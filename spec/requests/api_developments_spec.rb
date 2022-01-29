@@ -22,4 +22,23 @@ RSpec.describe "ApiDevelopments", type: :request do
       expect(parsed_body["name"]).to eq("test")
     end
   end
+
+  describe "MongoDB-backed" do
+    before(:each) { State.delete_all }
+    after(:each) { State.delete_all }
+    it "create MongoDB-backed model" do 
+      object = create(:state, name: "test") 
+      expect(object).to be_valid
+      expect(State.find(object.id).name).to eq("test")
+    end
+    it "create MongoDB-backed API resource" do 
+      object = create(:state, name: "test")
+      expect(api_states_path).to eq("/api/states")
+      get api_state_path(object.id)
+      expect(response).to have_http_status(:ok)
+      expect(parsed_body["name"]).to eq(object.name)
+      expect(parsed_body).to include("created_at")
+      expect(parsed_body).to include("id"=>object.id.to_s)
+    end
+  end
 end
