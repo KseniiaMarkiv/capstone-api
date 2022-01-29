@@ -24,7 +24,7 @@ gem "jbuilder"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
 gem 'mongo'
-gem 'mongoid'
+gem 'mongoid', git: 'https://github.com/mongodb/mongoid.git', branch: 'master'
 gem 'httparty'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -52,7 +52,8 @@ group :development, :test do
 end
 
 group :development do
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
+  gem 'awesome_print'
+  gem 'coderay'
   gem "spring"
 end
 
