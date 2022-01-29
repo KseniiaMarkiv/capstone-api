@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV['PGUSER'] %>
+  password: <%= ENV['PGPASSWORD'] %>
+  host: <%= ENV['PGHOST'] %>
+  port: <%= ENV['PGPORT'] %>
+
+development:
+  <<: *default
+  database: capstone_api_development
+
+test:
+  <<: *default
+  database: capstone_api_test
+
+production:
+  <<: *default
+  database: capstone_api_production
+  username: capstone_api
+  password: <%= ENV["CAPSTONE_API_DATABASE_PASSWORD"] %>
