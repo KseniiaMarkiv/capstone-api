@@ -31,15 +31,15 @@ module CapstoneApi
     # config.generators {|g| g.orm :active_record}
     config.generators {|g| g.orm :mongoid}
 
-    # config.middleware.insert_before 0, Rack::Cors do
-    #   allow do
-    #     origins /https:\/\/\w+\.github\.io/
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins /https:\/\/\w+\.github\.io/
 
-    #     resource '*', 
-    #       :headers => :any, 
-    #       :expose  => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
-    #       :methods => [:get, :post, :put, :delete, :options]
-    #   end
-    # end   
+        resource '*', 
+          :headers => :any, 
+          :expose  => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+          :methods => [:get, :post, :put, :delete, :options]
+      end
+    end   
   end
 end
