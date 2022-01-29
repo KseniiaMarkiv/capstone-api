@@ -11,8 +11,8 @@
   )
 end
 
-# 20.times do 
-#   State.create(
-#     name: Faker::Address.state
-#   )
-# end
+20.times do 
+  State.create(
+    name: Faker::Address.state
+  )
+end

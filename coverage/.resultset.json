@@ -4,6 +4,7 @@
       "/mnt/d/my_apps/_own/6c/capstone-api/app/models/city.rb": {
         "lines": [
           1,
+          1,
           null
         ]
       },
@@ -77,8 +78,76 @@
           1,
           null
         ]
+      },
+      "/mnt/d/my_apps/_own/6c/capstone-api/app/models/state.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/mnt/d/my_apps/_own/6c/capstone-api/app/controllers/api/states_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null
+        ]
       }
     },
-    "timestamp": 1643472090
+    "timestamp": 1643479297
   }
 }
