@@ -11,10 +11,6 @@ gem "sprockets-rails"
 gem 'sassc-rails'
 gem 'terser', '~> 1.1', '>= 1.1.8'
 
-
-# Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
-
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
@@ -54,6 +50,8 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  # Use sqlite3 as the database for Active Record
+  gem "sqlite3", "~> 1.4"
 end
 
 group :development do
@@ -67,3 +65,14 @@ group :development do
   # gem "spring"
 end
 
+group :production do
+  gem 'pg'
+end
+
+source 'https://rails-assets.org' do
+# source 'http://insecure.rails-assets.org' do
+  gem 'rails-assets-bootstrap', '~>3.3.7'
+  gem 'rails-assets-angular', '~>1.5.9'
+  gem 'rails-assets-angular-ui-router', '~>0.3.1'
+  gem 'rails-assets-angular-resource', '~>1.5.9'
+end

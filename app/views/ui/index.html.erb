@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="spa-demo">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://releases.jquery.com/git/jquery-3.x-git.min.js"></script> 
+    <%= stylesheet_link_tag    "spa-demo", :media => "all" %>
+    <%= javascript_include_tag "spa-demo" %>
+
+  </head>
+  <body>
+
+    <div class="container">
+      <h1> Hello </h1>
+      <span> app/views/ui/index.html.erb </span>
+      <div ui-view></div>
+    </div>
+  </body>
+</html>
