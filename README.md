@@ -1,3 +1,3 @@
 # Capstone Demo Application
 
-"_it's version from branch server-pages_"
+"_it's version from branch staging-app_"
