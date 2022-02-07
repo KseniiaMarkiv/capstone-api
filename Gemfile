@@ -8,6 +8,7 @@ gem "rails", "~> 7.0.1"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+# Use Sass to process CSS
 gem 'sassc-rails'
 gem 'terser', '~> 1.1', '>= 1.1.8'
 
@@ -33,16 +34,17 @@ gem "jbuilder"
 # gem "kredis"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
+gem 'mongo'
+gem 'mongoid', git: 'https://github.com/mongodb/mongoid.git', branch: 'master'
+gem 'httparty'
+gem 'rack-cors'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
-
-# Use Sass to process CSS
-# gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -52,6 +54,13 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   # Use sqlite3 as the database for Active Record
   gem "sqlite3", "~> 1.4"
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  # gem 'capybara'
+  # gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
+  # gem 'simplecov'
 end
 
 group :development do
@@ -63,6 +72,9 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'awesome_print'
+  gem 'coderay'
+  gem "spring"
 end
 
 group :production do
