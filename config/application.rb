@@ -33,5 +33,10 @@ module CapstoneApi
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    Mongoid.load!('./config/mongoid.yml')
+
+    # config.generators {|g| g.orm :active_record}
+    config.generators {|g| g.orm :mongoid}
   end
 end

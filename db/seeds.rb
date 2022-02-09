@@ -10,3 +10,9 @@
     name: Faker::Address.city
   )
 end
+
+20.times do 
+  State.create(
+    name: Faker::Address.state
+  )
+end
