@@ -18,11 +18,13 @@ RSpec.describe "/states", type: :request do
   # State. As you add validations to State, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    # skip("Add a hash of attributes valid for your model")
+    { name: "test" }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    # skip("Add a hash of attributes invalid for your model")
+    { name: nil }
   }
 
   describe "GET /index" do
@@ -79,7 +81,9 @@ RSpec.describe "/states", type: :request do
 
       it "renders a successful response (i.e. to display the 'new' template)" do
         post states_url, params: { state: invalid_attributes }
-        expect(response).to be_successful
+        # expect(response).to be_successful
+        # expect(response).to have_http_status(:unprocessable_entity)
+        assert_response :unprocessable_entity
       end
     end
   end
@@ -87,14 +91,16 @@ RSpec.describe "/states", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        # skip("Add a hash of attributes valid for your model")
+        { name: "test_updated" }
       }
 
       it "updates the requested state" do
         state = State.create! valid_attributes
         patch state_url(state), params: { state: new_attributes }
         state.reload
-        skip("Add assertions for updated state")
+        # skip("Add assertions for updated state")
+        assert_equal "test_updated", state.name
       end
 
       it "redirects to the state" do
@@ -109,7 +115,9 @@ RSpec.describe "/states", type: :request do
       it "renders a successful response (i.e. to display the 'edit' template)" do
         state = State.create! valid_attributes
         patch state_url(state), params: { state: invalid_attributes }
-        expect(response).to be_successful
+        # expect(response).to be_successful
+        assert_response :unprocessable_entity
+        # expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
