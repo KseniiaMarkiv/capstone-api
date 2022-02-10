@@ -5,6 +5,7 @@ ruby "2.7.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.1"
+gem 'pg'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -74,10 +75,6 @@ group :development do
   gem 'coderay'
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   gem "spring"
-end
-
-group :production do
-  gem 'pg'
 end
 
 source 'https://rails-assets.org' do
