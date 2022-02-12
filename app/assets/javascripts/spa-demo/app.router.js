@@ -14,8 +14,8 @@
         $stateProvider
             .state("home", {
                 url: "/",
-                templateUrl: APP_CONFIG.main_page_html
-            })
+                templateUrl: APP_CONFIG.main_page_html,
+            });
         $urlRouterProvider.otherwise("/");
     }
 })();

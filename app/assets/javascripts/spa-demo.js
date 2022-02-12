@@ -6,4 +6,5 @@
 
 //= require spa-demo/app.module
 //= require spa-demo/app.router
-//= require spa-demo/app.constant
+
+//= require spa-demo/config/config.module
