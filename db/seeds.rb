@@ -16,3 +16,9 @@ end
     name: Faker::Address.state
   )
 end
+
+5.times do 
+  Foo.create(
+    name: Faker::Name.name
+  )
+end
