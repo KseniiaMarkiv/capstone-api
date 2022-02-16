@@ -1,30 +1,31 @@
 require "rails_helper"
 
-RSpec.describe FoosController, type: :routing do
+RSpec.describe Api::FoosController, type: :routing do
+
   describe "routing" do
     it "routes to #index" do
-      expect(get: "/foos").to route_to("foos#index")
+      expect(get: "/api/foos").to route_to(format: :json, controller: "api/foos", action: "index")
     end
 
     it "routes to #show" do
-      expect(get: "/foos/1").to route_to("foos#show", id: "1")
+      expect(get: "/api/foos/1").to route_to(format: :json, controller: "api/foos", action: "show", id: "1")
     end
 
 
     it "routes to #create" do
-      expect(post: "/foos").to route_to("foos#create")
+      expect(post: "/api/foos").to route_to(format: :json, controller: "api/foos", action: "create")
     end
 
     it "routes to #update via PUT" do
-      expect(put: "/foos/1").to route_to("foos#update", id: "1")
+      expect(put: "/api/foos/1").to route_to(format: :json, controller: "api/foos", action: "update", id: "1")
     end
 
     it "routes to #update via PATCH" do
-      expect(patch: "/foos/1").to route_to("foos#update", id: "1")
+      expect(patch: "/api/foos/1").to route_to(format: :json, controller: "api/foos", action: "update", id: "1")
     end
 
     it "routes to #destroy" do
-      expect(delete: "/foos/1").to route_to("foos#destroy", id: "1")
+      expect(delete: "/api/foos/1").to route_to(format: :json, controller: "api/foos", action: "destroy", id: "1")
     end
   end
 end

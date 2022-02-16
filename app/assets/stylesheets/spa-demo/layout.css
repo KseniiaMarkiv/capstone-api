@@ -5,3 +5,36 @@
 body {
     background-color: #ffffff;
 }
+
+input[type=submit] {
+    padding: 4px 8px 4px;
+    margin-top: 10px;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color: white;
+    color: #52c57b;
+    border: 1px solid #89d4a3;
+    font-size: 0.875rem;
+}
+
+input[type=submit]:hover {
+    background-color: #8cf0af;
+    color: white;
+}
+
+.btn-outline-warning.btn-sm:hover {
+    color: white;
+    background-color: #ffc107;
+}
+
+.btn-outline-danger.btn-sm {
+    margin-top: 10px;
+    color: #f3375d;
+    border: 1px solid #f3375d;
+}
+
+.btn-outline-danger.btn-sm:hover {
+    background-color: #f3375d;
+    color: white
+}

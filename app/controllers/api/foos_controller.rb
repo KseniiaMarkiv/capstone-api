@@ -1,4 +1,4 @@
-class FoosController < ApplicationController
+class Api::FoosController < ApplicationController
   before_action :set_foo, only: %i[ show update destroy ]
 
   # GET /foos
@@ -18,7 +18,9 @@ class FoosController < ApplicationController
     @foo = Foo.new(foo_params)
 
     if @foo.save
-      render :show, status: :created, location: @foo
+      head :created
+      # render json: @foo, status: :created, location: @foo
+      # render :show, status: :created, location: @foo
     else
       render json: @foo.errors, status: :unprocessable_entity
     end
@@ -28,7 +30,8 @@ class FoosController < ApplicationController
   # PATCH/PUT /foos/1.json
   def update
     if @foo.update(foo_params)
-      render :show, status: :ok, location: @foo
+      head :ok
+      # render :show, status: :ok, location: @foo
     else
       render json: @foo.errors, status: :unprocessable_entity
     end
