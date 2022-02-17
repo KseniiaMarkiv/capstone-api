@@ -19,7 +19,7 @@ RSpec.describe "/cities", type: :request do
 
   let(:valid_attributes) {
     # skip("Add a hash of attributes valid for your model")
-    { name: "test" }
+    FactoryBot.attributes_for(:city)
   }
 
   let(:invalid_attributes) {

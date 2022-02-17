@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "states/show", type: :view do
+  before(:each) { State.delete_all }
+  after(:each) { State.delete_all }
+
   before(:each) do
-    @state = assign(:state, State.create!(
-      name: "Name"
-    ))
+    @state = assign(:state, FactoryBot.create(:state))
   end
 
   it "renders attributes in <p>" do

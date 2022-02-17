@@ -6,7 +6,7 @@ RSpec.describe "/api/foos", type: :request do
 
   let(:valid_attributes) {
     # skip("Add a hash of attributes valid for your model")
-    { name: "test" }
+    FactoryBot.attributes_for(:foo)
   }
 
   let(:invalid_attributes) {
@@ -15,7 +15,7 @@ RSpec.describe "/api/foos", type: :request do
   }
 
   let(:valid_headers) {
-     {headers: headers } 
+    { headers: headers } 
   }
 
   describe "GET /index" do

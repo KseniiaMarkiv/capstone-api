@@ -19,7 +19,7 @@ RSpec.describe "/states", type: :request do
   # adjust the attributes here as well.
   let(:valid_attributes) {
     # skip("Add a hash of attributes valid for your model")
-    { name: "test" }
+    FactoryBot.attributes_for(:state)
   }
 
   let(:invalid_attributes) {

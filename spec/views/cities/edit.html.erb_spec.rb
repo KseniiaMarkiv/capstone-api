@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "cities/edit", type: :view do
+  before(:each) { City.delete_all }
+  after(:each) { City.delete_all }
+
   before(:each) do
-    @city = assign(:city, City.create!(
-      name: "MyString"
-    ))
+    @city = assign(:city, FactoryBot.create(:city))
   end
 
   it "renders the edit city form" do
