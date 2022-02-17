@@ -2,6 +2,10 @@
  * layout.css
  */
 
+:root {
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 body {
     background-color: #ffffff;
 }
@@ -36,5 +40,31 @@ input[type=submit]:hover {
 
 .btn-outline-danger.btn-sm:hover {
     background-color: #f3375d;
-    color: white
+    color: white;
+}
+
+
+/* unordered list */
+
+ul.bg-yellow {
+    color: #0277bd;
+    /* background-color: #eeff41; */
+    list-style-type: circle;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+li.fooscolor>a {
+    color: #0277bd;
+    /* font-family: Consolas monospace; */
+    font-family: 'Redressed', cursive;
+    /* font-size: 1.1em; */
+    text-decoration: none;
+}
+
+
+/* mouse over link */
+
+li.fooscolor>a:hover {
+    color: hotpink;
 }
