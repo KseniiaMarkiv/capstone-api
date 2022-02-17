@@ -15,7 +15,7 @@ RSpec.describe "/api/foos", type: :request do
   }
 
   let(:valid_headers) {
-    { headers: headers } 
+     { headers: headers } 
   }
 
   describe "GET /index" do
