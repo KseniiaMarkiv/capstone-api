@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "states/index", type: :view do
-  before(:each) { State.delete_all }
-  after(:each) { State.delete_all }
-
   before(:each) do
     assign(:states, [
       FactoryBot.create(:state),

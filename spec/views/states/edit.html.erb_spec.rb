@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "states/edit", type: :view do
-  before(:each) { State.delete_all }
-  after(:each) { State.delete_all }
-
   before(:each) do
     @state = assign(:state, FactoryBot.create(:state))
   end

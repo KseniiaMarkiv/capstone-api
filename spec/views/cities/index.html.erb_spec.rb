@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "cities/index", type: :view do
-  before(:each) { City.delete_all }
-  after(:each) { City.delete_all }
-  
   before(:each) do
     assign(:cities, [
       FactoryBot.create(:city), FactoryBot.create(:city)

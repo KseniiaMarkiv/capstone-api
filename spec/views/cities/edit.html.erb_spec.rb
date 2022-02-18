@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "cities/edit", type: :view do
-  before(:each) { City.delete_all }
-  after(:each) { City.delete_all }
-
   before(:each) do
     @city = assign(:city, FactoryBot.create(:city))
   end

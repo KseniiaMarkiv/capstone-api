@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe City, type: :model do
-  before(:each) { City.delete_all }
-  after(:each) { City.delete_all }
   let(:city) { FactoryBot.create(:city) }
   
   context "City model" do

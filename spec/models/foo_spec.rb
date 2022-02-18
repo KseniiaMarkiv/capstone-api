@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Foo, type: :model do
-  before(:each) { Foo.delete_all }
-  after(:each) { Foo.delete_all }
   let(:foo) { FactoryBot.create(:foo) }
 
   context "Foo model" do
+    it "created Foo will be persisted and be found" do
+      expect(foo).to be_persisted
+      expect(Foo.find(foo.id)).to_not be_nil
+    end
     it "has a name" do
       foo.validate 
       expect(foo.errors[:foo]).to_not include("can't be blank")    

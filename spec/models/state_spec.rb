@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe State, type: :model do
-  before(:each) { State.delete_all }
-  after(:each) { State.delete_all }
   let(:state) { FactoryBot.create(:state) }
   
   context "State model" do
