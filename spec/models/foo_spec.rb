@@ -1,19 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Foo, type: :model do
-  before(:all) do
-    DatabaseCleaner[:active_record].strategy = :truncation
-    DatabaseCleaner.clean_with(:truncation)
-  end
-  after(:all) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-  before(:each) do
-    DatabaseCleaner.start
-  end
-  after(:each) do
-    DatabaseCleaner.clean
-  end
+  include_context "db_cleanup", :transaction
+  include_context "db_scope"
 
   let!(:before_count) { Foo.count }
   let(:foo) { FactoryBot.create(:foo) }

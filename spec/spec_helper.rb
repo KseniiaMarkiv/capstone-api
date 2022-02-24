@@ -1,8 +1,12 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'mongoid-rspec'
+require 'support/database_cleaners'
 
 RSpec.configure do |config|
   config.include Mongoid::Matchers, :orm => :mongoid
+  # this way isn't recommended cuz will be everywhere - the same way
+      # and we have chance of choice our own way
+  # config.include_context "db_cleanup", :type => :model
   
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
