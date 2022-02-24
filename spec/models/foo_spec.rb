@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Foo, type: :model do
+RSpec.describe Foo, type: :model, :orm => :active_record do
   include_context "db_cleanup", :transaction
   include_context "db_scope"
 

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "/api/foos", type: :request do
-  before(:each) { Foo.delete_all }
-  after(:each) { Foo.delete_all }
+  include_context "db_cleanup", :transaction
+  include_context "db_scope"
 
   let(:valid_attributes) {
     # skip("Add a hash of attributes valid for your model")

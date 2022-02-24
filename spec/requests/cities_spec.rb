@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "/cities", type: :request do
-  
-  before(:each) { City.delete_all }
-  after(:each) { City.delete_all }
+  include_context "db_cleanup", :transaction
+  include_context "db_scope"
 
   let(:valid_attributes) {
     # skip("Add a hash of attributes valid for your model")

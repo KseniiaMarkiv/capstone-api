@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe City, type: :model do
+  include_context "db_cleanup", :transaction
+  include_context "db_scope"
+
   let!(:before_count) { City.count }
   let(:city) { FactoryBot.create(:city) }
   

@@ -1,9 +1,10 @@
 require 'rails_helper'
-# require 'mongo'
+require 'mongo'
 # Mongo::Logger.logger.level = ::Logger::DEBUG
 # Mongo::Logger.logger.level = ::Logger::INFO
 
-RSpec.describe State, type: :model do
+RSpec.describe State, type: :model, :orm=>:mongoid do
+  include_context "db_cleanup"
 #   # include Mongoid::Matchers
 #   before(:all) do
 #     State.delete_all
@@ -14,11 +15,13 @@ RSpec.describe State, type: :model do
   end
 
   let(:state) { FactoryBot.create(:state) }
-  after(:each) do
-    State.delete_all
-  end
+  # after(:each) do
+  #   State.delete_all
+  # end
   
   context "State model" do
+    include_context "db_scope"
+
     it "created State will be persisted and be found" do
       expect(state).to be_persisted
       expect(State.find(state.id)).to_not be_nil

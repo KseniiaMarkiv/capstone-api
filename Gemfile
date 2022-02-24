@@ -7,7 +7,8 @@ ruby "2.7.0"
 gem "rails", "~> 7.0.1"
 gem 'pg'
 gem 'pry-rails'
-gem 'database_cleaner', '~> 2.0', '>= 2.0.1'
+gem 'database_cleaner'
+gem 'database_cleaner-mongoid'
 
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
