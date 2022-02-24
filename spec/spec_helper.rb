@@ -1,5 +1,9 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'mongoid-rspec'
+
 RSpec.configure do |config|
+  config.include Mongoid::Matchers, :orm => :mongoid
+  
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

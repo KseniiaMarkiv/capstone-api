@@ -7,6 +7,8 @@ ruby "2.7.0"
 gem "rails", "~> 7.0.1"
 gem 'pg'
 gem 'pry-rails'
+gem 'database_cleaner', '~> 2.0', '>= 2.0.1'
+
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -59,7 +61,6 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
   # gem 'capybara'
-  # gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'

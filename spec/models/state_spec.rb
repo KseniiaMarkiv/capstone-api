@@ -3,11 +3,11 @@ require 'rails_helper'
 # Mongo::Logger.logger.level = ::Logger::DEBUG
 # Mongo::Logger.logger.level = ::Logger::INFO
 
-RSpec.describe State, type: :model, :orm=>:mongoid do
-  # include Mongoid::Matchers
-  before(:all) do
-    State.delete_all
-  end
+RSpec.describe State, type: :model do
+#   # include Mongoid::Matchers
+#   before(:all) do
+#     State.delete_all
+#   end
 
   context State do
     it { is_expected.to have_field(:name).of_type(String).with_default_value_of(nil) }
@@ -33,6 +33,12 @@ RSpec.describe State, type: :model, :orm=>:mongoid do
     it "is not valid without a name" do
       expect(state.name).to_not be_nil
     end
+  end
+
+  context "created State (let)" do
+    it { expect(state).to be_persisted }
+    it { expect(state.name).to eq(state.name) }
+    it { expect(State.find(state.id)).to_not be_nil }
   end
 
 end

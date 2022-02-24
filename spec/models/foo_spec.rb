@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Foo, type: :model do
+  let!(:before_count) {Foo.count}
   let(:foo) { FactoryBot.create(:foo) }
 
   context "Foo model" do
@@ -17,6 +18,13 @@ RSpec.describe Foo, type: :model do
     end
     it "is not valid without a name" do
       expect(foo.name).to_not be_nil
+    end
+
+    context "created Foo lazy" do
+      it { expect(foo).to be_persisted }
+      it { expect(foo.name).to eq(foo.name) }
+      it { expect(Foo.find(foo.id)).to_not be_nil }
+      it { foo; expect(Foo.count).to eq(before_count + 1) }
     end
   end
 
