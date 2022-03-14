@@ -1,9 +1,11 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'mongoid-rspec'
-require 'support/database_cleaners'
+require_relative 'support/database_cleaners'
+require_relative 'helpers/foos_helper_spec.rb'
 
 RSpec.configure do |config|
   config.include Mongoid::Matchers, :orm => :mongoid
+  config.include ApiHelper, :type=>:request
   # this way isn't recommended cuz will be everywhere - the same way
       # and we have chance of choice our own way
   # config.include_context "db_cleanup", :type => :model

@@ -5,7 +5,7 @@ RSpec.describe Foo, type: :model, :orm => :active_record do
   include_context "db_scope"
 
   let!(:before_count) { Foo.count }
-  let(:foo) { FactoryBot.create(:foo) }
+  let(:foo) { FactoryBot.create(:foo, :name=>"test") }
 
   context "Foo model" do
     it "created Foo will be persisted and be found" do
@@ -25,7 +25,7 @@ RSpec.describe Foo, type: :model, :orm => :active_record do
 
     context "created Foo lazy" do
       it { expect(foo).to be_persisted }
-      it { expect(foo.name).to eq(foo.name) }
+      it { expect(foo.name).to eq("test") }
       it { expect(Foo.find(foo.id)).to_not be_nil }
       it { foo; expect(Foo.count).to eq(before_count + 1) }
     end

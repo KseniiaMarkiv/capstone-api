@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "/api/foos", type: :request do
-  include_context "db_cleanup", :transaction
-  include_context "db_scope"
+  include_context "db_cleanup_each", :transaction
 
   let(:valid_attributes) {
     # skip("Add a hash of attributes valid for your model")
@@ -13,7 +12,6 @@ RSpec.describe "/api/foos", type: :request do
     # skip("Add a hash of attributes invalid for your model")
     { name: nil }
   }
-
   let(:valid_headers) {
      { headers: headers } 
   }
@@ -22,6 +20,7 @@ RSpec.describe "/api/foos", type: :request do
     it "renders a successful response" do
       Foo.create! valid_attributes
       get api_foos_url, headers: valid_headers, as: :json
+      expect(request.method).to eq("GET")
       expect(response).to be_successful
     end
   end
@@ -82,6 +81,11 @@ RSpec.describe "/api/foos", type: :request do
         foo.reload
         # skip("Add assertions for updated state")
         assert_equal "test_updated", foo.name
+        # expect(foo.name).to eq(valid_attributes.name)
+        # expect(foo['name']).to eq(valid_attributes['name'])
+
+      #   NoMethodError:
+      #  undefined method `name' for {:name=>"Lorene Considine"}:Hash
       end
 
       it "renders a JSON response with the foo" do
