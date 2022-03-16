@@ -15,13 +15,26 @@ RSpec.describe "/api/foos", type: :request do
   let(:valid_headers) {
      { headers: headers } 
   }
+  let(:bad_id) {
+    { id: 1234567890 }
+  }
 
   describe "GET /index" do
     it "renders a successful response" do
-      Foo.create! valid_attributes
+      foo = Foo.create! valid_attributes
       get api_foos_url, headers: valid_headers, as: :json
       expect(request.method).to eq("GET")
-      expect(response).to be_successful
+      assert_response :success
+      assert_equal "application/json", @response.media_type
+      
+      json=parsed_body
+      expect(json[0]).to have_key("id")
+      expect(json[0]).to have_key("name")
+      assert_equal json[0]["name"], foo.name
+      id=json[0]["id"]
+
+      # verify we can locate the created instance in DB
+      assert_equal Foo.find(id).name, foo.name
     end
   end
 
@@ -29,7 +42,19 @@ RSpec.describe "/api/foos", type: :request do
     it "renders a successful response" do
       foo = Foo.create! valid_attributes
       get api_foo_url(foo), as: :json
-      expect(response).to be_successful
+      assert_response :success
+      assert_equal "application/json", @response.media_type
+
+      json=parsed_body
+      expect(json).to have_key("id")  # we have Hash
+      expect(json).to have_key("name")
+      # expect(json["name"]).to eq(foo[:name])
+      assert_equal json["name"], foo.name
+      id=json["id"]
+
+      # verify we can locate the created instance in DB
+      expect(Foo.find(id).name).to eq(foo[:name])
+      # assert_equal Foo.find(id).name, foo.name
     end
   end
 
@@ -40,13 +65,30 @@ RSpec.describe "/api/foos", type: :request do
           post api_foos_url,
                params: { foo: valid_attributes }, headers: valid_headers, as: :json
         }.to change(Foo, :count).by(1)
+        assert_equal "application/json", @response.media_type
       end
 
       it "renders a JSON response with the new foo" do
         post api_foos_url,
              params: { foo: valid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        assert_response :created
+        # expect(response.content_type).to match(a_string_including("application/json"))
+        assert_equal "application/json", @response.media_type
+      end
+      it "check the payload of the response" do
+        foo = Foo.create! valid_attributes
+        get api_foo_url(foo), as: :json
+        assert_response :success
+        assert_equal "application/json", @response.media_type
+
+        json=parsed_body
+        expect(json).to have_key("id")
+        expect(json).to have_key("name")
+        expect(json["name"]).to eq(foo[:name])
+        id=json["id"]
+  
+        # verify we can locate the created instance in DB
+        expect(Foo.find(id).name).to eq(foo[:name])
       end
     end
 
@@ -61,7 +103,7 @@ RSpec.describe "/api/foos", type: :request do
       it "renders a JSON response with errors for the new foo" do
         post api_foos_url,
              params: { foo: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
+             assert_response :unprocessable_entity
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
@@ -79,20 +121,15 @@ RSpec.describe "/api/foos", type: :request do
         patch api_foo_url(foo),
               params: { foo: new_attributes }, headers: valid_headers, as: :json
         foo.reload
-        # skip("Add assertions for updated state")
         assert_equal "test_updated", foo.name
-        # expect(foo.name).to eq(valid_attributes.name)
-        # expect(foo['name']).to eq(valid_attributes['name'])
-
-      #   NoMethodError:
-      #  undefined method `name' for {:name=>"Lorene Considine"}:Hash
+        # expect(foo["name"]).to eq("test_updated")
       end
 
       it "renders a JSON response with the foo" do
         foo = Foo.create! valid_attributes
         patch api_foo_url(foo),
               params: { foo: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
+        assert_response :ok
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
@@ -102,7 +139,7 @@ RSpec.describe "/api/foos", type: :request do
         foo = Foo.create! valid_attributes
         patch api_foo_url(foo),
               params: { foo: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
+        assert_response :unprocessable_entity
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
@@ -115,5 +152,11 @@ RSpec.describe "/api/foos", type: :request do
         delete api_foo_url(foo), headers: valid_headers, as: :json
       }.to change(Foo, :count).by(-1)
     end
+    
   end
+
 end
+
+
+
+

@@ -1,5 +1,6 @@
 class Api::FoosController < ApplicationController
   before_action :set_foo, only: %i[ show update destroy ]
+  wrap_parameters :foo, include: ["name"]
 
   # GET /foos
   # GET /foos.json
