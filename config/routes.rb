@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api, defaults: {format: :json}  do 
     resources :foos, except: [:new, :edit]
+    resources :bars, except: [:new, :edit]
   end
 
   resources :cities

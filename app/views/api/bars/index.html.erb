@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Bars</h1>
+
+<div id="api_bars">
+  <% @api_bars.each do |api_bar| %>
+    <%= render api_bar %>
+    <p>
+      <%= link_to "Show this bar", api_bar %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New bar", new_api_bar_path %>
