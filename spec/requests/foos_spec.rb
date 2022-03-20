@@ -103,7 +103,7 @@ RSpec.describe "/api/foos", type: :request do
       it "renders a JSON response with errors for the new foo" do
         post api_foos_url,
              params: { foo: invalid_attributes }, headers: valid_headers, as: :json
-             assert_response :unprocessable_entity
+        assert_response :unprocessable_entity
         expect(response.content_type).to match(a_string_including("application/json"))
       end
     end

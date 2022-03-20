@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # although I did step by step. New version RoR - new behavior of app
   include ActionController::ImplicitRender
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from Mongoid::Errors::DocumentNotFound, with: :record_not_found
   protected
 
   def record_not_found(exception) 

@@ -1,5 +1,6 @@
 class Api::BarsController < ApplicationController
   before_action :set_api_bar, only: %i[ show edit update destroy ]
+  wrap_parameters :bar, include: ["name"]
 
   # GET /api/bars or /api/bars.json
   def index
@@ -10,14 +11,14 @@ class Api::BarsController < ApplicationController
   def show
   end
 
-  # GET /api/bars/new
-  def new
-    @api_bar = Api::Bar.new
-  end
+  # # GET /api/bars/new
+  # def new
+  #   @api_bar = Api::Bar.new
+  # end
 
-  # GET /api/bars/1/edit
-  def edit
-  end
+  # # GET /api/bars/1/edit
+  # def edit
+  # end
 
   # POST /api/bars or /api/bars.json
   def create

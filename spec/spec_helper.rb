@@ -1,7 +1,7 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'mongoid-rspec'
 require_relative 'support/database_cleaners'
-require_relative 'helpers/foos_helper_spec.rb'
+require_relative 'helpers/api_helper_spec.rb'
 
 RSpec.configure do |config|
   config.include Mongoid::Matchers, :orm => :mongoid
