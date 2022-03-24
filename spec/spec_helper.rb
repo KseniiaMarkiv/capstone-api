@@ -1,11 +1,18 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'mongoid-rspec'
+require 'capybara'
+require 'capybara/rspec'
+# require 'webdrivers'
+
+
 require_relative 'support/database_cleaners'
 require_relative 'helpers/api_helper_spec.rb'
+
 
 RSpec.configure do |config|
   config.include Mongoid::Matchers, :orm => :mongoid
   config.include ApiHelper, :type=>:request
+  config.infer_spec_type_from_file_location!
   # this way isn't recommended cuz will be everywhere - the same way
       # and we have chance of choice our own way
   # config.include_context "db_cleanup", :type => :model
@@ -15,6 +22,6 @@ RSpec.configure do |config|
   end
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
-  end
+  end 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 end

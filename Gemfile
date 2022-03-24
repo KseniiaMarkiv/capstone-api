@@ -61,7 +61,6 @@ group :development, :test do
   gem "sqlite3", "~> 1.4"
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
-  # gem 'capybara'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
@@ -81,7 +80,11 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   gem "spring"
 end
-
+# group :test do
+  gem "capybara"
+  # gem 'selenium-webdriver', '~> 4.0'
+  # gem 'webdrivers', '~> 5.0', require: false
+# end
 source 'https://rails-assets.org' do
 # source 'http://insecure.rails-assets.org' do
   gem 'rails-assets-bootstrap'#, '~>3.3.7'
