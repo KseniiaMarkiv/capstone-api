@@ -2,21 +2,50 @@
 require 'mongoid-rspec'
 require 'capybara'
 require 'capybara/rspec'
-# require 'webdrivers'
-
-
+require 'webdrivers'
+require 'selenium/webdriver'
+require 'rexml/document'
 require_relative 'support/database_cleaners'
-require_relative 'helpers/api_helper_spec.rb'
+require_relative 'helpers/api_helper_spec'
+
+browser = :firefox
+Capybara.register_server :selenium do |app|
+  if browser == :chrome
+    options = Selenium::WebDriver::Options.chrome
+    Selenium::WebDriver.for :chrome, capabilities: options
+    Capybara::Selenium::Driver.new(app, browser: :chrome)
+  else
+    options = Selenium::WebDriver::Options.firefox(marionette: false)
+    Selenium::WebDriver.for :firefox, capabilities: options
+    Capybara::Selenium::Driver.new(app, browser: :firefox)
+  end
+end
+Selenium::WebDriver::Chrome::Service.driver_path = 'C:\WebDriver\bin\chromedriver.exe'
+
+require 'capybara/poltergeist'
+# Set the default driver 
+Capybara.configure do |config|
+  config.default_driver = :rack_test
+  #used when :js=>true
+  config.javascript_driver = :poltergeist
+end
+#Capybara.javascript_driver = :selenium
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new( app,
+    js_errors: false,
+    phantomjs_logger: StringIO.new,
+#    logger: STDERR
+    )
+end
 
 
 RSpec.configure do |config|
-  config.include Mongoid::Matchers, :orm => :mongoid
-  config.include ApiHelper, :type=>:request
+  config.include Mongoid::Matchers, orm: :mongoid
+  config.include ApiHelper, type: :request
   config.infer_spec_type_from_file_location!
   # this way isn't recommended cuz will be everywhere - the same way
       # and we have chance of choice our own way
   # config.include_context "db_cleanup", :type => :model
-  
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end

@@ -1,6 +1,7 @@
 require 'database_cleaner'
 require 'database_cleaner/mongoid'
 
+
 shared_context "db_cleanup" do |ar_strategy=:truncation|
   before(:all) do
     DatabaseCleaner[:mongoid].strategy = :deletion

@@ -8,7 +8,7 @@ RSpec.describe "ApiBars", type: :request do
       let(:response_check) do
         # pp json
         expect(json.count).to eq(resources.count);
-        expect(json.map{|f|f["name"]}).to eq(resources.map{|f|f[:name]})
+        expect(json.map{|f|f["name"]}).to eq resources.map{|f|f[:name]}
       end
     end
   end
@@ -18,8 +18,8 @@ RSpec.describe "ApiBars", type: :request do
         # pp json
         expect(json).to have_key("id")
         expect(json).to have_key("name")
-        expect(json["id"]["$oid"]).to eq(resource.id.to_s)
-        expect(json["name"]).to eq(resource.name)
+        expect(json["id"]["$oid"]).to eq resource.id.to_s
+        expect(json["name"]).to eq resource.name
       end
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe "ApiBars", type: :request do
         expect(json["name"]).to eq(resource_state[:name])
 
         # verify we can locate the created instance in DB
-        expect(Api::Bar.find(resource_id).name).to eq(resource_state[:name])
+        expect(Api::Bar.find(resource_id).name).to eq resource_state[:name]
       }
     end
   end
@@ -41,10 +41,10 @@ RSpec.describe "ApiBars", type: :request do
     it_should_behave_like "modifiable resource", :api_bar do
       let(:update_check) {
         #verify name is not yet the new name
-        expect(resource["name"]).to_not eq(new_name[:name])
+        expect(resource["name"]).to_not eq new_name[:name]
         pp resource["name"]
         # verify DB has instance updated with name
-        expect(Api::Bar.find(resource["id"]).name).to eq(new_name[:name])
+        expect(Api::Bar.find(resource["id"]).name).to eq new_name[:name]
         pp Api::Bar.find(resource["id"]).name
       }
     end
