@@ -9,32 +9,35 @@ require_relative 'support/database_cleaners'
 require_relative 'helpers/api_helper_spec'
 
 browser = :firefox
+Selenium::WebDriver::Chrome::Service.driver_path = 'C:\WebDriver\bin\chromedriver.exe'
+Selenium::WebDriver::Firefox::Service.driver_path = 'C:\WebDriver\bin\geckodriver.exe'
 Capybara.register_server :selenium do |app|
   if browser == :chrome
     options = Selenium::WebDriver::Options.chrome
     Selenium::WebDriver.for :chrome, capabilities: options
     Capybara::Selenium::Driver.new(app, browser: :chrome)
   else
-    options = Selenium::WebDriver::Options.firefox(marionette: false)
-    Selenium::WebDriver.for :firefox, capabilities: options
-    Capybara::Selenium::Driver.new(app, browser: :firefox)
+    options = Selenium::WebDriver::Options.firefox #(marionette: false)
+    driver = Selenium::WebDriver.for :firefox, capabilities: options
+    driver.quit
+    # Selenium::WebDriver.for :firefox, capabilities: options
+    # Capybara::Selenium::Driver.new(app, browser: :firefox, capabilities: options)
   end
 end
-Selenium::WebDriver::Chrome::Service.driver_path = 'C:\WebDriver\bin\chromedriver.exe'
 
 require 'capybara/poltergeist'
 # Set the default driver 
 Capybara.configure do |config|
   config.default_driver = :rack_test
-  #used when :js=>true
-  config.javascript_driver = :poltergeist
+  # used when :js=>true
+  config.javascript_driver = :selenium
 end
 #Capybara.javascript_driver = :selenium
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new( app,
     js_errors: false,
     phantomjs_logger: StringIO.new,
-#    logger: STDERR
+# logger: STDERR
     )
 end
 

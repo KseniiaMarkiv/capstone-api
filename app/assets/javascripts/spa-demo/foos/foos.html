@@ -16,7 +16,7 @@
     <div>
         <ul class="bg-yellow">
             <li ng-repeat="foo in foosVM.foos | orderBy:'name'" class="p-1 fooscolor">
-                <a ng-click="foosVM.edit(foo)">{{foo.name}}</a>
+                <a href="#" ng-click="foosVM.edit(foo)">{{foo.name}}</a>
             </li>
         </ul>
     </div>
