@@ -65,7 +65,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'mongoid-rspec'
-  # gem 'simplecov'
 end
 
 group :development do
@@ -86,6 +85,7 @@ group :test do
   gem 'launchy', '~> 2.5'
   gem 'poltergeist', '~> 1.18', '>= 1.18.1'
   gem 'selenium-webdriver', '~> 4.0'
+  gem 'simplecov', require: false
   gem 'rspec-rails', '~> 6.0.0.rc1'
   gem 'rspec', '~> 3.11'
   gem 'webdrivers', '~> 5.0'#, require: false

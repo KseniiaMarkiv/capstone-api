@@ -6,7 +6,8 @@ require 'webdrivers'
 require 'selenium/webdriver'
 require 'rexml/document'
 require_relative 'support/database_cleaners'
-require_relative 'helpers/api_helper_spec'
+require_relative 'support/api_helper'
+require 'simplecov'
 
 browser = :firefox
 Selenium::WebDriver::Chrome::Service.driver_path = 'C:\WebDriver\bin\chromedriver.exe'
@@ -40,7 +41,6 @@ Capybara.register_driver :poltergeist do |app|
 # logger: STDERR
     )
 end
-
 
 RSpec.configure do |config|
   config.include Mongoid::Matchers, orm: :mongoid
