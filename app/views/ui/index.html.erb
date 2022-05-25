@@ -1,21 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="spa-demo">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capstone App</title>
+
+         <!-- Libs -->
+    <script src="lib/jquery-3.6.0.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-resource.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+    <script src="lib/bootstrap.bundle.min.js"></script>
+
+    <link rel='stylesheet' href='lib/css/bootstrap.min.css'>
+
     
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
     <%= stylesheet_link_tag    'spa-demo', :media => "all" %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <%= javascript_include_tag 'spa-demo' %>
 
   </head>
-  <body>
+<body ng-app="spa-demo" class="container">
 
-    <div class="container">
-      <h1> Hello </h1>
-      <span>(from app/views/ui/index.html.erb) </span>
-      <div ui-view></div>
-    </div>
-  </body>
+  <div class="mt-5">
+    <h1> Hello </h1>
+    <span>(from app/views/ui/index.html.erb) </span>
+  </div>
+  <div ui-view class="mt-2"></div>  
+
+
+    
+</body>
 </html>

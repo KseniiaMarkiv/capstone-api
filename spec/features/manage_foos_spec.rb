@@ -10,7 +10,7 @@ RSpec.feature 'ManageFoos', type: :feature, js: true do
   FOO_FORM_XPATH=FooUiHelper::FOO_FORM_XPATH
   FOO_LIST_XPATH=FooUiHelper::FOO_LIST_XPATH
 
-  xfeature 'view existing Foos' do
+  feature 'view existing Foos' do
     let(:foos) { (1..5).map{ FactoryBot.create(:foo) }.sort_by {|v| v['name']} }
     scenario 'when no instances exist' do
       visit '/'
@@ -34,7 +34,7 @@ RSpec.feature 'ManageFoos', type: :feature, js: true do
     end
   end
 
-  xfeature 'add new Foo' do
+  feature 'add new Foo' do
     let(:foo_state) { FactoryBot.attributes_for(:foo) }
     background(:each) do # instead before blok
       visit root_path
@@ -83,7 +83,7 @@ RSpec.feature 'ManageFoos', type: :feature, js: true do
     end
   end
 
-  xfeature 'with existing Foo' do
+  feature 'with existing Foo' do
     background(:each) do
       create_foo foo_state
     end

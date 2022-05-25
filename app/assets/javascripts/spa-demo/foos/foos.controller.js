@@ -1,13 +1,9 @@
 (function() {
     "use strict";
 
-    angular
-        .module("spa-demo.foos")
-        .controller("spa-demo.foos.FoosController", FoosController);
+    var myApp = angular.module('spa-demo.foos');
 
-    FoosController.$inject = ["spa-demo.foos.Foo"];
-
-    function FoosController(Foo) {
+    myApp.controller('spa-demo.foos.FoosController', ['spa-demo.foos.Foo', function(Foo) {
         var vm = this;
         vm.foos;
         vm.foo;
@@ -32,52 +28,25 @@
             console.log(response);
         }
 
-        function edit(object) {
-            // console.log("selected", object);
-            vm.foo = object;
-        }
+        function edit(object, index) {}
 
         function create() {
-            // console.log("creating foo", vm.foo);
+            console.log("creating foo", vm.foo);
             vm.foo.$save()
                 .then(function(response) {
-                    // console.log(response);
+                    //console.log(response);
                     vm.foos.push(vm.foo);
                     newFoo();
                 })
                 .catch(handleError);
         }
 
-        function update() {
-            //console.log("update", vm.foo);
-            vm.foo.$update()
-                .then(function(response) {
-                    //console.log(response);
-                })
-                .catch(handleError);
-        }
+        function update() {}
 
-        function remove() {
-            //console.log("remove", vm.foo);
-            vm.foo.$delete()
-                .then(function(response) {
-                    //console.log(response);
-                    //remove the element from local array
-                    removeElement(vm.foos, vm.foo);
-                    // vm.foos = Foo.query();
-                    //replace edit area with prototype instance
-                    newFoo();
-                })
-                .catch(handleError);
-        }
+        function remove() {}
 
-        function removeElement(elements, element) {
-            for (var i = 0; i < elements.length; i++) {
-                if (elements[i].id == element.id) {
-                    elements.splice(i, 1);
-                    break;
-                }
-            }
-        }
-    }
+
+        function removeElement(elements, element) {}
+    }]);
+
 })();

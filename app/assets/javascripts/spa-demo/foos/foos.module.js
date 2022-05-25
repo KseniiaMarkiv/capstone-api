@@ -1,8 +1,7 @@
 (function() {
-  "use strict";
+    'use strict';
 
-  angular
-    .module("spa-demo.foos", [
-      "ngResource"
+    angular.module('spa-demo.foos', [
+        'ngResource'
     ]);
 })();

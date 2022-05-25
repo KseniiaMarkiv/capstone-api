@@ -1,21 +1,16 @@
 (function() {
-    "use strict";
+    'use strict';
+    //  'use babel';
 
-    angular
-        .module("spa-demo")
-        .config(RouterFunction);
+    var myApp = angular.module('spa-demo')
 
-    RouterFunction.$inject = ["$stateProvider",
-        "$urlRouterProvider",
-        "spa-demo.config.APP_CONFIG"
-    ];
-
-    function RouterFunction($stateProvider, $urlRouterProvider, APP_CONFIG) {
-        $stateProvider
-            .state("home", {
-                url: "/",
-                templateUrl: APP_CONFIG.main_page_html,
-            });
-        $urlRouterProvider.otherwise("/");
-    }
+    myApp.config(function($stateProvider, $urlRouterProvider, APP_CONFIG) {
+        var aboutState = {
+            name: 'home',
+            url: '/',
+            templateUrl: APP_CONFIG.main_page_html
+        }
+        $stateProvider.state(aboutState);
+        $urlRouterProvider.otherwise('/');
+    });
 })();
