@@ -8,6 +8,10 @@
                 <input name="name" ng-model="foosVM.foo.name" required="required" />
             </div>
             <button type="button" class="btn btn-info btn-sm my-button" ng-if="!foosVM.foo.id" type="submit" ng-click="foosVM.create()">Create Foo</button>
+            <div ng-if="foosVM.foo.id">
+                <button id="for-style" type="submit" class="btn btn-success custom-btn btn-sm my-button" ng-click="foosVM.update()">Update Foo</button>
+                <button id="for-style" type="submit" class="btn btn-danger custom-btn btn-sm my-button" ng-click="foosVM.remove()">Delete Foo</button>
+            </div>
         </form>
 
         <ul class="bg-yellow">
