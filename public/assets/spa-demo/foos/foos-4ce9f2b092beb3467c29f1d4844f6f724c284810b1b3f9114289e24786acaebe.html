@@ -1,0 +1,23 @@
+<div class="card border-info mb-3 mt-4" style="width: 18rem;">
+    <div class="card-header border-info">Foos</div>
+    <div class="card-body">
+
+        <form>
+            <div>
+                <label class="card-subtitle mb-4 pr-2 text-muted">Name:</label>
+                <input name="name" ng-model="foosVM.foo.name" required="required" />
+            </div>
+            <button type="button" class="btn btn-info btn-sm my-button" ng-if="!foosVM.foo.id" type="submit" ng-click="foosVM.create()">Create Foo</button>
+            <div ng-if="foosVM.foo.id">
+                <button id="for-style" type="submit" class="btn btn-success custom-btn btn-sm my-button" ng-click="foosVM.update()">Update Foo</button>
+                <button id="for-style" type="submit" class="btn btn-danger custom-btn btn-sm my-button" ng-click="foosVM.remove()">Delete Foo</button>
+            </div>
+        </form>
+
+        <ul class="bg-yellow">
+            <li ng-repeat="foo in foosVM.foos | orderBy:'name'" class="p-1 fooscolor">
+                <a ng-click="foosVM.edit(foo)">{{foo.name}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
