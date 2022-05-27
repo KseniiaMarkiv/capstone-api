@@ -90,7 +90,7 @@ group :test do
   gem 'rspec', '~> 3.11'
   gem 'webdrivers', '~> 5.0'#, require: false
 end
-
+gem 'rails_serve_static_assets'
 # source 'https://rails-assets.org' do
 # # source 'http://insecure.rails-assets.org' do
 #   gem 'rails-assets-bootstrap'#, '~>3.3.7'
