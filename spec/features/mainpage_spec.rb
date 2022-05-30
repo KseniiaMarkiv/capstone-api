@@ -34,7 +34,7 @@ RSpec.describe 'Mainpages', type: :feature do
     end
     scenario 'index page has bootstrap styling' do
       # puts page.html
-      expect(page).to have_css 'div.container'
+      expect(page).to have_css 'h1'
     end
   end
   xfeature 'with Angular when the main page is accessed', js: true do

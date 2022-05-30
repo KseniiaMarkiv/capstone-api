@@ -65,6 +65,13 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'mongoid-rspec'
+  gem 'capybara', '3.34'
+  gem 'launchy', '~> 2.5'
+  gem 'poltergeist', '~> 1.18', '>= 1.18.1'
+  gem 'selenium-webdriver', '~> 4.0.0.alpha7'
+  gem 'simplecov', require: false
+  gem 'rspec-rails', '~> 6.0.0.rc1'
+  gem 'webdrivers', '~> 4.0', require: false
 end
 
 group :development do
@@ -80,16 +87,6 @@ group :development do
   gem 'spring'
 end
 
-group :test do 
-  gem 'capybara', '~> 3.36'
-  gem 'launchy', '~> 2.5'
-  gem 'poltergeist', '~> 1.18', '>= 1.18.1'
-  gem 'selenium-webdriver', '~> 4.0'
-  gem 'simplecov', require: false
-  gem 'rspec-rails', '~> 6.0.0.rc1'
-  gem 'rspec', '~> 3.11'
-  gem 'webdrivers', '~> 5.0'#, require: false
-end
 gem 'rails_serve_static_assets'
 # source 'https://rails-assets.org' do
 # # source 'http://insecure.rails-assets.org' do
@@ -98,3 +95,4 @@ gem 'rails_serve_static_assets'
 #   gem 'rails-assets-angular-ui-router'#, '~>0.3.1'
 #   gem 'rails-assets-angular-resource'#, '~>1.5.9'
 # end
+gem "matrix", "~> 0.4.2"

@@ -10,21 +10,19 @@ require_relative 'support/api_helper'
 require 'simplecov'
 
 browser = :firefox
-Selenium::WebDriver::Chrome::Service.driver_path = 'C:\WebDriver\bin\chromedriver.exe'
-Selenium::WebDriver::Firefox::Service.driver_path = 'C:\WebDriver\bin\geckodriver.exe'
-Capybara.register_server :selenium do |app|
+
+Capybara.register_driver :selenium do |app|
   if browser == :chrome
-    options = Selenium::WebDriver::Options.chrome
-    Selenium::WebDriver.for :chrome, capabilities: options
+    require 'webdrivers/chromedriver'
+    Selenium::WebDriver::Chrome.path = 'C:\WebDriver\bin\chromedriver.exe'
     Capybara::Selenium::Driver.new(app, browser: :chrome)
   else
-    options = Selenium::WebDriver::Options.firefox #(marionette: false)
-    driver = Selenium::WebDriver.for :firefox, capabilities: options
-    driver.quit
-    # Selenium::WebDriver.for :firefox, capabilities: options
-    # Capybara::Selenium::Driver.new(app, browser: :firefox, capabilities: options)
+    require 'webdrivers/geckodriver'
+    Selenium::WebDriver::Firefox.path = 'C:\WebDriver\bin\geckodriver.exe'
+    Capybara::Selenium::Driver.new(app, browser: :firefox)
   end
 end
+
 
 require 'capybara/poltergeist'
 # Set the default driver 
