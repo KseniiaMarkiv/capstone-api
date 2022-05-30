@@ -1,4 +1,3 @@
 
-web: bundle exec b server -p $PGPORT -e $RAILS_ENV
-worker: sidekiq
-release: rails db:migrate
+web: bundle exec b server puma -C config/puma.rb -e $RAILS_ENV
+release: bundle exec rails db:migrate
