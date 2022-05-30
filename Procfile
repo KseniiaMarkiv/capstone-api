@@ -1,3 +1,4 @@
 
-web: bundle exec b server -p $PORT
-console: bundle exec rails console
+web: bundle exec b server -p $PGPORT -e $RAILS_ENV
+worker: sidekiq
+release: rails db:migrate
