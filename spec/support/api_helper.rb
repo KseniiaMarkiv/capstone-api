@@ -14,6 +14,39 @@ module ApiHelper
   #     end
   #   end
   # end
+
+  def signup(registration, status = :ok)
+    post user_registration_path, params: { user: registration }, as: :json
+    expect(response).to have_http_status(status)
+    json=parsed_body
+    if response.ok?
+      registration.merge(id: json['data']['id'],
+                         uid: json['data']['uid'])
+    end
+  end
+  
+  def login credentials, status=:ok
+    post user_session_path, credentials.slice(:email, :password)
+    expect(response).to have_http_status(status)
+    return response.ok? ? parsed_body["data"] : parsed_body
+  end
+  def logout status=:ok
+    delete destroy_user_session_path
+    @last_tokens={}
+    expect(response).to have_http_status(status) if status
+  end
+
+  def access_tokens?
+    !response.headers["access-token"].nil? if response
+  end
+  
+  def access_tokens
+    if access_tokens?
+      @last_tokens=["uid","client","token-type","access-token"].inject({}) {|h,k| h[k]=response.headers[k]; h}
+    end
+    @last_tokens || {}
+  end
+
   RSpec.shared_examples "resource index" do |model|
     let!(:resources) { FactoryBot.create_list( model, 5) }
     let(:json) { parsed_body }
