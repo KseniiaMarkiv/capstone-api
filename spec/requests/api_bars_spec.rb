@@ -4,7 +4,7 @@ RSpec.describe "ApiBars", type: :request do
   include_context "db_cleanup_each", :transaction
  
   context "caller requests list of Bars" do
-    it_should_behave_like "resource index", :api_bar do
+    it_should_behave_like "resource bar index", :api_bar do
       let(:response_check) do
         # pp json
         expect(json.count).to eq(resources.count);
@@ -13,7 +13,7 @@ RSpec.describe "ApiBars", type: :request do
     end
   end
   context "a specific Bar exists" do
-    it_should_behave_like "show resource", :api_bar do
+    it_should_behave_like "show bar resource", :api_bar do
       let(:response_check) do
         # pp json
         expect(json).to have_key("id")
@@ -25,7 +25,7 @@ RSpec.describe "ApiBars", type: :request do
   end
 
   context "create a new Bar" do
-    it_should_behave_like "create resource", :api_bar do
+    it_should_behave_like "create bar resource", :api_bar do
       let(:response_check) {
         #pp json
         expect(json).to have_key("name")
@@ -38,7 +38,7 @@ RSpec.describe "ApiBars", type: :request do
   end
   
   context "existing Bar" do
-    it_should_behave_like "modifiable resource", :api_bar do
+    it_should_behave_like "modifiable bar resource", :api_bar do
       let(:update_check) {
         #verify name is not yet the new name
         expect(resource["name"]).to_not eq new_name[:name]

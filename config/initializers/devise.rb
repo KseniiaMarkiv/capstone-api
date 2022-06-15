@@ -24,7 +24,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'not-reply@example.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -184,6 +184,10 @@ Devise.setup do |config|
   # one (and only one) @ exists in the given string. This is mainly
   # to give user feedback and not to assert the e-mail validity.
   
+  # If using rails-api, you may want to tell devise to not use ActionDispatch::Flash
+  # middleware b/c rails-api does not include it.
+  # See: https://stackoverflow.com/q/19600905/806956
+
   # config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
   config.navigational_formats = [:json]
 

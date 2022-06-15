@@ -6,6 +6,7 @@ require 'webdrivers'
 require 'selenium/webdriver'
 require 'rexml/document'
 require_relative 'support/database_cleaners'
+require_relative 'support/api_bar_helper'
 require_relative 'support/api_helper'
 require 'simplecov'
 
@@ -42,7 +43,13 @@ end
 
 RSpec.configure do |config|
   config.include Mongoid::Matchers, orm: :mongoid
+  config.include ApiBarHelper, type: :request
   config.include ApiHelper, type: :request
+
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Warden::Test::Helpers, type: :request
+
+
   config.infer_spec_type_from_file_location!
   # this way isn't recommended cuz will be everywhere - the same way
       # and we have chance of choice our own way

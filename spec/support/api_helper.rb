@@ -4,7 +4,7 @@ module ApiHelper
   def parsed_body
     JSON.parse(response.body)
   end
-
+  
    # automates the passing of payload bodies as json
   # ["post", "put", "patch", "get", "head", "delete"].each do |http_method_name|
   #   define_method("j#{http_method_name}") do |path,params={},headers={}| 
@@ -15,44 +15,61 @@ module ApiHelper
   #   end
   # end
 
-  def signup(registration, status = :ok)
-    post user_registration_path, params: { user: registration }, as: :json
+  def signup user, status = :ok
+    post user_registration_path,
+      params: { name: user[:name],
+      email: user[:email],
+      password: user[:password],
+      password_confirmation: user[:password] },
+    headers: user[:headers],
+    as: :json
     expect(response).to have_http_status(status)
-    json=parsed_body
-    if response.ok?
-      registration.merge(id: json['data']['id'],
-                         uid: json['data']['uid'])
-    end
-  end
   
-  def login credentials, status=:ok
-    post user_session_path, credentials.slice(:email, :password)
-    expect(response).to have_http_status(status)
-    return response.ok? ? parsed_body["data"] : parsed_body
   end
-  def logout status=:ok
-    delete destroy_user_session_path
-    @last_tokens={}
+  # def auth_tokens_for_user(user)
+  #   # The argument 'user' should be a hash that includes the params 'email' and 'password'.
+  #   post '/auth/sign_in/',
+  #     params: { email: user[:email], password: user[:password] },
+  #     as: :json
+  #   # The three categories below are the ones you need as authentication headers.
+  #   response.headers.slice('client', 'access-token', 'uid', 'token-type')
+  # end
+
+  def login user, status = :ok
+    signup(FactoryBot.attributes_for(:user))
+    assert_response :success
+       
+    user = FactoryBot.create(:user) # factory to create user
+  pp request.headers.merge! user.create_new_auth_token 
+    expect(response).to have_http_status(status)
+    
+  end
+  def logout status=:not_found
+    delete '/auth/sign_out'
     expect(response).to have_http_status(status) if status
   end
+  # def get_auth_params_from_login_response_headers(response)
+  #   client = response.headers['client']
+  #   token = response.headers['access-token']
+  #   expiry = response.headers['expiry']
+  #   token_type = response.headers['token-type']
+  #   uid = response.headers['uid']
 
-  def access_tokens?
-    !response.headers["access-token"].nil? if response
-  end
-  
-  def access_tokens
-    if access_tokens?
-      @last_tokens=["uid","client","token-type","access-token"].inject({}) {|h,k| h[k]=response.headers[k]; h}
-    end
-    @last_tokens || {}
-  end
-
+  #   auth_params = {
+  #     'access-token' => token,
+  #     'client' => client,
+  #     'uid' => uid,
+  #     'expiry' => expiry,
+  #     'token-type' => token_type
+  #   }
+  #   auth_params
+  # end
   RSpec.shared_examples "resource index" do |model|
     let!(:resources) { FactoryBot.create_list( model, 5) }
     let(:json) { parsed_body }
   
     it "returns all #{model} instances" do
-      get send("#{model}s_path"), params: {}, headers: {"Accept"=>"application/json"}
+      get send("api_#{model}s_path"), params: { "#{model}": resources }, headers: headers, as: :json
       expect(response).to have_http_status(:ok)
       assert_equal "application/json", @response.media_type
   
@@ -67,14 +84,14 @@ module ApiHelper
     let(:bad_id) { 1234567890 }
   
     it "returns #{model} when using correct ID" do
-      get send("#{model}_path", resource.id)
+      get send("api_#{model}_path", resource.id)
       expect(response).to have_http_status(:ok)
       assert_equal "application/json", @response.media_type
       response_check if respond_to?(:response_check)
     end
   
     it "returns not found when using incorrect ID" do
-      get send("#{model}_path", bad_id)
+      get send("api_#{model}_path", bad_id)
       expect(response).to have_http_status(:not_found)
       assert_equal "application/json", @response.media_type
   
@@ -86,12 +103,12 @@ module ApiHelper
   end
 
   RSpec.shared_examples "create resource" do |model|
-    let(:resource_state) { FactoryBot.attributes_for(model) }
+    let(:resource_state) { FactoryBot.create(model) }
     let(:json)        { parsed_body }
     let(:resource_id)    { json["id"] }
-    
+
     it "can create valid #{model}" do
-      post send("#{model}s_path"), params: { "#{model}": resource_state }
+      post send("api_#{model}s_url"), params: { "#{model}": resource_state }, headers: headers, as: :json
       assert_response :created
       assert_equal "application/json", @response.media_type
   
@@ -100,7 +117,7 @@ module ApiHelper
       response_check if respond_to?(:response_check)
       # pp json
       # verify we can locate the created instance in DB
-      get send("#{model}_path", resource_id["$oid"])
+      get send("api_#{model}_url", resource_id)
       expect(response).to have_http_status(:ok)
     end
   end
@@ -108,7 +125,7 @@ module ApiHelper
   RSpec.shared_examples "modifiable resource" do |model|
     let(:resource_state) {FactoryBot.create(:"#{model}")}
     let(:resource) do 
-      post send("#{model}s_path"), params: { "#{model}": {:name=>resource_state[:name]}}
+      post send("api_#{model}s_path"), params: { "#{model}": {:name=>resource_state[:name]}}, headers: headers, as: :json
       expect(response).to have_http_status(:created)
       parsed_body
     end
@@ -120,7 +137,7 @@ module ApiHelper
       # pp new_name
       
       # change to new state
-      put send("#{model}_path", resource["id"]["$oid"]), params: { "#{model}": new_name }
+      put send("api_#{model}_path", resource["id"]), params: { "#{model}": new_name }, headers: headers, as: :json
       resource_state.reload
       expect(response).to have_http_status(:ok)
 
@@ -128,14 +145,14 @@ module ApiHelper
     end
   
     it "can be deleted" do
-      head send("#{model}_path", resource["id"]["$oid"])
+      head send("api_#{model}_path", resource["id"])
       assert_response :ok
       assert_equal "application/json", @response.media_type
   
-      delete send("#{model}_path", resource["id"]["$oid"])
+      delete send("api_#{model}_path", resource["id"])
       expect(response).to have_http_status(:no_content)
       
-      head send("#{model}_path", resource["id"]["$oid"])
+      head send("api_#{model}_path", resource["id"])
       expect(response).to have_http_status(:not_found)
     end
   end

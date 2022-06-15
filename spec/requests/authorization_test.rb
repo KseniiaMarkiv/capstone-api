@@ -1,6 +1,10 @@
+# it's example from spec\support\api_helper.rb with   # def auth_tokens_for_user(user) method
+
 require 'rails_helper'
 require "awesome_print"
 RSpec.describe 'Authentication Api', type: :request do
+
+
   include ActionController::RespondWith
 
   include_context "db_cleanup_each", :transaction
@@ -10,11 +14,20 @@ RSpec.describe 'Authentication Api', type: :request do
      { headers: headers } 
   }
 
-  context 'sign-up' do
+  let(:account) { signup FactoryBot.attributes_for(:user) }
+  let(:valid_attributes) { FactoryBot.attributes_for(:image) }
+  let(:invalid_attributes) { {creator_id: '', caption: ''} }
+
+  xcontext 'sign-up' do
     context 'valid registration' do
 
       it 'successfully creates account' do
         signup user_props
+
+        assert_response :success
+
+        user_props
+        assert_response :success
 
         json=parsed_body
         expect(json).to include("status"=>"success")
@@ -26,8 +39,6 @@ RSpec.describe 'Authentication Api', type: :request do
         expect(json["data"]).to include("email"=>user_props[:email])
         expect(json["data"]).to include("created_at","updated_at")
       end
-    end
-
     context 'invalid registration' do
       context 'missing information' do
         it 'reports error with messages' do
@@ -61,10 +72,10 @@ RSpec.describe 'Authentication Api', type: :request do
         expect(json["errors"]["full_messages"]).to include(/Email/i)
       end
     end
-
+    end
   end # sign-up
 
-  context 'anonymous user' do
+  xcontext 'anonymous user' do
     it 'accesses unprotected' do
       get '/authn/whoami'
       # pp parsed_body
@@ -78,14 +89,14 @@ RSpec.describe 'Authentication Api', type: :request do
       expect(parsed_body).to include("errors"=>["You need to sign in or sign up before continuing."])
     end
   end # anonymous user
-
-  context 'login' do
+  xcontext 'login' do
     
     context 'valid user login' do
         
       it 'generates access token' do
-        login user_props, :ok
-        # pp response.headers
+        signup user_props
+        @auth_tokens = auth_tokens_for_user(user_props)
+        pp response.headers
         expect(response.headers).to include("uid")
         expect(response.headers).to include("access-token")
         expect(response.headers).to include("client")
@@ -93,7 +104,8 @@ RSpec.describe 'Authentication Api', type: :request do
       end
     
       it 'extracts access headers' do
-        login user_props, :ok
+        signup user_props
+        @auth_tokens = auth_tokens_for_user(user_props)
         if expect(response.headers).to include("access-token")
           puts "Headers already exist"
           response.headers["uid"]
@@ -106,7 +118,8 @@ RSpec.describe 'Authentication Api', type: :request do
       it 'grants access to resource' do
         get '/authn/checkme', headers: valid_headers, as: :json
         expect(response).to have_http_status(:unauthorized)
-        login user_props, :ok
+        signup user_props
+        @auth_tokens = auth_tokens_for_user(user_props)
               
         #pp parsed_body
         expect(response).to have_http_status(:success)
@@ -116,7 +129,7 @@ RSpec.describe 'Authentication Api', type: :request do
         expect(json["data"]).to include("id")
         expect(json["data"]).to include("uid")
       end
-      it "grants access to resource multiple times" do
+      xit "grants access to resource multiple times" do
         (1..10).each do |idx|
           # puts idx
           # sleep 6
@@ -124,8 +137,12 @@ RSpec.describe 'Authentication Api', type: :request do
           get authn_checkme_path,  headers: valid_headers, as: :json
           expect(response).to have_http_status(:unauthorized)
         
-          login user_props, :ok
+          signup user_props, :ok
+          @auth_tokens = auth_tokens_for_user(user_props)
           expect(response).to have_http_status(:ok)
+
+          get authn_checkme_path, headers: @auth_tokens, as: :json
+          assert_response :success
         end
       end
 
@@ -148,5 +165,21 @@ RSpec.describe 'Authentication Api', type: :request do
 
   end # login
 
+  xcontext "quick API check" do
+    before(:each) do
+      signup user_props
+      @auth_tokens = auth_tokens_for_user(user_props)
+    end
+    it_should_behave_like "resource index", :image
+    it_should_behave_like "show resource", :image
+    it '' do
+      post '/api/images/',
+        params: {
+          image: valid_attributes
+        },
+      headers: @auth_tokens
 
+      assert_response :created
+    end
+  end
 end

@@ -26,10 +26,8 @@ class Api::BarsController < ApplicationController
 
     respond_to do |format|
       if @api_bar.save
-        format.html { redirect_to api_bar_url(@api_bar), notice: "Bar was successfully created." }
         format.json { render :show, status: :created, location: @api_bar }
       else
-        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @api_bar.errors, status: :unprocessable_entity }
       end
     end
@@ -39,10 +37,8 @@ class Api::BarsController < ApplicationController
   def update
     respond_to do |format|
       if @api_bar.update(api_bar_params)
-        format.html { redirect_to api_bar_url(@api_bar), notice: "Bar was successfully updated." }
         format.json { render :show, status: :ok, location: @api_bar }
       else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @api_bar.errors, status: :unprocessable_entity }
       end
     end
@@ -53,7 +49,6 @@ class Api::BarsController < ApplicationController
     @api_bar.destroy
 
     respond_to do |format|
-      format.html { redirect_to api_bars_url, notice: "Bar was successfully destroyed." }
       format.json { head :no_content }
     end
   end

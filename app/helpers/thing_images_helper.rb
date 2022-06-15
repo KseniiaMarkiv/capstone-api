@@ -1,0 +1,2 @@
+module ThingImagesHelper
+end

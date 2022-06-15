@@ -4,6 +4,7 @@ FactoryBot.define do
     name     { Faker::Name.first_name }
     email    { Faker::Internet.email }
     password { Faker::Internet.password }
+    confirmed_at { Date.today }
   end
 
 end
