@@ -7,7 +7,8 @@
 }
 
 body {
-    background-color: var(--bs-info);
+    background-color: #252830;
+    color: rgb(231, 229, 229);
 }
 
 input[type=submit] {
