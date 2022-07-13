@@ -8,6 +8,7 @@ require 'rexml/document'
 require_relative 'support/database_cleaners'
 require_relative 'support/api_bar_helper'
 require_relative 'support/api_helper'
+require_relative 'support/ui_helper'
 require 'simplecov'
 
 browser = :firefox
@@ -45,6 +46,7 @@ RSpec.configure do |config|
   config.include Mongoid::Matchers, orm: :mongoid
   config.include ApiBarHelper, type: :request
   config.include ApiHelper, type: :request
+  config.include UiHelper, type: :feature
 
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Warden::Test::Helpers, type: :request
