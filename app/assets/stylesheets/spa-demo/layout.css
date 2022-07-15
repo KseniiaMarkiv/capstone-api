@@ -2,6 +2,7 @@
  * layout.css
  */
 
+@import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam&display=swap');
 :root {
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -9,6 +10,11 @@
 body {
     background-color: #252830;
     color: rgb(231, 229, 229);
+    font-family: "Anek Malayalam", sans-serif, 400;
+}
+
+form .invalid {
+    color: red;
 }
 
 input[type=submit] {

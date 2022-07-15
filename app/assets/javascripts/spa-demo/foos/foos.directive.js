@@ -2,7 +2,7 @@
     "use strict";
 
     var myApp = angular.module('spa-demo.foos')
-    myApp.directive('sdFoos', function(APP_CONFIG) {
+    myApp.directive('sdFoos', ['APP_CONFIG', function(APP_CONFIG) {
         var directive = {
             templateUrl: APP_CONFIG.foos_html,
             replace: true,
@@ -18,6 +18,6 @@
         function link(scope, element, attrs) {
             console.log('sdFoos', scope);
         }
-    });
+    }]);
 
 })();

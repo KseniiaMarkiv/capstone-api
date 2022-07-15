@@ -4,13 +4,19 @@
 
     var myApp = angular.module('spa-demo')
 
-    myApp.config(function($stateProvider, $urlRouterProvider, APP_CONFIG) {
-        var aboutState = {
+    myApp.config(['$stateProvider', '$urlRouterProvider', 'APP_CONFIG', function($stateProvider, $urlRouterProvider, APP_CONFIG) {
+        var homeState = {
             name: 'home',
             url: '/',
             templateUrl: APP_CONFIG.main_page_html
         }
-        $stateProvider.state(aboutState);
+        var accountSignup = {
+            name: 'accountSignup',
+            url: '/signup',
+            templateUrl: APP_CONFIG.signup_page_html
+        }
+        $stateProvider.state(homeState);
+        $stateProvider.state(accountSignup);
         $urlRouterProvider.otherwise('/');
-    });
+    }]);
 })();

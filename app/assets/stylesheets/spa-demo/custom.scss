@@ -49,3 +49,21 @@
     background-color: var(--bs-red);
     border-color: var(--bs-red);
 }
+
+// ----------- Common style -------------
+.form-control {
+    font-size: 14px;
+}
+
+.content {
+    /* height: 100vh; */
+    background: rgba(255, 255, 255, 0.2);
+    margin: 30px;
+    width: 50%;
+    height: auto;
+    box-shadow: 0 0 40px 40px rgba(255, 255, 255, 0.4) inset;
+    border-radius: 15px 50px;
+    font-size: 0.875em;
+}
+
+// ----------- Common style END -------------
