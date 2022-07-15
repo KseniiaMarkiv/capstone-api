@@ -24,9 +24,13 @@
     <%= javascript_include_tag 'spa-demo' %>
 
   </head>
-  <body ng-app="spa-demo" class="container-fluid">
-
-    <div ui-view class="mt-2"></div>  
-
+  <body ng-app="spa-demo">
+      <video playsinline autoplay muted loop poster="lib/images/vacaciones-playa-verano.jpg">
+        <source src="lib/images/jumbotron.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="container-fluid">
+        <div ui-view class="mt-2"></div>  
+      </div>
   </body>
 </html>

@@ -786,7 +786,7 @@ Released under the MIT license
       'server_url': "",
       'main_page_html': '/assets/spa-demo/pages/main-aaeae593a605cc2b0bece3fd21beb0b78f7d55d886f1de9abc1e119cb86988c9.html',
       'signup_page_html': "/assets/spa-demo/pages/signup_page-fb053f17eef479434431fbfb8f69d764d36a672005ce272f03398c9b24c81849.html",
-      'authn_signup_html': "/assets/spa-demo/authn/signup/signup-44b1f2f62059d0c3205117121ece20f3005617ecfe3b2198ad507d414a1c09f8.html",
+      'authn_signup_html': "/assets/spa-demo/authn/signup/signup-49b78b408679749b5903c6f2514273ec27167ac254b00c5825e87bb9b2f2fbd6.html",
       'foos_html': "/assets/spa-demo/foos/foos-881e3113f9cba12c5050386f3500877e9b58e776a7b0cba42cb4ebdf187690a4.html",
 
       })

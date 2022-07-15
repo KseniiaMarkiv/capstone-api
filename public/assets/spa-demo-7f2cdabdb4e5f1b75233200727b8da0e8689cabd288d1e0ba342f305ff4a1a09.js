@@ -40,7 +40,7 @@
       'server_url': "",
       'main_page_html': '/assets/spa-demo/pages/main-aaeae593a605cc2b0bece3fd21beb0b78f7d55d886f1de9abc1e119cb86988c9.html',
       'signup_page_html': "/assets/spa-demo/pages/signup_page-fb053f17eef479434431fbfb8f69d764d36a672005ce272f03398c9b24c81849.html",
-      'authn_signup_html': "/assets/spa-demo/authn/signup/signup-383b12333cdc6150178b9f3154d8d96133c5d4b8177d5e457b9f152d74b86bf3.html",
+      'authn_signup_html': "/assets/spa-demo/authn/signup/signup-0add013211795d341a12d12431e7bd1be64120a880a7574cc78eaf4f0147a2f9.html",
       'foos_html': "/assets/spa-demo/foos/foos-881e3113f9cba12c5050386f3500877e9b58e776a7b0cba42cb4ebdf187690a4.html",
 
       })

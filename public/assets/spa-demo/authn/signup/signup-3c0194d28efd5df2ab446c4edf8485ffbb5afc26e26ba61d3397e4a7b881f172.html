@@ -1,10 +1,11 @@
-<div class="col-lg-8">
-    <div class="col-lg-4 content mt-5 p-5">
+<section class="container p-0">
+    <div class="col-lg-8 mt-5 justify-content-start align-items-start">
+        <!-- <div class="col-lg-5 content mt-5 p-5"> -->
         <div class="pb-0">
 
-            <div class="">
+            <div class="col-lg-5 mt-5">
                 <!-- <div class="box opacity-form bg p-5 pb-2"> -->
-                <h3 class="mb-3 text-center fs-3 text-white">Account Registration</h3>
+                <h3 class="mb-3 text-start fs-3 text-white">Account Registration</h3>
                 <form id="signup-form" name="signup_form" ng-submit="$ctrl.signup()" ng-show="!$ctrl.getCurrentUser()">
                     <span class="invalid" ng-hide="signup_form.$dirty">{{$ctrl.signupForm.errors.full_messages}}</span>
 
@@ -20,22 +21,24 @@
                     </div>
                     <div id="signup-password" class="row col-lg-12">
                         <label for="exampleInputPassword" class="form-label fw-bold text-white">Password:</label>
-                        <input type="password" class="form-control text-muted fst-italic" id="exampleInputPassword" placeholder="Password" name="signup-password" ng-model="$ctrl.signupForm.password" required="required">
+                        <input type="password" class="form-control text-muted fst-italic" id="exampleInputPassword" placeholder="Password" name="signup-password" ng-model="$ctrl.signupForm.password" required="required" autocomplete="on">
                         <span class="invalid" ng-hide="signup_form.$dirty">{{$ctrl.signupForm.errors.password}}</span>
                     </div>
 
                     <div id="signup-password_confirmation" class="row col-lg-12">
                         <label for="exampleInputPasswordConf" class="form-label fw-bold text-white">Password confirmation:</label>
-                        <input class="form-control text-muted fst-italic" type="password" id="exampleInputPasswordConf" placeholder="Repeat password" name="signup-password_confirmation" ng-model="$ctrl.signupForm.password_confirmation" required="required" />
+                        <input class="form-control text-muted fst-italic" type="password" id="exampleInputPasswordConf" placeholder="Repeat password" name="signup-password_confirmation" ng-model="$ctrl.signupForm.password_confirmation" required="required" autocomplete="on">
                         <span class="invalid" ng-hide="signup_form.$dirty">{{$ctrl.signupForm.errors.password_confirmation}}</span>
                     </div>
 
+                    <div id="signup-controls" class="row mb-4 mt-4 button-video">
+                        <button ng-hide="$ctrl.id" class="rounded btn-mine" ng-disabled="signup_form.$invalid" type="submit" name="signup-submit" id="button-margin" style="--clr:#3DFFCF">
+                      <span>Sign Up</span><i></i>
+                    </button>
 
-                    <div id="signup-controls" class="d-grid gap-2 col-6 mx-auto">
-                        <button ng-hide="$ctrl.id" ng-disabled="signup_form.$invalid" class="btn btn-outline-warning" type="submit" name="signup-submit" id="button-margin">Sign Up</button>
-                    </div>
                 </form>
+                </div>
             </div>
+            <!-- </div> -->
         </div>
-    </div>
-</div>
+</section>

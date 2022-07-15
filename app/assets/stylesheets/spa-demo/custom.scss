@@ -55,15 +55,135 @@
     font-size: 14px;
 }
 
-.content {
-    /* height: 100vh; */
-    background: rgba(255, 255, 255, 0.2);
-    margin: 30px;
-    width: 50%;
-    height: auto;
-    box-shadow: 0 0 40px 40px rgba(255, 255, 255, 0.4) inset;
-    border-radius: 15px 50px;
-    font-size: 0.875em;
+// .content {
+//     /* height: 100vh; */
+//     background: rgba(255, 255, 255, 0.2);
+//     margin: 30px;
+//     width: 50%;
+//     height: auto;
+//     box-shadow: 0 0 40px 40px rgba(255, 255, 255, 0.4) inset;
+//     border-radius: 15px 50px;
+//     font-size: 0.875em;
+// }
+// ----------- Common style END -------------
+// ----------- Background video --------------
+video {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
 }
 
-// ----------- Common style END -------------
+.container-fluid {
+    position: relative;
+    color: white;
+}
+
+// ----------- Background video END --------------
+
+/* -------------- Button ----------------- */
+
+div.button-video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* min-height: 100vh; */
+    flex-direction: column;
+    gap: 60px;
+}
+
+div.button-video button {
+    position: relative;
+    background: rgba(61, 255, 207, 0.6);
+    color: white;
+    text-decoration: none;
+    /* text-transform: uppercase; */
+    letter-spacing: 0.04em;
+    padding: 5px 32px;
+    transition: 0.5s;
+    opacity: 0.85;
+}
+
+div.button-video button:hover {
+    letter-spacing: 0.25em;
+    background: var(--clr);
+    color: var(--clr);
+    /* interesting effect */
+    box-shadow: 0 0 35px var(--clr);
+}
+
+div.button-video button::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: #27282c;
+}
+
+div.button-video button span {
+    position: relative;
+    z-index: 1;
+    font-size: 1em;
+}
+
+div.button-video button i {
+    position: absolute;
+    inset: 0;
+    display: block;
+}
+
+div.button-video button i::before {
+    content: '';
+    position: absolute;
+    top: -3.5px;
+    left: 80%;
+    width: 10px;
+    height: 5px;
+    border: 2px solid var(--clr);
+    background: #27282c;
+    transform: translateX(-50%);
+    transition: 0.5s;
+}
+
+div.button-video button:hover i::before {
+    width: 20px;
+    left: 20%;
+}
+
+div.button-video button i::after {
+    content: '';
+    position: absolute;
+    bottom: -3.5px;
+    left: 20%;
+    width: 10px;
+    height: 5px;
+    border: 2px solid var(--clr);
+    background: #27282c;
+    transform: translateX(-50%);
+    transition: 0.5s;
+}
+
+div.button-video button:hover i::after {
+    width: 20px;
+    left: 80%;
+}
+
+button.btn-mine {
+    width: 80%;
+    /* height: 35px; */
+}
+
+button.btn-mine:hover {
+    width: 100%;
+    /* height: 45px; */
+    font-size: 1.1em;
+}
+
+button.btn-mine:focus {
+    background-color: var(--clr);
+}
+
+
+/* -------------- END Button ----------------- */
