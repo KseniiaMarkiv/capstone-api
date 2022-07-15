@@ -35,3 +35,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore uploaded mp4 files in development.
+/public/lib/images/jumbotron.mp4
