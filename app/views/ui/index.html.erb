@@ -25,10 +25,13 @@
 
   </head>
   <body ng-app="spa-demo">
-      <video playsinline autoplay muted loop poster="lib/images/vacaciones-playa-verano.jpg">
+      <video playsinline autoplay loop>
         <source src="lib/images/jumbotron.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
+      <div class="container-fluid fullsize">
+        <sd-navbar></sd-navbar>
+      </div>
       <div class="container-fluid">
         <div ui-view class="mt-2"></div>  
       </div>

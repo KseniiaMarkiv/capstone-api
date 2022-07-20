@@ -5,6 +5,7 @@
         'ui.router',
         'spa-demo.config',
         'spa-demo.authn',
+        'spa-demo.layout',
         'spa-demo.foos'
     ]);
 
@@ -39,6 +40,7 @@
     .constant('APP_CONFIG', {
       'server_url': "",
       'main_page_html': '/assets/spa-demo/pages/main-aaeae593a605cc2b0bece3fd21beb0b78f7d55d886f1de9abc1e119cb86988c9.html',
+      'navbar_html': '/assets/spa-demo/layout/navbar/navbar.html-ecf94caca6ca148e67a5b4757e49ad4ea4fd9fc68949048d4ae539671c9d4a24.erb',
       'signup_page_html': "/assets/spa-demo/pages/signup_page-fb053f17eef479434431fbfb8f69d764d36a672005ce272f03398c9b24c81849.html",
       'authn_signup_html': "/assets/spa-demo/authn/signup/signup-3c0194d28efd5df2ab446c4edf8485ffbb5afc26e26ba61d3397e4a7b881f172.html",
       'foos_html': "/assets/spa-demo/foos/foos-881e3113f9cba12c5050386f3500877e9b58e776a7b0cba42cb4ebdf187690a4.html",
@@ -126,6 +128,42 @@
                 }
             );
         }
+
+    }
+})();
+(function() {
+    "use strict";
+
+    angular.module('spa-demo.layout', []);
+})();
+(function() {
+    "use strict";
+
+    angular
+        .module("spa-demo.layout")
+        .component("sdNavbar", {
+            templateUrl: templateUrl,
+            controller: NavbarController
+        });
+
+
+    templateUrl.$inject = ["APP_CONFIG"];
+
+    function templateUrl(APP_CONFIG) {
+        return APP_CONFIG.navbar_html;
+    }
+
+    NavbarController.$inject = ["$scope"];
+
+    function NavbarController($scope) {
+        var vm = this;
+
+
+        vm.$onInit = function() {
+            console.log("NavbarController", $scope);
+        }
+        return;
+        //////////////
 
     }
 })();
@@ -262,6 +300,9 @@
 
 })();
 // SPA Demo Javascript Manifest File
+
+
+
 
 
 

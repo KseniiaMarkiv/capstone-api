@@ -12,6 +12,9 @@
 
 //= require spa-demo/authn/signup/signup.component
 
+//= require spa-demo/layout/layout.module
+//= require spa-demo/layout/navbar/navbar.component
+
 //= require spa-demo/foos/foos.module
 //= require spa-demo/foos/foos.service
 //= require spa-demo/foos/foos.controller

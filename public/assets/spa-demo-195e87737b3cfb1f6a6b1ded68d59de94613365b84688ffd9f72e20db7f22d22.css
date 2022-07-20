@@ -150,7 +150,13 @@ li.fooscolor>a:hover {
   font-size: 14px;
 }
 
-/* line 70, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 58, app/assets/stylesheets/spa-demo/custom.scss */
+.fullsize {
+  padding-left: 0%;
+  padding-right: 0%;
+}
+
+/* line 75, app/assets/stylesheets/spa-demo/custom.scss */
 video {
   object-fit: cover;
   position: absolute;
@@ -161,14 +167,14 @@ video {
   z-index: -1;
 }
 
-/* line 80, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 85, app/assets/stylesheets/spa-demo/custom.scss */
 .container-fluid {
   position: relative;
   color: white;
 }
 
 /* -------------- Button ----------------- */
-/* line 89, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 94, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video {
   display: flex;
   justify-content: center;
@@ -178,7 +184,7 @@ div.button-video {
   gap: 60px;
 }
 
-/* line 98, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 103, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button {
   position: relative;
   background: rgba(61, 255, 207, 0.6);
@@ -191,7 +197,7 @@ div.button-video button {
   opacity: 0.85;
 }
 
-/* line 110, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 115, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button:hover {
   letter-spacing: 0.25em;
   background: var(--clr);
@@ -200,7 +206,7 @@ div.button-video button:hover {
   box-shadow: 0 0 35px var(--clr);
 }
 
-/* line 118, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 123, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button::before {
   content: '';
   position: absolute;
@@ -208,21 +214,21 @@ div.button-video button::before {
   background: #27282c;
 }
 
-/* line 125, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 130, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button span {
   position: relative;
   z-index: 1;
   font-size: 1em;
 }
 
-/* line 131, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 136, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button i {
   position: absolute;
   inset: 0;
   display: block;
 }
 
-/* line 137, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 142, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button i::before {
   content: '';
   position: absolute;
@@ -236,13 +242,13 @@ div.button-video button i::before {
   transition: 0.5s;
 }
 
-/* line 150, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 155, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button:hover i::before {
   width: 20px;
   left: 20%;
 }
 
-/* line 155, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 160, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button i::after {
   content: '';
   position: absolute;
@@ -256,26 +262,26 @@ div.button-video button i::after {
   transition: 0.5s;
 }
 
-/* line 168, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 173, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button:hover i::after {
   width: 20px;
   left: 80%;
 }
 
-/* line 173, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 178, app/assets/stylesheets/spa-demo/custom.scss */
 button.btn-mine {
   width: 80%;
   /* height: 35px; */
 }
 
-/* line 178, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 183, app/assets/stylesheets/spa-demo/custom.scss */
 button.btn-mine:hover {
   width: 100%;
   /* height: 45px; */
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
-/* line 184, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 189, app/assets/stylesheets/spa-demo/custom.scss */
 button.btn-mine:focus {
   background-color: var(--clr);
 }
