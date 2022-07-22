@@ -1,31 +1,33 @@
 (function() {
-    "use strict";
+    'use strict';
 
     angular
-        .module("spa-demo.layout")
-        .component("sdNavbar", {
+        .module('spa-demo.layout')
+        .component('sdNavbar', {
             templateUrl: templateUrl,
             controller: NavbarController
         });
 
 
-    templateUrl.$inject = ["APP_CONFIG"];
+    templateUrl.$inject = ['APP_CONFIG'];
 
     function templateUrl(APP_CONFIG) {
         return APP_CONFIG.navbar_html;
     }
 
-    NavbarController.$inject = ["$scope"];
+    NavbarController.$inject = ['$scope', 'Authn'];
 
-    function NavbarController($scope) {
+    function NavbarController($scope, Authn) {
         var vm = this;
-
+        vm.getLoginLabel = getLoginLabel;
 
         vm.$onInit = function() {
-            console.log("NavbarController", $scope);
+            console.log('NavbarController', $scope);
         }
         return;
         //////////////
-
+        function getLoginLabel() {
+            return Authn.isAuthenticated() ? Authn.getCurrentUserName() : 'Login';
+        }
     }
 })();
