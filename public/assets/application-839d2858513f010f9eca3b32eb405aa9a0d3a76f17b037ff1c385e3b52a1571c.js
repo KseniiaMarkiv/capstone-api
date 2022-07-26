@@ -786,10 +786,10 @@ Released under the MIT license
     .constant('APP_CONFIG', {
       'server_url': "",
       'main_page_html': '/assets/spa-demo/pages/main-aaeae593a605cc2b0bece3fd21beb0b78f7d55d886f1de9abc1e119cb86988c9.html',
-      'navbar_html': '/assets/spa-demo/layout/navbar/navbar-4184c749015ac2ac4895e5de4ea0f57abfbfee2bdb3b17a39bcd4fcd12fd3243.html',
-      'signup_page_html': "/assets/spa-demo/pages/signup_page-fb053f17eef479434431fbfb8f69d764d36a672005ce272f03398c9b24c81849.html",
-      'authn_signup_html': "/assets/spa-demo/authn/signup/signup-3c0194d28efd5df2ab446c4edf8485ffbb5afc26e26ba61d3397e4a7b881f172.html",
-      authn_session_html: "/assets/spa-demo/authn/authn_session/authn_session-0ace1ce42571654cc552c1104607eaa652867e0e9e2c1c25c9205b6c14597963.html",
+      'navbar_html': '/assets/spa-demo/layout/navbar/navbar-b5aa4e80c00bc3f4b0a252ac7ff0dfecc90c6c8044a4ba6298d8afb29bcd3035.html',
+      'signup_page_html': "/assets/spa-demo/pages/signup_page-47ad58f07c3eb5920310315793163d951c398c194ddae69b98d31b67642cdf37.html",
+      'authn_signup_html': "/assets/spa-demo/authn/signup/signup-c6c9d9bb527508c143a8ef9f7d924cb9e11b3675afe98f0e004c5ef1af0d9ddc.html",
+      authn_session_html: "/assets/spa-demo/authn/authn_session/authn_session-85c36f6ad034f03d1eb22bf66e63a0cefd4ddae940b8a31a15126b8454ed5878.html",
       'foos_html': "/assets/spa-demo/foos/foos-881e3113f9cba12c5050386f3500877e9b58e776a7b0cba42cb4ebdf187690a4.html",
 
       })
@@ -856,6 +856,7 @@ Released under the MIT license
                     console.log("login complete", response);
                     service.user = response;
                 });
+            return result;
         }
     }])
 })();
@@ -928,7 +929,7 @@ Released under the MIT license
 
     function AuthnSessionController($scope, Authn) {
         var vm = this;
-        vm.loginForm = {};
+        vm.loginForm = {}
         vm.login = login;
         vm.getCurrentUser = Authn.getCurrentUser;
         vm.getCurrentUserName = Authn.getCurrentUserName;
@@ -937,7 +938,7 @@ Released under the MIT license
             console.log("AuthnSessionController", $scope);
         }
         vm.$postLink = function() {
-            vm.dropdown = $("#login-dropdown")
+            vm.dropdown = $("li.dropdown")
         }
         return;
         //////////////

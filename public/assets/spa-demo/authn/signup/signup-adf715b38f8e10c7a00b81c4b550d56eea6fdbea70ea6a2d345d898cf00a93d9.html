@@ -1,10 +1,10 @@
-<section class="container p-0">
+<section class="container">
     <div class="col-lg-8 mt-5 justify-content-start align-items-start">
-        <!-- <div class="col-lg-5 content mt-5 p-5"> -->
+        <!-- <div class="col-lg-5 content mt-5 p-5">  -->
         <div class="pb-0">
 
-            <div class="col-lg-5 mt-5">
-                <!-- <div class="box opacity-form bg p-5 pb-2"> -->
+            <div class="ps-0">
+                <!-- <div class="box opacity-form bg p-5 pb-2"> col-lg-5 mt-5-->
                 <h3 class="mb-3 text-start fs-3 text-white">Account Registration</h3>
                 <form id="signup-form" name="signup_form" ng-submit="$ctrl.signup()" ng-show="!$ctrl.getCurrentUser()">
                     <span class="invalid" ng-hide="signup_form.$dirty">{{$ctrl.signupForm.errors.full_messages}}</span>
@@ -12,6 +12,7 @@
                     <div id="signup-email" class="row col-lg-12">
                         <label for="exampleFormControlInput1" class="form-label fw-bold text-white">Email:</label>
                         <input type="email" class="form-control text-muted fst-italic" name="signup-email" ng-model="$ctrl.signupForm.email" id="exampleFormControlInput1" placeholder="name@example.com" required="required">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         <span class="invalid" ng-hide="signup_form.$dirty">{{$ctrl.signupForm.errors.email}}</span>
                     </div>
                     <div id="signup-email" class="row col-lg-12">
@@ -31,14 +32,14 @@
                         <span class="invalid" ng-hide="signup_form.$dirty">{{$ctrl.signupForm.errors.password_confirmation}}</span>
                     </div>
 
-                    <div id="signup-controls" class="row mb-4 mt-4 button-video">
+                    <div id="signup-controls" class="row mb-4 mt-4 ms-0 me-0 button-video">
                         <button ng-hide="$ctrl.id" class="rounded btn-mine" ng-disabled="signup_form.$invalid" type="submit" name="signup-submit" id="button-margin" style="--clr:#3DFFCF">
-                      <span>Sign Up</span><i></i>
-                    </button>
-
+                          <span>Sign Up</span><i></i>
+                        </button>
+                    </div>
                 </form>
-                </div>
             </div>
-            <!-- </div> -->
         </div>
+
+    </div>
 </section>

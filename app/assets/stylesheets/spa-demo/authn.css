@@ -1,3 +1,11 @@
 span#user_id {
     display: none;
 }
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+#authnSession {
+    margin-right: 10px;
+}

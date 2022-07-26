@@ -40,6 +40,7 @@
                     console.log("login complete", response);
                     service.user = response;
                 });
+            return result;
         }
     }])
 })();
