@@ -74,6 +74,18 @@
     padding: 0%;
 }
 
+
+/*********** navbar *************/
+
+.nav li form {
+    padding-left: 10px;
+    /* adds spacing along left of dropdown menu form */
+    padding-right: 10px;
+}
+
+
+/*********** navbar END *************/
+
 // ----------- Common style END -------------
 // ----------- Background video --------------
 video {
@@ -105,7 +117,7 @@ div.button-video {
 
 div.button-video button {
     position: relative;
-    background: rgba(61, 255, 207, 0.6);
+    background: #444;
     color: white;
     text-decoration: none;
     /* text-transform: uppercase; */
@@ -113,6 +125,10 @@ div.button-video button {
     padding: 5px 28px;
     transition: 0.5s;
     opacity: 0.85;
+}
+
+div.button-video button.signup-button {
+    background: rgba(61, 255, 207, 0.6);
 }
 
 div.button-video button:hover {

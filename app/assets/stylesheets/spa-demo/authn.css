@@ -6,6 +6,58 @@ span#user_id {
     position: absolute;
 }
 
+
+/* 
 #authnSession {
     margin-right: 10px;
+} */
+
+#login-form #new-account label {
+    width: auto;
+    /* flatten the New here? label */
+    margin-top: 5px;
+}
+
+div#logout-identity {
+    text-align: center;
+    /* keep organized as name in label gets long */
+}
+
+div#logout-identity label {
+    padding-right: 10px;
+}
+
+a.initialism:link {
+    text-decoration: none;
+}
+
+a.initialism:visited {
+    text-decoration: none;
+}
+
+a.initialism:hover {
+    text-decoration: none;
+}
+
+a.initialism:active {
+    text-decoration: none;
+}
+
+ul#authnSession.dropdown-menu.show form#login-form {
+    width: 15rem;
+    height: 15rem;
+}
+
+ul#authnSession.dropdown-menu.show form#logout-form {
+    width: 10rem;
+    height: 2rem;
+}
+
+ul.dropdown-menu.show {
+    padding: 1rem;
+}
+
+.authCheck {
+    text-decoration: none;
+    font-size: 0.7rem;
 }

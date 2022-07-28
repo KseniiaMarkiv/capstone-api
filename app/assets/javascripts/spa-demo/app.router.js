@@ -15,8 +15,15 @@
             url: '/signup',
             templateUrl: APP_CONFIG.signup_page_html
         }
+        var authnState = {
+            name: "authn",
+            url: "/authn",
+            templateUrl: APP_CONFIG.authn_page_html
+        }
         $stateProvider.state(homeState);
         $stateProvider.state(accountSignup);
+        $stateProvider.state(authnState);
+
         $urlRouterProvider.otherwise('/');
     }]);
 })();

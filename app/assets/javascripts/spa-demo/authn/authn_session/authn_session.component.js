@@ -21,26 +21,32 @@
         var vm = this;
         vm.loginForm = {}
         vm.login = login;
+        vm.logout = logout;
         vm.getCurrentUser = Authn.getCurrentUser;
         vm.getCurrentUserName = Authn.getCurrentUserName;
 
         vm.$onInit = function() {
-                console.log("AuthnSessionController", $scope);
-            }
-            // --------------- this "open" function not need now in 2022 year -----------------
-            // vm.$postLink = function() {
-            //     vm.dropdown = $("li.dropdown")
-            // }
+            console.log("AuthnSessionController", $scope);
+        }
+        vm.$postLink = function() {
+            vm.dropdown = $("#login-dropdown")
+        }
         return;
         //////////////
         function login() {
             //console.log("login");
-            Authn.login(vm.loginForm)
-                // --------------- this "open" function not need now in 2022 year -----------------
-                // .then(
-                // function() {
-                //     vm.dropdown.removeClass("open");
-                // });
+            $scope.login_form.$setPristine();
+            vm.loginForm["errors"] = null;
+            Authn.login(vm.loginForm),
+
+                function(response) {
+                    vm.loginForm["errors"] = response.errors;
+                };
+        }
+
+        function logout() {
+            Authn.logout();
+            console.log("logout")
         }
     }
 })();

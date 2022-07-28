@@ -30,6 +30,12 @@ form .invalid {
     text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
 }
 
+.invalid-error {
+    color: red;
+    font-weight: bold;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
+}
+
 input[type=submit] {
     padding: 4px 8px 4px;
     margin-top: 10px;
