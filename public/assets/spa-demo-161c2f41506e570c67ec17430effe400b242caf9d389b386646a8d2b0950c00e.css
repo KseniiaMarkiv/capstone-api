@@ -168,15 +168,67 @@ li.fooscolor>a:hover {
 }
 
 /*********** navbar *************/
-/* line 80, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 78, app/assets/stylesheets/spa-demo/custom.scss */
 .nav li form {
   padding-left: 10px;
   /* adds spacing along left of dropdown menu form */
   padding-right: 10px;
 }
 
+/* line 84, app/assets/stylesheets/spa-demo/custom.scss */
+.bg-mine-yellow {
+  background-color: rgba(255, 255, 0, 0.75);
+}
+
+/* line 88, app/assets/stylesheets/spa-demo/custom.scss */
+.bg-mine-blue,
+nav.navbar.navbar-expand-lg.bg-mine-blue {
+  background-color: rgba(0, 85, 255, 0.75);
+}
+
+/* line 93, app/assets/stylesheets/spa-demo/custom.scss */
+ul.dropdown-menu {
+  opacity: 1.0;
+}
+
+/* line 97, app/assets/stylesheets/spa-demo/custom.scss */
+button.navbar-toggler.collapsed {
+  color: #0055FF;
+  border-color: #0055FF;
+}
+
+/* line 102, app/assets/stylesheets/spa-demo/custom.scss */
+button.navbar-toggler:focus {
+  color: #0055FF;
+  border-color: #0055FF;
+  background-color: rgba(0, 85, 255, 0.5);
+}
+
+/* line 108, app/assets/stylesheets/spa-demo/custom.scss */
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 85, 255)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* line 112, app/assets/stylesheets/spa-demo/custom.scss */
+a#login-dropdown.navbar-dark .navbar-nav .nav-link:focus,
+a#login-dropdown.navbar-dark .navbar-nav .nav-link:hover {
+  color: #0055FF;
+}
+
+/* line 117, app/assets/stylesheets/spa-demo/custom.scss */
+a#login-dropdown.navbar-dark .navbar-nav .nav-link {
+  color: #0055FF;
+}
+
+/* line 121, app/assets/stylesheets/spa-demo/custom.scss */
+.navbar-dark .navbar-nav .nav-link,
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #0055FF;
+}
+
 /*********** navbar END *************/
-/* line 91, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 130, app/assets/stylesheets/spa-demo/custom.scss */
 video {
   object-fit: cover;
   top: 0;
@@ -186,14 +238,14 @@ video {
   z-index: -1;
 }
 
-/* line 100, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 139, app/assets/stylesheets/spa-demo/custom.scss */
 sd-signup {
   color: white;
   z-index: auto;
 }
 
 /* -------------- Button ----------------- */
-/* line 109, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 147, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video {
   display: flex;
   justify-content: center;
@@ -203,7 +255,7 @@ div.button-video {
   gap: 60px;
 }
 
-/* line 118, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 156, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button {
   position: relative;
   background: #444;
@@ -216,12 +268,12 @@ div.button-video button {
   opacity: 0.85;
 }
 
-/* line 130, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 168, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button.signup-button {
   background: rgba(61, 255, 207, 0.6);
 }
 
-/* line 134, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 172, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button:hover {
   letter-spacing: 0.25em;
   background: var(--clr);
@@ -230,7 +282,7 @@ div.button-video button:hover {
   box-shadow: 0 0 35px var(--clr);
 }
 
-/* line 142, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 180, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button::before {
   content: '';
   position: absolute;
@@ -238,21 +290,21 @@ div.button-video button::before {
   background: #27282c;
 }
 
-/* line 149, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 187, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button span {
   position: relative;
   z-index: 1;
   font-size: 1em;
 }
 
-/* line 155, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 193, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button i {
   position: absolute;
   inset: 0;
   display: block;
 }
 
-/* line 161, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 199, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button i::before {
   content: '';
   position: absolute;
@@ -266,13 +318,13 @@ div.button-video button i::before {
   transition: 0.5s;
 }
 
-/* line 174, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 212, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button:hover i::before {
   width: 20px;
   left: 20%;
 }
 
-/* line 179, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 217, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button i::after {
   content: '';
   position: absolute;
@@ -286,26 +338,26 @@ div.button-video button i::after {
   transition: 0.5s;
 }
 
-/* line 192, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 230, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button:hover i::after {
   width: 20px;
   left: 80%;
 }
 
-/* line 197, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 235, app/assets/stylesheets/spa-demo/custom.scss */
 button.btn-mine {
   width: 80%;
   /* height: 35px; */
 }
 
-/* line 202, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 240, app/assets/stylesheets/spa-demo/custom.scss */
 button.btn-mine:hover {
   width: 100%;
   /* height: 45px; */
   font-size: 1em;
 }
 
-/* line 208, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 246, app/assets/stylesheets/spa-demo/custom.scss */
 button.btn-mine:focus {
   background-color: var(--clr);
 }
@@ -379,21 +431,6 @@ ul.dropdown-menu.show {
 
 
 
-
-
- */
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
 
 
  */

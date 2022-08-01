@@ -47,7 +47,7 @@
     .constant('APP_CONFIG', {
       'server_url': "",
       'main_page_html': '/assets/spa-demo/pages/main-aaeae593a605cc2b0bece3fd21beb0b78f7d55d886f1de9abc1e119cb86988c9.html',
-      'navbar_html': '/assets/spa-demo/layout/navbar/navbar-419ae2e9072a991f3c180743319bae0949acd8423e916ba908dd6ca4f591e8e3.html',
+      'navbar_html': '/assets/spa-demo/layout/navbar/navbar-88ad8f3c6d00416419817d8ad42d94c72f28b931c03e86ce9ff88eaec7df4e6c.html',
       'signup_page_html': "/assets/spa-demo/pages/signup_page-47ad58f07c3eb5920310315793163d951c398c194ddae69b98d31b67642cdf37.html",
       'authn_signup_html': "/assets/spa-demo/authn/signup/signup-797b899fa508c764d4f1465d758e4edf32e6379d0cb559392d4be313f04c39b6.html",
       'authn_session_html': "/assets/spa-demo/authn/authn_session/authn_session-a607754a8f11782dd62ea0c881c766f8b797e8cc0f80f22f2f62dbb9d3032cec.html",
