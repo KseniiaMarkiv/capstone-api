@@ -19,12 +19,15 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li ui-sref-active="active">
+                                <a ui-sref="images({id:null})" class="dropdown-item">Images</a>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li ui-sref-active="active">
-                                <a ui-sref="authn" class="authCheck fst-italic">Authentication Check</a></li>
+                                <a ui-sref="authn" class="dropdown-item authCheck fst-italic">Authentication Check</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -33,7 +36,7 @@
             <span class="text-muted pe-3">Toggleable via the navbar brand.</span>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-success" type="submit">Submit</button>
+                <button class="btn btn-info" type="submit">Submit</button>
             </form>
         </nav>
     </div>

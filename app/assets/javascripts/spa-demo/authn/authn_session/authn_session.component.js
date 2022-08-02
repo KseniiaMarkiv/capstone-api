@@ -5,7 +5,7 @@
         .module("spa-demo.authn")
         .component("sdAuthnSession", {
             templateUrl: templateUrl,
-            controller: AuthnSessionController
+            controller: AuthnSessionController,
         });
 
 

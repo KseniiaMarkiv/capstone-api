@@ -20,9 +20,15 @@
             url: "/authn",
             templateUrl: APP_CONFIG.authn_page_html
         }
+        var imageState = {
+            name: "images",
+            url: "/images/:id",
+            templateUrl: APP_CONFIG.images_page_html
+        }
         $stateProvider.state(homeState);
         $stateProvider.state(accountSignup);
         $stateProvider.state(authnState);
+        $stateProvider.state(imageState);
 
         $urlRouterProvider.otherwise('/');
     }]);
