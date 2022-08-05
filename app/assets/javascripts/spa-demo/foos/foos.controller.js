@@ -3,7 +3,7 @@
 
     var myApp = angular.module('spa-demo.foos');
 
-    myApp.controller('spa-demo.foos.FoosController', ['spa-demo.foos.Foo', function(Foo) {
+    myApp.controller('FoosController', ['spa-demo.foos.Foo', function(Foo) {
         var vm = this;
         vm.foos;
         vm.foo;

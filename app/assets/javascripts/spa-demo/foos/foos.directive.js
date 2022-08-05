@@ -7,7 +7,7 @@
             templateUrl: APP_CONFIG.foos_html,
             replace: true,
             bindToController: true,
-            controller: 'spa-demo.foos.FoosController',
+            controller: 'FoosController',
             controllerAs: 'foosVM',
             restrict: 'E',
             scope: {},

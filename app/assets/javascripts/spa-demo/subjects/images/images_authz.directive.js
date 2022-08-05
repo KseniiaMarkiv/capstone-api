@@ -11,7 +11,7 @@
                     vm.authz = {};
                     vm.authz.authenticated = false;
                     vm.authz.canCreate = false;
-                    vm.authz.canQuery = false;
+                    vm.authz.canQuery = true;
                     vm.authz.canUpdate = false;
                     vm.authz.canDelete = false;
                     vm.authz.canGetDetails = false;

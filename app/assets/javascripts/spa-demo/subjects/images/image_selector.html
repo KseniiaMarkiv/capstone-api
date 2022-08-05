@@ -1,4 +1,5 @@
-<div class="image-list" ng-show="$ctrl.authz.canQuery">
+<!-- ng-show="$ctrl.authz.canQuery" -->
+<div class="image-list">
     <ul>
         <li ng-repeat="item in $ctrl.items | orderBy:'caption'">
             <a ui-sref="images({id:item.id})">

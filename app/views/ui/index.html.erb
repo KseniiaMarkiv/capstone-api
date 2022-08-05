@@ -5,8 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capstone App</title>
+  </head>
+  <body ng-app="spa-demo">
+      <div class="container-fluid fullsize">
+        <sd-navbar></sd-navbar>
+      </div>
+      <div class="container-fluid">
+        <div ui-view class="mt-2"></div>  
+      </div>
+  </body>
 
-     <!-- Libs -->
+       <!-- Libs -->
     <script src="lib/js/jquery-3.6.0.min.js"></script>
     <script src="lib/js/angular.min.js"></script>
     <script src="lib/js/angular-resource.js"></script>
@@ -23,13 +32,4 @@
     <%= stylesheet_link_tag    'spa-demo', :media => "all" %>
     <%= javascript_include_tag 'spa-demo' %>
 
-  </head>
-  <body ng-app="spa-demo">
-      <div class="container-fluid fullsize">
-        <sd-navbar></sd-navbar>
-      </div>
-      <div class="container-fluid">
-        <div ui-view class="mt-2"></div>  
-      </div>
-  </body>
 </html>

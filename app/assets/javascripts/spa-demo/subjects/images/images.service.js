@@ -2,7 +2,7 @@
     'use strict';
 
     var myApp = angular.module('spa-demo.subjects');
-    myApp.factory('spa-demo.subjects.Image', ['$resource', 'APP_CONFIG', function($resource, APP_CONFIG) {
+    myApp.factory('Image', ['$resource', 'APP_CONFIG', function($resource, APP_CONFIG) {
 
         var service = $resource(APP_CONFIG.server_url + "/api/images/:id", { id: '@id' }, {
             update: { method: "PUT" },
