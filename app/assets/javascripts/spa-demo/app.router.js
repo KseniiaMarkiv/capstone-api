@@ -25,10 +25,16 @@
             url: "/images/:id",
             templateUrl: APP_CONFIG.images_page_html
         }
+        var thingState = {
+            name: "things",
+            url: "/things/:id",
+            templateUrl: APP_CONFIG.things_page_html
+        }
         $stateProvider.state(homeState);
         $stateProvider.state(accountSignup);
         $stateProvider.state(authnState);
         $stateProvider.state(imageState);
+        $stateProvider.state(thingState);
 
         $urlRouterProvider.otherwise('/');
     }]);
