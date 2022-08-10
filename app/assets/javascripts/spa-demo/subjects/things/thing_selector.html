@@ -1,5 +1,4 @@
-<!-- ng-show="$ctrl.authz.canQuery" -->
-<div class="thing-list">
+<div class="thing-list" ng-show="$ctrl.authz.canQuery">
     <ul>
         <li ng-repeat="item in $ctrl.items | orderBy:'name'">
             <a ui-sref="things({id:item.id})">

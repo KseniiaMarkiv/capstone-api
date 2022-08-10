@@ -11,7 +11,7 @@
                     vm.authz = {};
                     vm.authz.authenticated = false;
                     vm.authz.canCreate = false;
-                    vm.authz.canQuery = true;
+                    vm.authz.canQuery = false;
                     vm.authz.canUpdate = false;
                     vm.authz.canDelete = false;
                     vm.authz.canGetDetails = false;
@@ -36,8 +36,8 @@
 
                     function newUser(user, prevUser) {
                         console.log("newUser=", user, ", prev=", prevUser);
-                        vm.authz.canQuery = true;
                         vm.authz.authenticated = Authn.isAuthenticated();
+                        vm.authz.canQuery = true;
                         if (vm.authz.authenticated) {
                             vm.authz.canCreate = true;
                             vm.authz.canUpdate = true;

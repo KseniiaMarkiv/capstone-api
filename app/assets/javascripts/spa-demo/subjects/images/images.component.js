@@ -27,7 +27,7 @@
             templateUrl: ["APP_CONFIG", function imageEditorTemplateUrl(APP_CONFIG) {
                 return APP_CONFIG.image_editor_html;
             }],
-            controller: ["$scope", "$state", "$stateParams", "Image", function ImageEditorController($scope, $state, $stateParams, Image) {
+            controller: ["$scope", "$q", "$state", "$stateParams", "Image", "ImageLinkableThing", "ImageThing", function ImageEditorController($scope, $q, $state, $stateParams, Image, ImageLinkableThing, ImageThing) {
                 var vm = this;
                 vm.create = create;
                 vm.clear = clear;
@@ -37,7 +37,9 @@
                 vm.$onInit = function() {
                     console.log("ImageEditorController", $scope);
                     if ($stateParams.id) {
-                        vm.item = Image.get({ id: $stateParams.id });
+                        // reload($stateParams.id);
+                        $scope.$watch(function() { return vm.authz.authenticated },
+                            function() { reload($stateParams.id); });
                     } else {
                         newResource();
                     }
@@ -49,13 +51,23 @@
                     return vm.item;
                 }
 
+                function reload(imageId) {
+                    var itemId = imageId ? imageId : vm.item.id;
+                    console.log("reloading image", itemId);
+                    vm.item = Image.get({ id: itemId });
+                    vm.things = ImageThing.query({ image_id: itemId });
+                    vm.linkable_things = ImageLinkableThing.query({ image_id: itemId });
+                    $q.all([vm.item.$promise,
+                        vm.things.$promise
+                    ]).catch(handleError);
+                }
+
                 function clear() {
                     newResource();
                     $state.go(".", { id: null });
                 }
 
                 function create() {
-                    $scope.imageform.$setPristine();
                     vm.item.errors = null;
                     vm.item.$save().then(
                         function() {
@@ -65,12 +77,26 @@
                 }
 
                 function update() {
-                    $scope.imageform.$setPristine();
                     vm.item.errors = null;
-                    vm.item.$update().then(
-                        function() {
-                            console.log("Updated complete", vm.item);
-                            $state.reload();
+                    var update = vm.item.$update();
+                    linkThings(update);
+                }
+
+                function linkThings(parentPromise) {
+                    var promises = [];
+                    if (parentPromise) { promises.push(parentPromise); }
+                    angular.forEach(vm.selected_linkables, function(linkable) {
+                        var resource = ImageThing.save({ image_id: vm.item.id }, { thing_id: linkable });
+                        promises.push(resource.$promise);
+                    });
+
+                    vm.selected_linkables = [];
+                    //console.log("waiting for promises", promises);
+                    $q.all(promises).then(
+                        function(response) {
+                            //console.log("promise.all response", response); 
+                            $scope.imageform.$setPristine();
+                            reload();
                         },
                         handleError);
                 }
@@ -86,7 +112,7 @@
                         vm.item["errors"] = {}
                         vm.item["errors"]["full_messages"] = [response];
                     }
-
+                    $scope.imageform.$setPristine();
                 }
             }],
             bindings: {

@@ -9,13 +9,8 @@
                 controller: ['$scope', 'Authn', function ThingsAuthzDirective($scope, Authn) {
                     var vm = this;
                     vm.authz = {};
-                    vm.authz.authenticated = false;
-                    vm.authz.canCreate = false;
-                    vm.authz.canQuery = true;
-                    vm.authz.canUpdate = false;
-                    vm.authz.canDelete = false;
-                    vm.authz.canGetDetails = false;
                     vm.authz.canUpdateItem = canUpdateItem;
+
 
                     ThingsAuthzDirective.prototype.resetAccess = function() {
                         this.authz.canCreate = false;
@@ -23,6 +18,8 @@
                         this.authz.canUpdate = false;
                         this.authz.canDelete = false;
                         this.authz.canGetDetails = true;
+                        this.authz.canUpdateImage = false;
+                        this.authz.canRemoveImage = false;
 
                     }
 
@@ -43,6 +40,9 @@
                             vm.authz.canUpdate = true;
                             vm.authz.canDelete = true;
                             vm.authz.canGetDetails = true;
+                            vm.authz.canUpdateImage = true;
+                            vm.authz.canRemoveImage = true;
+
                         } else {
                             vm.resetAccess();
                         }

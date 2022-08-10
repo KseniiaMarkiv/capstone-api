@@ -812,11 +812,11 @@ Released under the MIT license
       'authn_session_html': "/assets/spa-demo/authn/authn_session/authn_session-a607754a8f11782dd62ea0c881c766f8b797e8cc0f80f22f2f62dbb9d3032cec.html",
       'authn_page_html': "/assets/spa-demo/pages/authn_page-b369675392e053c2c3c48af34484a700e433fcc7b9b731037aa851b168c9168c.html",
       'images_page_html': "/assets/spa-demo/pages/images_page-f3affa16f8e89a65a3d623f0e6ece3a9cb27a81807d20c41ffeeb63550718929.html",
-      'image_selector_html': "/assets/spa-demo/subjects/images/image_selector-821140a669b1a77b0ceeac5bf3a9dd9ee08f7359d26f8f42291aac8a831056c1.html",
-      'image_editor_html': "/assets/spa-demo/subjects/images/image_editor-31883860e1b4b220c672663391ddbad2b859b88113e8d311c559b62295683498.html",
+      'image_selector_html': "/assets/spa-demo/subjects/images/image_selector-083decd045cc67de243f308f0c9e94c67b2ebda758270c8a39df2fc9a9d96d98.html",
+      'image_editor_html': "/assets/spa-demo/subjects/images/image_editor-4199728338f03c08f25cf8de3c81ec40b6e09b46f31862755efc79936fb957b0.html",
       'things_page_html': "/assets/spa-demo/pages/things_page-5600694cd4bc8ee18089b8b48e176a5a6693dfce34b09046d9d32b229fbd66ff.html",
-      'thing_selector_html': "/assets/spa-demo/subjects/things/thing_selector-02128ee657b521ea8b671e7b997fa8f97b52b870eb63c748d1f37c550895065f.html",
-      'thing_editor_html': "/assets/spa-demo/subjects/things/thing_editor-4b613599cccf7a72fdb318ee05013901ce2b3139f09a0badd0714be5d856c9e8.html",
+      'thing_selector_html': "/assets/spa-demo/subjects/things/thing_selector-209da3067772af0dc6bca67a08000afbf6a7f9373da13f5e03ffe571bd332c14.html",
+      'thing_editor_html': "/assets/spa-demo/subjects/things/thing_editor-e03c2daa8d907434957473d4704ffc4ed08a0cad24926c6e3062e41db9089898.html",
       
       'foos_html': "/assets/spa-demo/foos/foos-881e3113f9cba12c5050386f3500877e9b58e776a7b0cba42cb4ebdf187690a4.html",
 
@@ -1286,7 +1286,7 @@ Released under the MIT license
             templateUrl: ["APP_CONFIG", function imageEditorTemplateUrl(APP_CONFIG) {
                 return APP_CONFIG.image_editor_html;
             }],
-            controller: ["$scope", "$state", "$stateParams", "Image", function ImageEditorController($scope, $state, $stateParams, Image) {
+            controller: ["$scope", "$q", "$state", "$stateParams", "Image", "ImageLinkableThing", "ImageThing", function ImageEditorController($scope, $q, $state, $stateParams, Image, ImageLinkableThing, ImageThing) {
                 var vm = this;
                 vm.create = create;
                 vm.clear = clear;
@@ -1296,7 +1296,7 @@ Released under the MIT license
                 vm.$onInit = function() {
                     console.log("ImageEditorController", $scope);
                     if ($stateParams.id) {
-                        vm.item = Image.get({ id: $stateParams.id });
+                        reload($stateParams.id);
                     } else {
                         newResource();
                     }
@@ -1308,13 +1308,23 @@ Released under the MIT license
                     return vm.item;
                 }
 
+                function reload(imageId) {
+                    var itemId = imageId ? imageId : vm.item.id;
+                    console.log("reloading image", itemId);
+                    vm.item = Image.get({ id: itemId });
+                    vm.things = ImageThing.query({ image_id: itemId });
+                    vm.linkable_things = ImageLinkableThing.query({ image_id: itemId });
+                    $q.all([vm.item.$promise,
+                        vm.things.$promise
+                    ]).catch(handleError);
+                }
+
                 function clear() {
                     newResource();
                     $state.go(".", { id: null });
                 }
 
                 function create() {
-                    $scope.imageform.$setPristine();
                     vm.item.errors = null;
                     vm.item.$save().then(
                         function() {
@@ -1324,12 +1334,26 @@ Released under the MIT license
                 }
 
                 function update() {
-                    $scope.imageform.$setPristine();
                     vm.item.errors = null;
-                    vm.item.$update().then(
-                        function() {
-                            console.log("Updated complete", vm.item);
-                            $state.reload();
+                    var update = vm.item.$update();
+                    linkThings(update);
+                }
+
+                function linkThings(parentPromise) {
+                    var promises = [];
+                    if (parentPromise) { promises.push(parentPromise); }
+                    angular.forEach(vm.selected_linkables, function(linkable) {
+                        var resource = ImageThing.save({ image_id: vm.item.id }, { thing_id: linkable });
+                        promises.push(resource.$promise);
+                    });
+
+                    vm.selected_linkables = [];
+                    //console.log("waiting for promises", promises);
+                    $q.all(promises).then(
+                        function(response) {
+                            //console.log("promise.all response", response); 
+                            $scope.imageform.$setPristine();
+                            reload();
                         },
                         handleError);
                 }
@@ -1345,7 +1369,7 @@ Released under the MIT license
                         vm.item["errors"] = {}
                         vm.item["errors"]["full_messages"] = [response];
                     }
-
+                    $scope.imageform.$setPristine();
                 }
             }],
             bindings: {
@@ -1390,7 +1414,7 @@ Released under the MIT license
                     vm.authz = {};
                     vm.authz.authenticated = false;
                     vm.authz.canCreate = false;
-                    vm.authz.canQuery = true;
+                    vm.authz.canQuery = false;
                     vm.authz.canUpdate = false;
                     vm.authz.canDelete = false;
                     vm.authz.canGetDetails = false;
@@ -1415,8 +1439,8 @@ Released under the MIT license
 
                     function newUser(user, prevUser) {
                         console.log("newUser=", user, ", prev=", prevUser);
-                        vm.authz.canQuery = true;
                         vm.authz.authenticated = Authn.isAuthenticated();
+                        vm.authz.canQuery = true;
                         if (vm.authz.authenticated) {
                             vm.authz.canCreate = true;
                             vm.authz.canUpdate = true;
@@ -1448,6 +1472,25 @@ Released under the MIT license
 
 })();
 (function() {
+    'use strict';
+
+    var myApp = angular.module('spa-demo.subjects');
+    myApp.factory('ImageThing', ['$resource', 'APP_CONFIG', function($resource, APP_CONFIG) {
+
+        return $resource(APP_CONFIG.server_url + "/api/images/:image_id/thing_images");
+    }]);
+
+})();
+(function() {
+    'use strict';
+
+    var myApp = angular.module('spa-demo.subjects');
+    myApp.factory('ImageLinkableThing', ['$resource', 'APP_CONFIG', function($resource, APP_CONFIG) {
+        return $resource(APP_CONFIG.server_url + "/api/images/:image_id/linkable_things");
+    }]);
+
+})();
+(function() {
     "use strict";
 
     angular
@@ -1476,7 +1519,7 @@ Released under the MIT license
             templateUrl: ["APP_CONFIG", function thingEditorTemplateUrl(APP_CONFIG) {
                 return APP_CONFIG.thing_editor_html;
             }],
-            controller: ["$scope", "$state", "$stateParams", "Thing", function ThingEditorController($scope, $state, $stateParams, Thing) {
+            controller: ["$scope", "$q", "$state", "$stateParams", "Thing", "ThingImage", function ThingEditorController($scope, $q, $state, $stateParams, Thing, ThingImage) {
                 var vm = this;
                 vm.create = create;
                 vm.clear = clear;
@@ -1486,7 +1529,7 @@ Released under the MIT license
                 vm.$onInit = function() {
                     console.log("ThingEditorController", $scope);
                     if ($stateParams.id) {
-                        vm.item = Thing.get({ id: $stateParams.id });
+                        reload($stateParams.id);
                     } else {
                         newResource();
                     }
@@ -1496,6 +1539,20 @@ Released under the MIT license
                 function newResource() {
                     vm.item = new Thing();
                     return vm.item;
+                }
+
+                function reload(thingId) {
+                    var itemId = thingId ? thingId : vm.item.id;
+                    console.log("reloading thing", itemId);
+                    vm.images = ThingImage.query({ thing_id: itemId });
+                    vm.item = Thing.get({ id: itemId });
+                    vm.images.$promise.then(
+                        function() {
+                            angular.forEach(vm.images, function(ti) {
+                                ti.originalPriority = ti.priority;
+                            });
+                        });
+                    $q.all([vm.item.$promise, vm.images.$promise]).catch(handleError);
                 }
 
                 function clear() {
@@ -1549,9 +1606,7 @@ Released under the MIT license
 
     var myApp = angular.module('spa-demo.subjects');
     myApp.factory('Thing', ['$resource', 'APP_CONFIG', function($resource, APP_CONFIG) {
-
-        var service = $resource(APP_CONFIG.server_url + "/api/things/:id", { id: '@id' }, { update: { method: "PUT" } });
-        return service;
+        return $resource(APP_CONFIG.server_url + "/api/things/:id", { id: '@id' }, { update: { method: "PUT" } });
     }]);
 
 })();
@@ -1566,13 +1621,8 @@ Released under the MIT license
                 controller: ['$scope', 'Authn', function ThingsAuthzDirective($scope, Authn) {
                     var vm = this;
                     vm.authz = {};
-                    vm.authz.authenticated = false;
-                    vm.authz.canCreate = false;
-                    vm.authz.canQuery = true;
-                    vm.authz.canUpdate = false;
-                    vm.authz.canDelete = false;
-                    vm.authz.canGetDetails = false;
                     vm.authz.canUpdateItem = canUpdateItem;
+
 
                     ThingsAuthzDirective.prototype.resetAccess = function() {
                         this.authz.canCreate = false;
@@ -1580,6 +1630,8 @@ Released under the MIT license
                         this.authz.canUpdate = false;
                         this.authz.canDelete = false;
                         this.authz.canGetDetails = true;
+                        this.authz.canUpdateImage = false;
+                        this.authz.canRemoveImage = false;
 
                     }
 
@@ -1600,6 +1652,9 @@ Released under the MIT license
                             vm.authz.canUpdate = true;
                             vm.authz.canDelete = true;
                             vm.authz.canGetDetails = true;
+                            vm.authz.canUpdateImage = true;
+                            vm.authz.canRemoveImage = true;
+
                         } else {
                             vm.resetAccess();
                         }
@@ -1625,7 +1680,24 @@ Released under the MIT license
 
 
 })();
+(function() {
+    'use strict';
+
+    var myApp = angular.module('spa-demo.subjects');
+    myApp.factory('ThingImage', ['$resource', 'APP_CONFIG', function($resource, APP_CONFIG) {
+        return $resource(APP_CONFIG.server_url + "/api/things/:thing_id/thing_images/:id", {
+            thing_id: '@thing_id',
+            id: '@id'
+        }, {
+            update: { method: "PUT" }
+        });
+    }]);
+
+})();
 // SPA Demo Javascript Manifest File
+
+
+
 
 
 
