@@ -9,7 +9,7 @@ gem 'pg'
 gem 'pry-rails'
 gem 'database_cleaner'
 gem 'database_cleaner-mongoid'
-
+gem 'pundit', '~> 2.2'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'

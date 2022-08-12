@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_15_090358) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_12_151910) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_090358) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_images_on_creator_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "role_name", null: false
+    t.string "mname"
+    t.integer "mid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mid"], name: "index_roles_on_mid"
+    t.index ["mname", "mid"], name: "index_roles_on_mname_and_mid"
+    t.index ["mname"], name: "index_roles_on_mname"
+    t.index ["user_id"], name: "index_roles_on_user_id"
   end
 
   create_table "thing_images", force: :cascade do |t|
@@ -85,6 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_090358) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "roles", "users"
   add_foreign_key "thing_images", "images"
   add_foreign_key "thing_images", "things"
 end

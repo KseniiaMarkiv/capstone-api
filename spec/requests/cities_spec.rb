@@ -55,6 +55,7 @@ RSpec.describe "/cities", type: :request do
 
       it "redirects to the created city" do
         post cities_url, params: { city: valid_attributes }
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to(city_url(City.last))
       end
     end

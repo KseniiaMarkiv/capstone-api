@@ -2,11 +2,21 @@ class Api::ImagesController < ApplicationController
   before_action :set_image, only: %i[show update destroy]
   wrap_parameters :image, include: ['caption']
   before_action :authenticate_user!, only: %i[create update destroy]
-
+  after_action :verify_authorized
+  after_action :verify_policy_scoped, only: [:index]
+  
   # GET /images
   # GET /images.json
   def index
+    authorize Image
+    # @images = policy_scope(Image.all)
     @images = Image.all
+    
+# this method allows us don't use policy scope auth
+    # if false
+    # else
+    #   skip_policy_scope
+    # end
   end
 
   # GET /images/1
@@ -17,6 +27,7 @@ class Api::ImagesController < ApplicationController
   # POST /images
   # POST /images.json
   def create
+    authorize Image
     @image = Image.new(image_params)
     @image.creator_id=current_user.id
 
