@@ -22,6 +22,8 @@ class Api::ImagesController < ApplicationController
   # GET /images/1
   # GET /images/1.json
   def show
+    authorize @image
+
   end
 
   # POST /images
@@ -41,6 +43,8 @@ class Api::ImagesController < ApplicationController
   # PATCH/PUT /images/1
   # PATCH/PUT /images/1.json
   def update
+    authorize @image
+
     if @image.update(image_params)
       render :show, status: :ok, location: @image
     else
@@ -51,7 +55,10 @@ class Api::ImagesController < ApplicationController
   # DELETE /images/1
   # DELETE /images/1.json
   def destroy
+    authorize @image
+
     @image.destroy
+    head :no_content
   end
 
   private

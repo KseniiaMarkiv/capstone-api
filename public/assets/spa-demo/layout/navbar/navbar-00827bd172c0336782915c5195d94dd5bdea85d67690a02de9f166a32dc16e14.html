@@ -5,19 +5,19 @@
                 <h5 class="text-white">Navbar</h5>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+              <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item dropdown btn-group dropend">
+                        <a class="nav-link dropdown-toggle text-white btn btn-default" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           Go To
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="dropdown-menu dropdown-menu-start bg-light" aria-labelledby="navbarDropdown" id="navDropDown">
                             <li><a class="dropdown-item" href="#">Action</a></li>
                             <li ui-sref-active="active">
                                 <a ui-sref="images({id:null})" class="dropdown-item">Images</a>
@@ -29,7 +29,7 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li ui-sref-active="active">
-                                <a ui-sref="authn" class="dropdown-item authCheck fst-italic">Authentication Check</a>
+                                <a ui-sref="authn" class="dropdown-item authCheck fst-italic" style="color:#0055FF;">Authentication Check</a>
                             </li>
                         </ul>
                     </li>
@@ -45,8 +45,8 @@
     </div>
 </div>
 <nav class="navbar navbar-dark bg-mine-yellow">
-    <div class="container">
-        <button id="navMine" class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="container-navbar d-flex">
+        <button id="navMine" class="navbar-toggler custom-toggler me-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="btn-group dropstart">
@@ -55,7 +55,7 @@
                     <a class="nav-link dropdown-toggle btn btn-default" href="#" id="login-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span id="navbar-loginlabel" class="fw-bold fs-5" style="color:#0055FF">{{$ctrl.getLoginLabel()}}</span>
                     </a>
-                    <ul class="dropdown-menu" id='authnSession' aria-labelledby="dropdownMenuClickableOutside">
+                    <ul class="dropdown-menu position-absolute bg-light" id='authnSession' aria-labelledby="dropdownMenuClickableOutside">
                         <li>
                             <sd-authn-session></sd-authn-session>
                         </li>
@@ -64,7 +64,7 @@
             </ul>
         </div>
 
-        <!-- container-fluid -->
+        <!--container-fluid -->
     </div>
 
 </nav>

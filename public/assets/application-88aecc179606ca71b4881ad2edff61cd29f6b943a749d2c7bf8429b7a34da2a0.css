@@ -12,6 +12,7 @@ body {
     background-color: white;
     background-size: cover;
     z-index: 1;
+    overflow: hidden;
 }
 
 body:after {
@@ -170,57 +171,62 @@ li.fooscolor>a:hover {
 
 /*********** navbar *************/
 /* line 78, app/assets/stylesheets/spa-demo/custom.scss */
+.container-navbar {
+  margin-right: 5em;
+  margin-left: 5em;
+  flex-wrap: inherit;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* line 87, app/assets/stylesheets/spa-demo/custom.scss */
 .nav li form {
   padding-left: 10px;
   /* adds spacing along left of dropdown menu form */
   padding-right: 10px;
 }
 
-/* line 84, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 93, app/assets/stylesheets/spa-demo/custom.scss */
 .bg-mine-yellow {
-  background-color: rgba(255, 255, 0, 0.75);
+  background-color: rgba(255, 255, 0, 0.65);
 }
 
-/* line 88, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 97, app/assets/stylesheets/spa-demo/custom.scss */
 .bg-mine-blue {
-  background-color: rgba(0, 85, 255, 0.75);
+  background-color: rgba(0, 85, 255, 0.65);
 }
 
-/* line 92, app/assets/stylesheets/spa-demo/custom.scss */
-ul.dropdown-menu {
-  opacity: 0.75;
-}
-
-/* line 96, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 101, app/assets/stylesheets/spa-demo/custom.scss */
 button.navbar-toggler.collapsed {
   color: #0055FF;
   border-color: #0055FF;
 }
 
-/* line 101, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 106, app/assets/stylesheets/spa-demo/custom.scss */
 button.navbar-toggler:focus {
   color: #0055FF;
   border-color: #0055FF;
   background-color: rgba(0, 85, 255, 0.5);
 }
 
-/* line 107, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 112, app/assets/stylesheets/spa-demo/custom.scss */
 .custom-toggler .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 85, 255)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* line 111, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 116, app/assets/stylesheets/spa-demo/custom.scss */
 a#login-dropdown.navbar-dark .navbar-nav .nav-link:focus,
 a#login-dropdown.navbar-dark .navbar-nav .nav-link:hover {
   color: #0055FF;
 }
 
-/* line 116, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 121, app/assets/stylesheets/spa-demo/custom.scss */
 a#login-dropdown.navbar-dark .navbar-nav .nav-link {
   color: #0055FF;
 }
 
-/* line 120, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 125, app/assets/stylesheets/spa-demo/custom.scss */
 .navbar-dark .navbar-nav .nav-link,
 .navbar-dark .navbar-nav .nav-link:focus,
 .navbar-dark .navbar-nav .nav-link:hover {
@@ -228,7 +234,7 @@ a#login-dropdown.navbar-dark .navbar-nav .nav-link {
 }
 
 /*********** navbar END *************/
-/* line 129, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 134, app/assets/stylesheets/spa-demo/custom.scss */
 video {
   object-fit: cover;
   top: 0;
@@ -238,14 +244,13 @@ video {
   z-index: -1;
 }
 
-/* line 138, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 143, app/assets/stylesheets/spa-demo/custom.scss */
 sd-signup {
   color: white;
-  z-index: auto;
 }
 
 /* -------------- Button ----------------- */
-/* line 146, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 151, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video {
   display: flex;
   justify-content: center;
@@ -255,7 +260,7 @@ div.button-video {
   gap: 60px;
 }
 
-/* line 155, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 160, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button {
   position: relative;
   background: #444;
@@ -265,15 +270,14 @@ div.button-video button {
   letter-spacing: 0.04em;
   padding: 5px 28px;
   transition: 0.5s;
-  opacity: 0.85;
 }
 
-/* line 167, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 172, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button.signup-button {
   background: rgba(61, 255, 207, 0.6);
 }
 
-/* line 171, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 176, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button:hover {
   letter-spacing: 0.25em;
   background: var(--clr);
@@ -282,7 +286,7 @@ div.button-video button:hover {
   box-shadow: 0 0 35px var(--clr);
 }
 
-/* line 179, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 184, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button::before {
   content: '';
   position: absolute;
@@ -290,21 +294,21 @@ div.button-video button::before {
   background: #27282c;
 }
 
-/* line 186, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 191, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button span {
   position: relative;
   z-index: 1;
   font-size: 1em;
 }
 
-/* line 192, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 197, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button i {
   position: absolute;
   inset: 0;
   display: block;
 }
 
-/* line 198, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 203, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button i::before {
   content: '';
   position: absolute;
@@ -318,13 +322,13 @@ div.button-video button i::before {
   transition: 0.5s;
 }
 
-/* line 211, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 216, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button:hover i::before {
   width: 20px;
   left: 20%;
 }
 
-/* line 216, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 221, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button i::after {
   content: '';
   position: absolute;
@@ -338,26 +342,26 @@ div.button-video button i::after {
   transition: 0.5s;
 }
 
-/* line 229, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 234, app/assets/stylesheets/spa-demo/custom.scss */
 div.button-video button:hover i::after {
   width: 20px;
   left: 80%;
 }
 
-/* line 234, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 239, app/assets/stylesheets/spa-demo/custom.scss */
 button.btn-mine {
   width: 80%;
   /* height: 35px; */
 }
 
-/* line 239, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 244, app/assets/stylesheets/spa-demo/custom.scss */
 button.btn-mine:hover {
   width: 100%;
   /* height: 45px; */
   font-size: 1em;
 }
 
-/* line 245, app/assets/stylesheets/spa-demo/custom.scss */
+/* line 250, app/assets/stylesheets/spa-demo/custom.scss */
 button.btn-mine:focus {
   background-color: var(--clr);
 }
@@ -365,10 +369,6 @@ button.btn-mine:focus {
 /* -------------- END Button ----------------- */
 span#user_id {
     display: none;
-}
-
-.navbar-nav .dropdown-menu {
-    position: absolute;
 }
 
 
@@ -426,6 +426,28 @@ ul.dropdown-menu.show {
     text-decoration: none;
     font-size: 0.7rem;
 }
+
+
+/* *************************************** signup form *************************************** */
+
+.card.signup-card {
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(3px);
+    padding-left: 4em;
+    padding-right: 4em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    /* backdrop-filter: drop-shadow(4px 4px 10px blue); */
+    box-shadow: rgb(0, 85, 255) -5px 5px, rgb(255, 255, 0, 0.7) -10px 10px, rgba(0, 85, 255, 0.5) -15px 15px, rgba(61, 255, 207, 0.7) -5px 5px 15px 0px inset, rgba(61, 255, 207, 0.5) -5px 5px 15px 0px inset;
+}
+
+sd-signup {
+    margin-top: 12em;
+    margin-left: 17em;
+}
+
+
+/* *************************************** signup form END *************************************** */
 form.thing-form .id,
 div.thing-list .id,
 form.image-form .id,
@@ -438,6 +460,21 @@ div.image-list .id {
 
 
 
+
+
+ */
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
 
 
  */

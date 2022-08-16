@@ -75,6 +75,15 @@
     }
     /*********** navbar *************/
     
+    .container-navbar {
+        margin-right: 5em;
+        margin-left: 5em;
+        flex-wrap: inherit;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
     .nav li form {
         padding-left: 10px;
         /* adds spacing along left of dropdown menu form */
@@ -82,15 +91,11 @@
     }
     
     .bg-mine-yellow {
-        background-color: rgba(255, 255, 0, 0.75);
+        background-color: rgba(255, 255, 0, .65);
     }
     
     .bg-mine-blue {
-        background-color: rgba(0, 85, 255, 0.75);
-    }
-    
-    ul.dropdown-menu {
-        opacity: 0.75;
+        background-color: rgba(0, 85, 255, .65);
     }
     
     button.navbar-toggler.collapsed {
@@ -137,7 +142,7 @@
     
     sd-signup {
         color: white;
-        z-index: auto;
+        // z-index: auto;
     }
     
     // ----------- Background video END --------------
@@ -161,7 +166,7 @@
         letter-spacing: 0.04em;
         padding: 5px 28px;
         transition: 0.5s;
-        opacity: 0.85;
+        // opacity: 0.85;
     }
     
     div.button-video button.signup-button {
