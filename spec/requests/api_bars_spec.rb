@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "ApiBars", type: :request do
   include_context "db_cleanup_each", :transaction
+  let(:originator) { apply_originator(signup(FactoryBot.attributes_for(:user)), Thing) }
+  let(:user) { login originator }
  
   context "caller requests list of Bars" do
     it_should_behave_like "resource bar index", :api_bar do

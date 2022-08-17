@@ -66,6 +66,7 @@ module ApiHelper
   # end
   RSpec.shared_examples "resource index" do |model|
     let!(:resources) { FactoryBot.create_list( model, 5) }
+    let!(:apply_roles) { apply_organizer User.find(user["id"]), resources }
     let(:json) { parsed_body }
   
     it "returns all #{model} instances" do
@@ -80,6 +81,7 @@ module ApiHelper
 
   RSpec.shared_examples "show resource" do |model|
     let(:resource) { FactoryBot.create(model) }
+    let!(:apply_roles) { apply_organizer User.find(user["id"]), resources }
     let(:json) { parsed_body }
     let(:bad_id) { 1234567890 }
   
