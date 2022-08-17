@@ -9,8 +9,10 @@ class Api::ImagesController < ApplicationController
   # GET /images.json
   def index
     authorize Image
-    # @images = policy_scope(Image.all)
-    @images = Image.all
+    @images = policy_scope(Image.all)
+    # @images = Image.all
+    # pp @images.map(&:attributes)
+    @images = ImagePolicy.merge(@images)
     
 # this method allows us don't use policy scope auth
     # if false
@@ -23,7 +25,8 @@ class Api::ImagesController < ApplicationController
   # GET /images/1.json
   def show
     authorize @image
-
+    images = policy_scope(Image.where(:id=>@image.id))
+    @image = ImagePolicy.merge(images).first
   end
 
   # POST /images
@@ -33,10 +36,15 @@ class Api::ImagesController < ApplicationController
     @image = Image.new(image_params)
     @image.creator_id=current_user.id
 
-    if @image.save
-      render :show, status: :created, location: @image
-    else
-      render json: @image.errors, status: :unprocessable_entity
+    User.transaction do
+      if @image.save
+        role=current_user.add_role(Role::ORGANIZER, @image)
+        @image.user_roles << role.role_name # it's marshaled of data for DB query
+        role.save!
+        render :show, status: :created, location: @image
+      else
+        render json: @image.errors, status: :unprocessable_entity
+      end
     end
   end
 
