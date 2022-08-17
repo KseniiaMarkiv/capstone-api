@@ -1,33 +1,53 @@
 class Api::ThingsController < ApplicationController
+  include ActionController::Helpers
+  helper ThingsHelper
   before_action :set_thing, only: %i[ show update destroy ]
   before_action :authenticate_user!, only: %i[create, update, destroy]
+  after_action :verify_authorized
+  after_action :verify_policy_scoped, only: [:index]
+
   wrap_parameters :thing, include: ["name", "description", "notes"]
   # GET /things
   # GET /things.json
   def index
-    @things = Thing.all
+    authorize Thing
+    @things = policy_scope(Thing.all)
+    @things = ThingPolicy.merge(@things)
+    # pp @things.map(&:attributes)
   end
 
   # GET /things/1
   # GET /things/1.json
   def show
+    authorize @thing
+    things = ThingPolicy::Scope.new(pundit_user,
+                                    Thing.where(:id=>@thing.id))
+                                    .user_roles(false)
+    @thing = ThingPolicy.merge(things).first
   end
 
   # POST /things
   # POST /things.json
   def create
+    authorize Thing
     @thing = Thing.new(thing_params)
 
-    if @thing.save
-      render :show, status: :created, location: @thing
-    else
-      render json: @thing.errors, status: :unprocessable_entity
+    User.transaction do
+      if @thing.save
+        role=current_user.add_role(Role::ORGANIZER,@thing)
+        @thing.user_roles << role.role_name
+        role.save!
+        render :show, status: :created, location: @thing
+      else
+        render json: @thing.errors, status: :unprocessable_entity
+      end
     end
   end
 
   # PATCH/PUT /things/1
   # PATCH/PUT /things/1.json
   def update
+    authorize @thing
     if @thing.update(thing_params)
       render :show, status: :ok, location: @thing
     else
@@ -38,6 +58,7 @@ class Api::ThingsController < ApplicationController
   # DELETE /things/1
   # DELETE /things/1.json
   def destroy
+    authorize @thing
     @thing.destroy
   end
 

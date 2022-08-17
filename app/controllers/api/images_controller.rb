@@ -11,8 +11,8 @@ class Api::ImagesController < ApplicationController
     authorize Image
     @images = policy_scope(Image.all)
     # @images = Image.all
-    # pp @images.map(&:attributes)
     @images = ImagePolicy.merge(@images)
+    # pp @images.map(&:attributes)
     
 # this method allows us don't use policy scope auth
     # if false
@@ -66,7 +66,6 @@ class Api::ImagesController < ApplicationController
     authorize @image
 
     @image.destroy
-    head :no_content
   end
 
   private
