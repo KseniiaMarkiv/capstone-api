@@ -7,7 +7,7 @@
             templateUrl: ["APP_CONFIG", function thingEditorTemplateUrl(APP_CONFIG) {
                 return APP_CONFIG.thing_editor_html;
             }],
-            controller: ["$scope", "$q", "$state", "$stateParams", "Thing", "ThingImage", function ThingEditorController($scope, $q, $state, $stateParams, Thing, ThingImage) {
+            controller: ["$scope", "$q", "$state", "$stateParams", "Authz", "Thing", "ThingImage", function ThingEditorController($scope, $q, $state, $stateParams, Authz, Thing, ThingImage) {
                 var vm = this;
                 vm.create = create;
                 vm.clear = clear;
@@ -18,13 +18,14 @@
 
                 vm.$onInit = function() {
                     console.log("ThingEditorController", $scope);
-                    if ($stateParams.id) {
-                        // reload($stateParams.id);
-                        $scope.$watch(function() { return vm.authz.authenticated },
-                            function() { reload($stateParams.id); });
-                    } else {
-                        newResource();
-                    }
+                    $scope.$watch(function() { return Authz.getAuthorizedUserId(); },
+                        function() {
+                            if ($stateParams.id) {
+                                reload($stateParams.id);
+                            } else {
+                                newResource();
+                            }
+                        });
                 }
                 return;
                 //////////////
@@ -132,14 +133,17 @@
             templateUrl: ["APP_CONFIG", function thingSelectorTemplateUrl(APP_CONFIG) {
                 return APP_CONFIG.thing_selector_html;
             }],
-            controller: ["$scope", "$stateParams", "Thing", function ThingSelectorController($scope, $stateParams, Thing) {
+            controller: ["$scope", "$stateParams", "Authz", "Thing", function ThingSelectorController($scope, $stateParams, Authz, Thing) {
                 var vm = this;
 
                 vm.$onInit = function() {
                     console.log("ThingSelectorController", $scope);
-                    if (!$stateParams.id) {
-                        vm.items = Thing.query();
-                    }
+                    $scope.$watch(function() { return Authz.getAuthorizedUserId(); },
+                        function() {
+                            if (!$stateParams.id) {
+                                vm.items = Thing.query();
+                            }
+                        });
                 }
                 return;
                 //////////////

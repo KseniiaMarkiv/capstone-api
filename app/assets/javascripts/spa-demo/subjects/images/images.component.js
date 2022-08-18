@@ -7,14 +7,17 @@
             templateUrl: ["APP_CONFIG", function imageSelectorTemplateUrl(APP_CONFIG) {
                 return APP_CONFIG.image_selector_html;
             }],
-            controller: ["$scope", "$stateParams", "Image", function ImageSelectorController($scope, $stateParams, Image) {
+            controller: ["$scope", "$stateParams", "Authz", "Image", function ImageSelectorController($scope, $stateParams, Authz, Image) {
                 var vm = this;
 
                 vm.$onInit = function() {
                     console.log("ImageSelectorController", $scope);
-                    if (!$stateParams.id) {
-                        vm.items = Image.query();
-                    }
+                    $scope.$watch(function() { return Authz.getAuthorizedUserId; },
+                        function() {
+                            if (!$stateParams.id) {
+                                vm.items = Image.query();
+                            }
+                        });
                 }
                 return;
                 //////////////
@@ -27,7 +30,7 @@
             templateUrl: ["APP_CONFIG", function imageEditorTemplateUrl(APP_CONFIG) {
                 return APP_CONFIG.image_editor_html;
             }],
-            controller: ["$scope", "$q", "$state", "$stateParams", "Image", "ImageLinkableThing", "ImageThing", function ImageEditorController($scope, $q, $state, $stateParams, Image, ImageLinkableThing, ImageThing) {
+            controller: ["$scope", "$q", "$state", "$stateParams", "Authz", "Image", "ImageLinkableThing", "ImageThing", function ImageEditorController($scope, $q, $state, $stateParams, Authz, Image, ImageLinkableThing, ImageThing) {
                 var vm = this;
                 vm.create = create;
                 vm.clear = clear;
@@ -37,17 +40,19 @@
 
                 vm.$onInit = function() {
                     console.log("ImageEditorController", $scope);
-                    if ($stateParams.id) {
-                        // reload($stateParams.id);
-                        $scope.$watch(function() { return vm.authz.authenticated },
-                            function() { reload($stateParams.id); });
-                    } else {
-                        newResource();
-                    }
+                    $scope.$watch(function() { return Authz.getAuthorizedUserId(); },
+                        function() {
+                            if ($stateParams.id) {
+                                reload($stateParams.id);
+                            } else {
+                                newResource();
+                            }
+                        });
                 }
                 return;
                 //////////////
                 function newResource() {
+                    console.log("newResource()");
                     vm.item = new Image();
                     return vm.item;
                 }
