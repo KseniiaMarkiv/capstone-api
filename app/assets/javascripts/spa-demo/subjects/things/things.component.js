@@ -3,26 +3,6 @@
 
     angular
         .module("spa-demo.subjects")
-        .component("sdThingSelector", {
-            templateUrl: ["APP_CONFIG", function thingSelectorTemplateUrl(APP_CONFIG) {
-                return APP_CONFIG.thing_selector_html;
-            }],
-            controller: ["$scope", "$stateParams", "Thing", function ThingSelectorController($scope, $stateParams, Thing) {
-                var vm = this;
-
-                vm.$onInit = function() {
-                    console.log("ThingSelectorController", $scope);
-                    if (!$stateParams.id) {
-                        vm.items = Thing.query();
-                    }
-                }
-                return;
-                //////////////
-            }],
-            bindings: {
-                authz: "<"
-            },
-        })
         .component("sdThingEditor", {
             templateUrl: ["APP_CONFIG", function thingEditorTemplateUrl(APP_CONFIG) {
                 return APP_CONFIG.thing_editor_html;
@@ -39,7 +19,9 @@
                 vm.$onInit = function() {
                     console.log("ThingEditorController", $scope);
                     if ($stateParams.id) {
-                        reload($stateParams.id);
+                        // reload($stateParams.id);
+                        $scope.$watch(function() { return vm.authz.authenticated },
+                            function() { reload($stateParams.id); });
                     } else {
                         newResource();
                     }
@@ -65,10 +47,6 @@
                     $q.all([vm.item.$promise, vm.images.$promise]).catch(handleError);
                 }
 
-                function clear() {
-                    newResource();
-                    $state.go(".", { id: null });
-                }
 
                 function haveDirtyLinks() {
                     for (var i = 0; vm.images && i < vm.images.length; i++) {
@@ -81,7 +59,7 @@
                 }
 
                 function create() {
-                    $scope.thingform.$setPristine();
+                    // $scope.thingform.$setPristine();
                     vm.item.errors = null;
                     vm.item.$save().then(
                         function() {
@@ -90,8 +68,13 @@
                         handleError);
                 }
 
+                function clear() {
+                    newResource();
+                    $state.go(".", { id: null });
+                }
+
                 function update() {
-                    $scope.thingform.$setPristine();
+                    // $scope.thingform.$setPristine();
                     vm.item.errors = null;
                     var update = vm.item.$update();
                     updateImageLinks(update);
@@ -120,7 +103,14 @@
                         handleError);
                 }
 
-                function remove() {}
+                function remove() {
+                    vm.item.$remove().then(
+                        function() {
+                            console.log("thing.removed", vm.item);
+                            clear();
+                        },
+                        handleError);
+                }
 
                 function handleError(response) {
                     console.log("error", response);
@@ -131,12 +121,33 @@
                         vm.item["errors"] = {}
                         vm.item["errors"]["full_messages"] = [response];
                     }
-
+                    $scope.thingform.$setPristine();
                 }
             }],
             bindings: {
                 authz: "<"
             },
+        })
+        .component("sdThingSelector", {
+            templateUrl: ["APP_CONFIG", function thingSelectorTemplateUrl(APP_CONFIG) {
+                return APP_CONFIG.thing_selector_html;
+            }],
+            controller: ["$scope", "$stateParams", "Thing", function ThingSelectorController($scope, $stateParams, Thing) {
+                var vm = this;
+
+                vm.$onInit = function() {
+                    console.log("ThingSelectorController", $scope);
+                    if (!$stateParams.id) {
+                        vm.items = Thing.query();
+                    }
+                }
+                return;
+                //////////////
+            }],
+            bindings: {
+                authz: "<"
+            },
         });
+
 
 })();

@@ -3,7 +3,7 @@
 
     angular
         .module("spa-demo.subjects")
-        .directive("sdImagesAuthz", function() {
+        .directive("sdImagesAuthz", function ImagesAuthzDirective() {
             var directive = {
                 bindToController: true,
                 controller: ['$scope', 'Authn', function ImagesAuthzController($scope, Authn) {
@@ -36,8 +36,9 @@
 
                     function newUser(user, prevUser) {
                         console.log("newUser=", user, ", prev=", prevUser);
-                        vm.authz.authenticated = Authn.isAuthenticated();
                         vm.authz.canQuery = true;
+                        vm.authz.authenticated = Authn.isAuthenticated();
+
                         if (vm.authz.authenticated) {
                             vm.authz.canCreate = true;
                             vm.authz.canUpdate = true;

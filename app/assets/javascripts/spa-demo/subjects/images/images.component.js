@@ -33,6 +33,7 @@
                 vm.clear = clear;
                 vm.update = update;
                 vm.remove = remove;
+                vm.linkThings = linkThings;
 
                 vm.$onInit = function() {
                     console.log("ImageEditorController", $scope);
@@ -68,7 +69,7 @@
                 }
 
                 function create() {
-                    vm.item.errors = null;
+                    // vm.item.errors = null;
                     vm.item.$save().then(
                         function() {
                             $state.go(".", { id: vm.item.id });
@@ -101,7 +102,15 @@
                         handleError);
                 }
 
-                function remove() {}
+                function remove() {
+                    vm.item.errors = null;
+                    vm.item.$delete().then(
+                        function() {
+                            console.log("remove complete", vm.item);
+                            clear();
+                        },
+                        handleError);
+                }
 
                 function handleError(response) {
                     console.log("error", response);

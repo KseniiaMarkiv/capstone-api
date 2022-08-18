@@ -3,21 +3,21 @@
 
     angular
         .module("spa-demo.subjects")
-        .directive("sdThingsAuthz", function() {
+        .directive("sdThingsAuthz", function ThingsAuthzDirective() {
             var directive = {
                 bindToController: true,
-                controller: ['$scope', 'Authn', function ThingsAuthzDirective($scope, Authn) {
+                controller: ['$scope', 'Authn', function ThingsAuthzController($scope, Authn) {
                     var vm = this;
                     vm.authz = {};
                     vm.authz.canUpdateItem = canUpdateItem;
 
 
-                    ThingsAuthzDirective.prototype.resetAccess = function() {
+                    ThingsAuthzController.prototype.resetAccess = function() {
                         this.authz.canCreate = false;
-                        this.authz.canQuery = true;
+                        this.authz.canQuery = false;
                         this.authz.canUpdate = false;
                         this.authz.canDelete = false;
-                        this.authz.canGetDetails = true;
+                        this.authz.canGetDetails = false;
                         this.authz.canUpdateImage = false;
                         this.authz.canRemoveImage = false;
 
@@ -33,9 +33,9 @@
 
                     function newUser(user, prevUser) {
                         console.log("newUser=", user, ", prev=", prevUser);
-                        vm.authz.canQuery = true;
                         vm.authz.authenticated = Authn.isAuthenticated();
                         if (vm.authz.authenticated) {
+                            vm.authz.canQuery = true;
                             vm.authz.canCreate = true;
                             vm.authz.canUpdate = true;
                             vm.authz.canDelete = true;

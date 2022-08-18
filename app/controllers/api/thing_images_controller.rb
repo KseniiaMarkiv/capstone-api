@@ -2,12 +2,12 @@ class Api::ThingImagesController < ApplicationController
   include ActionController::Helpers
   helper ThingsHelper
   wrap_parameters :thing_image, include: %i["image_id" "thing_id" "priority"]
-  before_action :get_thing, only: %i[index: update: destroy:]
-  before_action :get_image, only: %i[image_things:]
-  before_action :get_thing_image, only: %i[update: destroy:]
-  before_action :authenticate_user!, only: %i[create: update: destroy:]
+  before_action :get_thing, only: %i[index update destroy]
+  before_action :get_image, only: %i[image_things]
+  before_action :get_thing_image, only: %i[update destroy]
+  before_action :authenticate_user!, only: %i[create update destroy]
   after_action :verify_authorized
-  after_action :verify_policy_scoped, only: [:linkable_things]
+  # after_action :verify_policy_scoped, only: [:linkable_things]
 
   def index
     authorize @thing, :get_images?
@@ -16,7 +16,6 @@ class Api::ThingImagesController < ApplicationController
 
   def image_things
     authorize @thing, :get_things?
-    image = Image.find(params[:image_id])
     @thing_images=@image.thing_images.prioritized.with_name
     render :index 
   end
@@ -24,11 +23,13 @@ class Api::ThingImagesController < ApplicationController
   def linkable_things
     authorize Thing, :get_linkables?
     image = Image.find(params[:image_id])
-    @things=policy_scope(Thing.not_linked(image))
+    #@things=policy_scope(Thing.not_linked(image))
+    #need to exclude admins from seeing things they cannot link
+    @things=Thing.not_linked(image)
+    @things=ThingPolicy::Scope.new(current_user,@things).user_roles(true,false)
     @things=ThingPolicy.merge(@things)
-    render 'things/index'
+    render "things/index"
   end
-
   def create
     thing_image = ThingImage.new(thing_image_create_params.merge({
                                   :image_id=>params[:image_id],
@@ -73,6 +74,9 @@ class Api::ThingImagesController < ApplicationController
     end
     def get_image
       @image ||= Image.find(params[:image_id])
+    end
+    def get_thing_image
+      @thing_image ||= ThingImage.find(params[:id])
     end
     def thing_image_create_params
       params.require(:thing_image).tap {|p|

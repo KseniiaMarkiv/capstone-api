@@ -11,7 +11,7 @@
         <label class="col-auto pe-2 form-label">Related Things:</label>
         <ul class="image-things col-auto">
             <li ng-repeat="ti in $ctrl.things | orderBy:'priority'">
-                <a data-ui-sref="things({id:ti.thing_id})">
+                <a ui-sref="things({id:ti.thing_id})">
                     <span class="id thing_id">{{ti.thing_id}}</span> {{ti.thing_name}}
                 </a>
             </li>
@@ -31,10 +31,15 @@
     </div>
     <div class="image-controls">
         <span ng-show="$ctrl.authz.authenticated">
-        <button name="image-create" ng-show="!$ctrl.item.id && $ctrl.authz.canCreate" type="submit" ng-disabled="imageform.$invalid || !$ctrl.item.image_content.content" ng-click="$ctrl.create()" class="btn btn-info btn-sm">Create Image</button>
+        <button name="image-create" ng-show="!$ctrl.item.id && $ctrl.authz.canCreate" type="submit" ng-disabled="imageform.$invalid" ng-click="$ctrl.create()" class="btn btn-info btn-sm">Create Image</button>
 
         <span ng-show="$ctrl.item.id">
           <button name="image-update" type="submit" ng-show="$ctrl.authz.canUpdate" ng-disabled="!imageform.$dirty" ng-click="$ctrl.update()" class="btn btn-warning btn-sm">Update Image</button>
+          <button name="image-update"
+                  type="submit"
+                  ng-show="!$ctrl.authz.canUpdate" 
+                  ng-disabled="$ctrl.selected_linkables.length==0"
+                  ng-click="$ctrl.linkThings()" class="btn btn-danger btn-sm">Link to Things</button>
           <button name="image-delete" type="submit" ng-show="$ctrl.authz.canDelete" ng-click="$ctrl.remove()" class="btn btn-danger btn-sm">Delete Image</button>
         </span>
         </span>

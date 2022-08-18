@@ -15,6 +15,9 @@
 //= require spa-demo/authn/authn_check/authn_check.directive
 //= require spa-demo/authn/authn_check/authn_check.controller
 
+//= require spa-demo/authz/authz.module
+
+
 //= require spa-demo/layout/layout.module
 //= require spa-demo/layout/navbar/navbar.component
 

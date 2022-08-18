@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from Mongoid::Errors::DocumentNotFound, with: :record_not_found
+  rescue_from ActionController::ParameterMissing, with: :missing_parameter
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   
   # protect_from_forgery with: :null_session  # ONLY FOR API, I haven't api project, cuz all steps of teacher isn't have been behavior the same for me

@@ -5,6 +5,7 @@
         'ui.router',
         'spa-demo.config',
         'spa-demo.authn',
+        "spa-demo.authz",
         'spa-demo.layout',
         'spa-demo.foos',
         'spa-demo.subjects'
@@ -62,15 +63,15 @@
       'main_page_html': '/assets/spa-demo/pages/main-aaeae593a605cc2b0bece3fd21beb0b78f7d55d886f1de9abc1e119cb86988c9.html',
       'navbar_html': '/assets/spa-demo/layout/navbar/navbar-00827bd172c0336782915c5195d94dd5bdea85d67690a02de9f166a32dc16e14.html',
       'signup_page_html': "/assets/spa-demo/pages/signup_page-b2723361761ce4e347c67112b0d11adeee5e35d061c16c6f0cffcd1fc6ddfde4.html",
-      'authn_signup_html': "/assets/spa-demo/authn/signup/signup-0a179adaaafb9dff9f8de3bfe5d2bb2cac2b0152bbe8e5f91c3cf03f8af1185e.html",
+      'authn_signup_html': "/assets/spa-demo/authn/signup/signup-d9ad98c5d70ede0142401aa2040fb392d41164dd585c66deda52f46d2728036f.html",
       'authn_session_html': "/assets/spa-demo/authn/authn_session/authn_session-89d2f8951f13657ffc005ab328f4f4cd6953868b5b9851d0a5a1d972018f8e54.html",
       'authn_page_html': "/assets/spa-demo/pages/authn_page-b369675392e053c2c3c48af34484a700e433fcc7b9b731037aa851b168c9168c.html",
       'images_page_html': "/assets/spa-demo/pages/images_page-f3affa16f8e89a65a3d623f0e6ece3a9cb27a81807d20c41ffeeb63550718929.html",
       'image_selector_html': "/assets/spa-demo/subjects/images/image_selector-083decd045cc67de243f308f0c9e94c67b2ebda758270c8a39df2fc9a9d96d98.html",
-      'image_editor_html': "/assets/spa-demo/subjects/images/image_editor-4199728338f03c08f25cf8de3c81ec40b6e09b46f31862755efc79936fb957b0.html",
+      'image_editor_html': "/assets/spa-demo/subjects/images/image_editor-945dbb930d6cf3a8cf367db9d97321380f1afc02ee9d92423bdf6d278def65e4.html",
       'things_page_html': "/assets/spa-demo/pages/things_page-5600694cd4bc8ee18089b8b48e176a5a6693dfce34b09046d9d32b229fbd66ff.html",
       'thing_selector_html': "/assets/spa-demo/subjects/things/thing_selector-209da3067772af0dc6bca67a08000afbf6a7f9373da13f5e03ffe571bd332c14.html",
-      'thing_editor_html': "/assets/spa-demo/subjects/things/thing_editor-61eaf616f3f4df5c031c1132068549199105b7dc48a3bae80087e88e07ef8016.html",
+      'thing_editor_html': "/assets/spa-demo/subjects/things/thing_editor-d51caaaa1a71634061346c4506b059e812808dfddf1d5dd6d35a0705cc9b69c4.html",
       
       'foos_html': "/assets/spa-demo/foos/foos-881e3113f9cba12c5050386f3500877e9b58e776a7b0cba42cb4ebdf187690a4.html",
 
@@ -107,6 +108,7 @@
         service.isAuthenticated = isAuthenticated;
         service.getCurrentUser = getCurrentUser;
         service.getCurrentUserName = getCurrentUserName;
+        service.getCurrentUserId = getCurrentUserId;
         service.login = login;
         service.logout = logout;
 
@@ -130,7 +132,11 @@
         }
 
         function getCurrentUserName() {
-            return service.user ? service.user.name : null;
+            return service.user != null ? service.user.name : null;
+        }
+
+        function getCurrentUserId() {
+            return service.user != null ? service.user.id : null;
         }
 
         function getCurrentUser() {
@@ -218,7 +224,6 @@
         var vm = this;
         vm.signupForm = {}
         vm.signup = signup;
-        vm.getCurrentUser = Authn.getCurrentUser;
 
         vm.$onInit = function() {
             console.log("SignupController", $scope);
@@ -269,19 +274,23 @@
                 return;
                 //////////////
                 function login() {
-                    //console.log("login");
+                    console.log("login");
                     $scope.login_form.$setPristine();
                     vm.loginForm["errors"] = null;
-                    Authn.login(vm.loginForm),
-
+                    Authn.login(vm.loginForm).then(
+                        function() {
+                            vm.dropdown.removeClass("open");
+                        },
                         function(response) {
                             vm.loginForm["errors"] = response.errors;
-                        };
+                        });
                 }
 
                 function logout() {
-                    Authn.logout();
-                    console.log("logout")
+                    Authn.logout().then(
+                        function() {
+                            vm.dropdown.removeClass("open");
+                        });
                 }
             }],
         });
@@ -341,6 +350,13 @@
             );
         }
     }])
+})();
+(function() {
+  "use strict";
+
+  angular
+    .module("spa-demo.authz", [
+    ]);
 })();
 (function() {
     "use strict";
@@ -546,6 +562,7 @@
                 vm.clear = clear;
                 vm.update = update;
                 vm.remove = remove;
+                vm.linkThings = linkThings;
 
                 vm.$onInit = function() {
                     console.log("ImageEditorController", $scope);
@@ -581,7 +598,7 @@
                 }
 
                 function create() {
-                    vm.item.errors = null;
+                    // vm.item.errors = null;
                     vm.item.$save().then(
                         function() {
                             $state.go(".", { id: vm.item.id });
@@ -614,7 +631,15 @@
                         handleError);
                 }
 
-                function remove() {}
+                function remove() {
+                    vm.item.errors = null;
+                    vm.item.$delete().then(
+                        function() {
+                            console.log("remove complete", vm.item);
+                            clear();
+                        },
+                        handleError);
+                }
 
                 function handleError(response) {
                     console.log("error", response);
@@ -662,12 +687,12 @@
 
     angular
         .module("spa-demo.subjects")
-        .directive("sdImagesAuthz", function() {
+        .directive("sdImagesAuthz", function ImagesAuthzDirective() {
             var directive = {
                 bindToController: true,
                 controller: ['$scope', 'Authn', function ImagesAuthzController($scope, Authn) {
                     var vm = this;
-                    vm.authz = {};
+                    vm.authz = [];
                     vm.authz.authenticated = false;
                     vm.authz.canCreate = false;
                     vm.authz.canQuery = false;
@@ -695,8 +720,9 @@
 
                     function newUser(user, prevUser) {
                         console.log("newUser=", user, ", prev=", prevUser);
-                        vm.authz.authenticated = Authn.isAuthenticated();
                         vm.authz.canQuery = true;
+                        vm.authz.authenticated = Authn.isAuthenticated();
+
                         if (vm.authz.authenticated) {
                             vm.authz.canCreate = true;
                             vm.authz.canUpdate = true;
@@ -751,26 +777,6 @@
 
     angular
         .module("spa-demo.subjects")
-        .component("sdThingSelector", {
-            templateUrl: ["APP_CONFIG", function thingSelectorTemplateUrl(APP_CONFIG) {
-                return APP_CONFIG.thing_selector_html;
-            }],
-            controller: ["$scope", "$stateParams", "Thing", function ThingSelectorController($scope, $stateParams, Thing) {
-                var vm = this;
-
-                vm.$onInit = function() {
-                    console.log("ThingSelectorController", $scope);
-                    if (!$stateParams.id) {
-                        vm.items = Thing.query();
-                    }
-                }
-                return;
-                //////////////
-            }],
-            bindings: {
-                authz: "<"
-            },
-        })
         .component("sdThingEditor", {
             templateUrl: ["APP_CONFIG", function thingEditorTemplateUrl(APP_CONFIG) {
                 return APP_CONFIG.thing_editor_html;
@@ -787,7 +793,9 @@
                 vm.$onInit = function() {
                     console.log("ThingEditorController", $scope);
                     if ($stateParams.id) {
-                        reload($stateParams.id);
+                        // reload($stateParams.id);
+                        $scope.$watch(function() { return vm.authz.authenticated },
+                            function() { reload($stateParams.id); });
                     } else {
                         newResource();
                     }
@@ -813,10 +821,6 @@
                     $q.all([vm.item.$promise, vm.images.$promise]).catch(handleError);
                 }
 
-                function clear() {
-                    newResource();
-                    $state.go(".", { id: null });
-                }
 
                 function haveDirtyLinks() {
                     for (var i = 0; vm.images && i < vm.images.length; i++) {
@@ -829,7 +833,7 @@
                 }
 
                 function create() {
-                    $scope.thingform.$setPristine();
+                    // $scope.thingform.$setPristine();
                     vm.item.errors = null;
                     vm.item.$save().then(
                         function() {
@@ -838,8 +842,13 @@
                         handleError);
                 }
 
+                function clear() {
+                    newResource();
+                    $state.go(".", { id: null });
+                }
+
                 function update() {
-                    $scope.thingform.$setPristine();
+                    // $scope.thingform.$setPristine();
                     vm.item.errors = null;
                     var update = vm.item.$update();
                     updateImageLinks(update);
@@ -868,7 +877,14 @@
                         handleError);
                 }
 
-                function remove() {}
+                function remove() {
+                    vm.item.$remove().then(
+                        function() {
+                            console.log("thing.removed", vm.item);
+                            clear();
+                        },
+                        handleError);
+                }
 
                 function handleError(response) {
                     console.log("error", response);
@@ -879,13 +895,34 @@
                         vm.item["errors"] = {}
                         vm.item["errors"]["full_messages"] = [response];
                     }
-
+                    $scope.thingform.$setPristine();
                 }
             }],
             bindings: {
                 authz: "<"
             },
+        })
+        .component("sdThingSelector", {
+            templateUrl: ["APP_CONFIG", function thingSelectorTemplateUrl(APP_CONFIG) {
+                return APP_CONFIG.thing_selector_html;
+            }],
+            controller: ["$scope", "$stateParams", "Thing", function ThingSelectorController($scope, $stateParams, Thing) {
+                var vm = this;
+
+                vm.$onInit = function() {
+                    console.log("ThingSelectorController", $scope);
+                    if (!$stateParams.id) {
+                        vm.items = Thing.query();
+                    }
+                }
+                return;
+                //////////////
+            }],
+            bindings: {
+                authz: "<"
+            },
         });
+
 
 })();
 (function() {
@@ -902,21 +939,21 @@
 
     angular
         .module("spa-demo.subjects")
-        .directive("sdThingsAuthz", function() {
+        .directive("sdThingsAuthz", function ThingsAuthzDirective() {
             var directive = {
                 bindToController: true,
-                controller: ['$scope', 'Authn', function ThingsAuthzDirective($scope, Authn) {
+                controller: ['$scope', 'Authn', function ThingsAuthzController($scope, Authn) {
                     var vm = this;
-                    vm.authz = {};
+                    vm.authz = [];
                     vm.authz.canUpdateItem = canUpdateItem;
 
 
-                    ThingsAuthzDirective.prototype.resetAccess = function() {
+                    ThingsAuthzController.prototype.resetAccess = function() {
                         this.authz.canCreate = false;
-                        this.authz.canQuery = true;
+                        this.authz.canQuery = false;
                         this.authz.canUpdate = false;
                         this.authz.canDelete = false;
-                        this.authz.canGetDetails = true;
+                        this.authz.canGetDetails = false;
                         this.authz.canUpdateImage = false;
                         this.authz.canRemoveImage = false;
 
@@ -932,9 +969,9 @@
 
                     function newUser(user, prevUser) {
                         console.log("newUser=", user, ", prev=", prevUser);
-                        vm.authz.canQuery = true;
                         vm.authz.authenticated = Authn.isAuthenticated();
                         if (vm.authz.authenticated) {
+                            vm.authz.canQuery = true;
                             vm.authz.canCreate = true;
                             vm.authz.canUpdate = true;
                             vm.authz.canDelete = true;
@@ -982,6 +1019,9 @@
 
 })();
 // SPA Demo Javascript Manifest File
+
+
+
 
 
 

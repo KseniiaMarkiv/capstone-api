@@ -53,21 +53,23 @@
       <span class="invalid">{{$ctrl.item.errors.images}}</span>
     </div>
     <div class="thing-controls">
-      <span ng-show="$ctrl.authz.authenticated"></span>
+      <span ng-show="$ctrl.authz.authenticated">
         <button ng-show="!$ctrl.item.id && $ctrl.authz.canCreate" name="thing-create" ng-disabled="thingform.$invalid" type="submit" ng-click="$ctrl.create()" class="btn btn-info btn-sm">Create Thing</button>
 
         <div ng-show="$ctrl.item.id">
-          <button name="thing-update" type="submit" ng-disabled="thingform.$invalid || !thingform.$dirty" ng-hide="!thingform['thing-name'].$dirty && !thingform['thing-desc'].$dirty && !thingform['thing-notes'].$dirty" ng-click="$ctrl.update()" class="btn btn-warning btn-sm">Update Thing</button>     
-          <span class="thing-modify" data-ng-hide="!$ctrl.authz.canUpdate">
+          <span class="thing-modify"
+          data-ng-hide="!$ctrl.authz.canUpdate &&
+                        !$ctrl.authz.canUpdateImage &&
+                        !$ctrl.authz.canRemoveImage">
           <button name="thing-update"
-                  type="submit"          
-                  ng-disabled="thingform.$invalid || !thingform.$dirty"
-                  data-ng-hide="$ctrl.haveDirtyLinks() &&
-                    (!thingform['thing-name'].$dirty && 
-                    !thingform['thing-desc'].$dirty && 
-                    !thingform['thing-notes'].$dirty)"
-                  ng-click="$ctrl.update()"
-                  class="btn btn-warning btn-sm">Update Thing</button>
+              type="submit"          
+              ng-disabled="thingform.$invalid || !thingform.$dirty"
+              data-ng-hide="$ctrl.haveDirtyLinks() &&
+                (!thingform['thing-name'].$dirty && 
+                !thingform['thing-desc'].$dirty && 
+                !thingform['thing-notes'].$dirty)"
+              ng-click="$ctrl.update()"
+              class="btn btn-warning btn-sm">Update Thing</button>
           <button name="thing-images-update"
                   type="submit"          
                   data-ng-show="$ctrl.haveDirtyLinks() &&
@@ -77,9 +79,10 @@
                   ng-click="$ctrl.updateImageLinks()"
                   class="btn btn-sm" style="background-color:#FFDB00">Update Image Links</button>        
           </span>
+          
           <button name="thing-delete" type="submit" ng-show="$ctrl.authz.canDelete" ng-click="$ctrl.remove()" class="btn btn-danger btn-sm">Delete Thing</button>
+          <button name="thing-clear" type="submit" ng-click="$ctrl.clear()" class="btn btn-secondary btn-sm">Clear Thing</button>
         </div>
       </span>
-          <button name="thing-clear" type="submit" ng-click="$ctrl.clear()" class="btn btn-secondary btn-sm">Clear Thing</button>
     </div>
 </form>

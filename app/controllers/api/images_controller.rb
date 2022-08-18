@@ -66,6 +66,7 @@ class Api::ImagesController < ApplicationController
     authorize @image
 
     @image.destroy
+    head :no_content
   end
 
   private
