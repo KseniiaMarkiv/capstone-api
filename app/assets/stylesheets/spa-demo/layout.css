@@ -96,3 +96,11 @@ li.fooscolor>a {
 li.fooscolor>a:hover {
     color: hotpink;
 }
+
+[readonly='readonly'] {
+    background-color: inherit;
+}
+
+button:disabled {
+    color: #717782;
+}
