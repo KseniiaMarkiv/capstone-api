@@ -6,7 +6,7 @@
         .directive("sdThingsAuthz", function ThingsAuthzDirective() {
             var directive = {
                 bindToController: true,
-                controller: ['$scope', 'Authn', function ThingsAuthzController($scope, Authn) {
+                controller: ['$scope', 'ThingsAuthz', function ThingsAuthzController($scope, ThingsAuthz) {
                     var vm = this;
                     vm.authz = {};
                     vm.authz.canUpdateItem = canUpdateItem;
@@ -28,12 +28,12 @@
                     //////////
                     function activate() {
                         vm.resetAccess();
-                        $scope.$watch(Authn.getCurrentUser, newUser);
+                        newUser();
                     }
 
                     function newUser(user, prevUser) {
                         console.log("newUser=", user, ", prev=", prevUser);
-                        vm.authz.authenticated = Authn.isAuthenticated();
+                        vm.authz.authenticated = ThingsAuthz.isAuthenticated();
                         if (vm.authz.authenticated) {
                             vm.authz.canQuery = true;
                             vm.authz.canCreate = true;
@@ -49,7 +49,7 @@
                     }
 
                     function canUpdateItem(item) {
-                        return Authn.isAuthenticated();
+                        return ThingsAuthz.isAuthenticated();
                     }
                 }],
                 controllerAs: "vm",

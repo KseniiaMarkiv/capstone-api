@@ -17,6 +17,7 @@
 
 //= require spa-demo/authz/authz.module
 //= require spa-demo/authz/authz.service
+//= require spa-demo/authz/base_policy.service
 
 //= require spa-demo/layout/layout.module
 //= require spa-demo/layout/navbar/navbar.component
@@ -29,10 +30,12 @@
 //= require spa-demo/subjects/subjects.module
 //= require spa-demo/subjects/images/images.component
 //= require spa-demo/subjects/images/images.service
+//= require spa-demo/subjects/images/images_authz.service
 //= require spa-demo/subjects/images/images_authz.directive
 //= require spa-demo/subjects/images/image_things.service
 //= require spa-demo/subjects/images/image_linkable_things.service
 //= require spa-demo/subjects/things/things.component
 //= require spa-demo/subjects/things/things.service
+//= require spa-demo/subjects/things/things_authz.service
 //= require spa-demo/subjects/things/things_authz.directive
 //= require spa-demo/subjects/things/thing_images.service
