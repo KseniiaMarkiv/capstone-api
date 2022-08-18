@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capstone App</title>
+    <link rel='stylesheet' href='lib/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
   </head>
   <body ng-app="spa-demo">
       <div class="container-fluid fullsize">
@@ -13,23 +15,20 @@
       <div class="container">
         <div ui-view class="mt-5"></div>  
       </div>
-  </body>
 
        <!-- Libs -->
     <script src="lib/js/jquery-3.6.0.min.js"></script>
+     <script src="lib/js/bootstrap.bundle.min.js"></script>
     <script src="lib/js/angular.min.js"></script>
-    <script src="lib/js/angular-resource.js"></script>
     <script src="lib/js/angular-ui-router.min.js"></script>
-    <script src="lib/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/js/angular-cookie/angular-cookie.js"></script>
+    <script src="lib/js/angular-resource.js"></script>
     <script src="lib/js/dist/ng-token-auth.js"></script>
-
-    <link rel='stylesheet' href='lib/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <script src="lib/js/angular-cookie/angular-cookie.js"></script>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <%= stylesheet_link_tag    'spa-demo', :media => "all" %>
     <%= javascript_include_tag 'spa-demo' %>
 
+  </body>
 </html>

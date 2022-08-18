@@ -15,9 +15,9 @@ class Api::ThingImagesController < ApplicationController
   end
 
   def image_things
-    authorize @thing, :get_things?
+    authorize @image, :get_things?
     @thing_images=@image.thing_images.prioritized.with_name
-    render :index 
+    render 'api/thing_images/index'
   end
 
   def linkable_things
@@ -28,8 +28,9 @@ class Api::ThingImagesController < ApplicationController
     @things=Thing.not_linked(image)
     @things=ThingPolicy::Scope.new(current_user,@things).user_roles(true,false)
     @things=ThingPolicy.merge(@things)
-    render "things/index"
+    render 'api/things/index'
   end
+  
   def create
     thing_image = ThingImage.new(thing_image_create_params.merge({
                                   :image_id=>params[:image_id],

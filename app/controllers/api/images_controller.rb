@@ -43,7 +43,7 @@ class Api::ImagesController < ApplicationController
         role.save!
         render :show, status: :created, location: @image
       else
-        render json: @image.errors, status: :unprocessable_entity
+        render json: {errors:@image.errors.messages}, status: :unprocessable_entity
       end
     end
   end
@@ -56,7 +56,7 @@ class Api::ImagesController < ApplicationController
     if @image.update(image_params)
       render :show, status: :ok, location: @image
     else
-      render json: @image.errors, status: :unprocessable_entity
+      render json: {errors:@image.errors.messages}, status: :unprocessable_entity
     end
   end
 

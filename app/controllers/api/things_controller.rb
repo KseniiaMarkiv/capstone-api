@@ -39,7 +39,7 @@ class Api::ThingsController < ApplicationController
         role.save!
         render :show, status: :created, location: @thing
       else
-        render json: @thing.errors, status: :unprocessable_entity
+        render json: {errors:@thing.errors.messages}, status: :unprocessable_entity
       end
     end
   end
@@ -51,7 +51,7 @@ class Api::ThingsController < ApplicationController
     if @thing.update(thing_params)
       render :show, status: :ok, location: @thing
     else
-      render json: @thing.errors, status: :unprocessable_entity
+      render json: {errors:@thing.errors.messages}, status: :unprocessable_entity
     end
   end
 
