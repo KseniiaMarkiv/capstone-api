@@ -3,21 +3,16 @@ class ThingsController < ApplicationController
   helper ThingsHelper
   before_action :set_thing, only: %i[show update destroy]
   before_action :authenticate_user!, only: %i[create update destroy]
+  wrap_parameters :thing, include: ['name', 'description', 'notes']
   after_action :verify_authorized
   after_action :verify_policy_scoped, only: [:index]
 
-  wrap_parameters :thing, include: %w[name description notes]
-  # GET /things
-  # GET /things.json
   def index
     authorize Thing
-    @things = policy_scope(Thing.all)
-    @things = ThingPolicy.merge(@things)
-    # pp @things.map(&:attributes)
+    things = policy_scope(Thing.all)
+    @things = ThingPolicy.merge(things)
   end
 
-  # GET /things/1
-  # GET /things/1.json
   def show
     authorize @thing
     things = ThingPolicy::Scope.new(current_user,
@@ -26,8 +21,6 @@ class ThingsController < ApplicationController
     @thing = ThingPolicy.merge(things).first
   end
 
-  # POST /things
-  # POST /things.json
   def create
     authorize Thing
     @thing = Thing.new(thing_params)
@@ -44,10 +37,9 @@ class ThingsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /things/1
-  # PATCH/PUT /things/1.json
   def update
     authorize @thing
+
     if @thing.update(thing_params)
       head :no_content
     else
@@ -55,24 +47,22 @@ class ThingsController < ApplicationController
     end
   end
 
-  # DELETE /things/1
-  # DELETE /things/1.json
   def destroy
     authorize @thing
     @thing.destroy
+
     head :no_content
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_thing
       @thing = Thing.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def thing_params
       params.require(:thing).tap {|p|
-        p.require(:name) #throws ActionController::ParameterMissing
-      }.permit(:name, :description, :notes)
+          p.require(:name) #throws ActionController::ParameterMissing
+        }.permit(:name, :description, :notes)
     end
 end

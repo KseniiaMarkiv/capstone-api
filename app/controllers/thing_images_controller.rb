@@ -1,7 +1,7 @@
 class ThingImagesController < ApplicationController
   include ActionController::Helpers
   helper ThingsHelper
-  wrap_parameters :thing_image, include: %i["image_id" "thing_id" "priority"]
+  wrap_parameters :thing_image, include: %i[image_id thing_id priority]
   before_action :get_thing, only: %i[index update destroy]
   before_action :get_image, only: %i[image_things]
   before_action :get_thing_image, only: %i[update destroy]

@@ -1009,7 +1009,7 @@
 
                 function reload(thingId) {
                     var itemId = thingId ? thingId : vm.item.id;
-                    console.log("reloading thing", itemId);
+                    console.log("re/loading thing", itemId);
                     vm.images = ThingImage.query({ thing_id: itemId });
                     vm.item = Thing.get({ id: itemId });
                     vm.thingsAuthz.newItem(vm.item);
@@ -1034,10 +1034,10 @@
                 }
 
                 function create() {
-                    // $scope.thingform.$setPristine();
                     vm.item.errors = null;
                     vm.item.$save().then(
                         function() {
+                            console.log("thing created", vm.item);
                             $state.go(".", { id: vm.item.id });
                         },
                         handleError);
@@ -1049,14 +1049,13 @@
                 }
 
                 function update() {
-                    // $scope.thingform.$setPristine();
                     vm.item.errors = null;
                     var update = vm.item.$update();
                     updateImageLinks(update);
                 }
 
                 function updateImageLinks(promise) {
-                    //console.log("updating links to images");
+                    console.log("updating links to images");
                     var promises = [];
                     if (promise) { promises.push(promise); }
                     angular.forEach(vm.images, function(ti) {
@@ -1067,10 +1066,10 @@
                         }
                     });
 
-                    //console.log("waiting for promises", promises);
+                    console.log("waiting for promises", promises);
                     $q.all(promises).then(
                         function(response) {
-                            //console.log("promise.all response", response); 
+                            console.log("promise.all response", response);
                             //update button will be disabled when not $dirty
                             $scope.thingform.$setPristine();
                             reload();
@@ -1137,7 +1136,8 @@
 
     var myApp = angular.module('spa-demo.subjects');
     myApp.factory('Thing', ['$resource', 'APP_CONFIG', function($resource, APP_CONFIG) {
-        return $resource(APP_CONFIG.server_url + "/api/things/:id", { id: '@id' }, { update: { method: "PUT" } });
+        var service = $resource(APP_CONFIG.server_url + "/api/things/:id", { id: '@id' }, { update: { method: "PUT" } });
+        return service;
     }]);
 
 })();
