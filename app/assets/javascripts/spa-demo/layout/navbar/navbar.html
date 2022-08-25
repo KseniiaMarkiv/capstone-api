@@ -1,70 +1,54 @@
-<div class="collapse" id="navbarToggleExternalContent">
-    <div class="bg-mine-blue p-4">
-        <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="#">
-                <h5 class="text-white">Navbar</h5>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
-                    </li>
-
-                    <li class="nav-item dropdown btn-group dropend">
-                        <a class="nav-link dropdown-toggle text-white btn btn-default" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Go To
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-start bg-light" aria-labelledby="navbarDropdown" id="navDropDown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li ui-sref-active="active">
-                                <a ui-sref="images({id:null})" class="dropdown-item">Images</a>
-                            </li>
-                            <li ui-sref-active="active">
-                                <a ui-sref="things({id:null})" class="dropdown-item">Things</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li ui-sref-active="active">
-                                <a ui-sref="authn" class="dropdown-item authCheck fst-italic" style="color:#0055FF;">Authentication Check</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-
-            </div>
-            <span class="text-muted pe-3">Toggleable via the navbar brand.</span>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-info" type="submit">Submit</button>
-            </form>
-        </nav>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" ui-sref="home">Brand</a>
     </div>
-</div>
-<nav class="navbar navbar-dark bg-mine-yellow">
-    <div class="container-navbar d-flex">
-        <button id="navMine" class="navbar-toggler custom-toggler me-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="btn-group dropstart">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle btn btn-default" href="#" id="login-dropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span id="navbar-loginlabel" class="fw-bold fs-5" style="color:#0055FF">{{$ctrl.getLoginLabel()}}</span>
-                    </a>
-                    <ul class="dropdown-menu position-absolute bg-light" id='authnSession' aria-labelledby="dropdownMenuClickableOutside">
-                        <li>
-                            <sd-authn-session></sd-authn-session>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Go To<span class="caret"></span></a>
+
+          <ul class="dropdown-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="authn">Authentication Check</a></li>
+            <li ui-sref-active="active">
+                <a ui-sref="images({id:null})">Images</a></li>
+            <li ui-sref-active="active">
+                <a ui-sref="things({id:null})">Things</a></li>
+          </ul>
+          
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
         </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
 
-        <!--container-fluid -->
-    </div>
 
+      <ul class="nav navbar-nav navbar-right">
+        <li id="login-dropdown" class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <span id="navbar-loginlabel">{{$ctrl.getLoginLabel()}}</span>
+          <span class="caret"></span></a>
+
+          <ul class="dropdown-menu">
+            <li><sd-authn-session></sd-authn-session></li>
+          </ul>
+        </li>
+      </ul>
+
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>

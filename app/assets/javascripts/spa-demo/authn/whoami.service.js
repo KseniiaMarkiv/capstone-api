@@ -1,8 +1,12 @@
 (function() {
-    "use strict";
+  "use strict";
 
-    var myApp = angular.module("spa-demo.authn")
-    myApp.factory('spa-demo.authn.whoAmI', ['$resource', 'APP_CONFIG', function($resource, APP_CONFIG) {
-        return $resource(APP_CONFIG.server_url + "/authn/whoami");
-    }]);
+  angular
+    .module("spa-demo.authn")
+    .factory("spa-demo.authn.whoAmI", WhoAmIFactory);
+
+  WhoAmIFactory.$inject = ["$resource", "spa-demo.config.APP_CONFIG"];
+  function WhoAmIFactory($resource, APP_CONFIG) {
+    return $resource(APP_CONFIG.server_url + "/authn/whoami");
+  }
 })();

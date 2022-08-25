@@ -1,23 +1,27 @@
 (function() {
-    "use strict";
+  "use strict";
 
-    var myApp = angular.module("spa-demo.subjects")
-    myApp.factory("ImagesAuthz", ["Authz", "BasePolicy", function ImagesAuthzFactory(Authz, BasePolicy) {
-        function ImagesAuthz() {
-            BasePolicy.call(this, "Image");
-        }
+  angular
+    .module("spa-demo.subjects")
+    .factory("spa-demo.subjects.ImagesAuthz", ImagesAuthzFactory);
 
-        //start with base class prototype definitions
-        ImagesAuthz.prototype = Object.create(BasePolicy.prototype);
-        ImagesAuthz.constructor = ImagesAuthz;
+  ImagesAuthzFactory.$inject = ["spa-demo.authz.Authz",
+                                "spa-demo.authz.BasePolicy"];
+  function ImagesAuthzFactory(Authz, BasePolicy) {
+    function ImagesAuthz() {
+      BasePolicy.call(this, "Image");
+    }
 
-        //override and add additional methods
-        ImagesAuthz.prototype.canCreate = function() {
-            //console.log("ItemsAuthz.canCreate");
-            return Authz.isAuthenticated();
-        };
+      //start with base class prototype definitions
+    ImagesAuthz.prototype = Object.create(BasePolicy.prototype);
+    ImagesAuthz.constructor = ImagesAuthz;
 
-        return new ImagesAuthz();
+      //override and add additional methods
+    ImagesAuthz.prototype.canCreate=function() {
+      //console.log("ItemsAuthz.canCreate");
+      return Authz.isAuthenticated();
+    };
 
-    }]);
+    return new ImagesAuthz();
+  }
 })();

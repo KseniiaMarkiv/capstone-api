@@ -1,14 +1,19 @@
 (function() {
-    'use strict';
+    "use strict";
 
-    var myApp = angular.module('spa-demo.subjects');
-    myApp.factory('ThingImage', ['$resource', 'APP_CONFIG', function($resource, APP_CONFIG) {
+    angular
+        .module("spa-demo.subjects")
+        .factory("spa-demo.subjects.ThingImage", ThingImage);
+
+    ThingImage.$inject = ["$resource", "spa-demo.config.APP_CONFIG"];
+
+    function ThingImage($resource, APP_CONFIG) {
         return $resource(APP_CONFIG.server_url + "/api/things/:thing_id/thing_images/:id", {
             thing_id: '@thing_id',
             id: '@id'
         }, {
             update: { method: "PUT" }
         });
-    }]);
+    }
 
 })();

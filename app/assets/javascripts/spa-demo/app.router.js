@@ -1,41 +1,40 @@
 (function() {
-    'use strict';
-    //  'use babel';
+  "use strict";
 
-    var myApp = angular.module('spa-demo')
+  angular
+    .module("spa-demo")
+    .config(RouterFunction);
 
-    myApp.config(['$stateProvider', '$urlRouterProvider', 'APP_CONFIG', function($stateProvider, $urlRouterProvider, APP_CONFIG) {
-        var homeState = {
-            name: 'home',
-            url: '/',
-            templateUrl: APP_CONFIG.main_page_html
-        }
-        var accountSignup = {
-            name: 'accountSignup',
-            url: '/signup',
-            templateUrl: APP_CONFIG.signup_page_html
-        }
-        var authnState = {
-            name: "authn",
-            url: "/authn",
-            templateUrl: APP_CONFIG.authn_page_html
-        }
-        var imageState = {
-            name: "images",
-            url: "/images/:id",
-            templateUrl: APP_CONFIG.images_page_html
-        }
-        var thingState = {
-            name: "things",
-            url: "/things/:id",
-            templateUrl: APP_CONFIG.things_page_html
-        }
-        $stateProvider.state(homeState);
-        $stateProvider.state(accountSignup);
-        $stateProvider.state(authnState);
-        $stateProvider.state(imageState);
-        $stateProvider.state(thingState);
+  RouterFunction.$inject = ["$stateProvider",
+                            "$urlRouterProvider", 
+                            "spa-demo.config.APP_CONFIG"];
 
-        $urlRouterProvider.otherwise('/');
-    }]);
+  function RouterFunction($stateProvider, $urlRouterProvider, APP_CONFIG) {
+    $stateProvider
+    .state("home",{
+      url: "/",
+      templateUrl: APP_CONFIG.main_page_html,
+      // controller: ,
+      // controllerAs: ,
+    })
+    .state("accountSignup",{
+      url: "/signup",
+      templateUrl: APP_CONFIG.signup_page_html
+    })
+    .state("authn",{ 
+      url: "/authn",
+      templateUrl: APP_CONFIG.authn_page_html
+    })
+    .state("images",{
+      url: "/images/:id",
+      templateUrl: APP_CONFIG.images_page_html
+    })
+    .state("things",{
+      url: "/things/:id",
+      templateUrl: APP_CONFIG.things_page_html
+    })
+    ; 
+
+    //$urlRouterProvider.otherwise("/"); eliminate default route
+  }
 })();

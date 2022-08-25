@@ -45,7 +45,7 @@ gem 'mongoid'#, git: 'https://github.com/mongodb/mongoid.git', branch: 'master'
 gem 'httparty'
 gem 'rack-cors'
 gem 'rexml', '~> 3.2', '>= 3.2.5'
-
+gem 'jquery-rails', '~> 4.5'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
 
@@ -97,4 +97,12 @@ gem 'rails_serve_static_assets'
 #   gem 'rails-assets-angular-ui-router'#, '~>0.3.1'
 #   gem 'rails-assets-angular-resource'#, '~>1.5.9'
 # end
+source 'https://rails-assets.org' do
+  gem 'rails-assets-bootstrap', '3.4.1'
+  gem 'rails-assets-angular', '1.5.9'
+  gem 'rails-assets-angular-ui-router', '0.4.3'
+  gem 'rails-assets-angular-resource', '1.5.9'
+  gem 'rails-assets-ng-token-auth', '0.0.30'
+  gem 'rails-assets-angular-cookie' #required by ng-token-auth
+end
 gem "matrix", "~> 0.4.2"
