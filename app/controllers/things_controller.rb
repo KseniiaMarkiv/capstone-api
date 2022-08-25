@@ -1,4 +1,4 @@
-class Api::ThingsController < ApplicationController
+class ThingsController < ApplicationController
   include ActionController::Helpers
   helper ThingsHelper
   before_action :set_thing, only: %i[show update destroy]
@@ -49,7 +49,7 @@ class Api::ThingsController < ApplicationController
   def update
     authorize @thing
     if @thing.update(thing_params)
-      render :show, status: :ok, location: @thing
+      head :no_content
     else
       render json: {errors:@thing.errors.messages}, status: :unprocessable_entity
     end

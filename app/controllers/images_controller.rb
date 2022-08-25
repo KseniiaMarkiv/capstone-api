@@ -1,4 +1,4 @@
-class Api::ImagesController < ApplicationController
+class ImagesController < ApplicationController
   before_action :set_image, only: %i[show update destroy]
   wrap_parameters :image, include: ['caption']
   before_action :authenticate_user!, only: %i[create update destroy]
@@ -54,7 +54,7 @@ class Api::ImagesController < ApplicationController
     authorize @image
 
     if @image.update(image_params)
-      render :show, status: :ok, location: @image
+      head :no_content
     else
       render json: {errors:@image.errors.messages}, status: :unprocessable_entity
     end

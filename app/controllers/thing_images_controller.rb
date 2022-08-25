@@ -1,4 +1,4 @@
-class Api::ThingImagesController < ApplicationController
+class ThingImagesController < ApplicationController
   include ActionController::Helpers
   helper ThingsHelper
   wrap_parameters :thing_image, include: %i["image_id" "thing_id" "priority"]
@@ -17,7 +17,7 @@ class Api::ThingImagesController < ApplicationController
   def image_things
     authorize @image, :get_things?
     @thing_images=@image.thing_images.prioritized.with_name
-    render 'api/thing_images/index'
+    render :index
   end
 
   def linkable_things
@@ -28,7 +28,7 @@ class Api::ThingImagesController < ApplicationController
     @things=Thing.not_linked(image)
     @things=ThingPolicy::Scope.new(current_user,@things).user_roles(true,false)
     @things=ThingPolicy.merge(@things)
-    render 'api/things/index'
+    render 'things/index'
   end
   
   def create
