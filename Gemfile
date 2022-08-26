@@ -98,7 +98,7 @@ gem 'rails_serve_static_assets'
 #   gem 'rails-assets-angular-resource'#, '~>1.5.9'
 # end
 source 'https://rails-assets.org' do
-  gem 'rails-assets-bootstrap', '3.4.1'
+  gem 'rails-assets-bootstrap', '5.1.3'
   gem 'rails-assets-angular', '1.5.9'
   gem 'rails-assets-angular-ui-router', '0.4.3'
   gem 'rails-assets-angular-resource', '1.5.9'

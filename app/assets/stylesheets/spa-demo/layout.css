@@ -2,30 +2,105 @@
  * layout.css
  */
 
- body {
-  background-color: #d2b48c;
- }
+@import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam&display=swap');
+ :root {
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+body {
+    font-family: "Anek Malayalam", sans-serif, 400;
+    background-color: white;
+    background-size: cover;
+    z-index: 1;
+    /* overflow: hidden; */
+}
+
+body:after {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    z-index: -1;
+}
 
 form .invalid {
-  color: red;
+    color: red;
+    font-weight: bold;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
 }
 
-.fullsize {
-  padding-right: 0px;
-  padding-left: 0px;
+.invalid-error {
+    color: red;
+    font-weight: bold;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
 }
 
-/*********** navbar *************/
+input[type=submit] {
+    padding: 4px 8px 4px;
+    margin-top: 10px;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color: white;
+    color: #52c57b;
+    border: 1px solid #89d4a3;
+    font-size: 0.875rem;
+}
 
-.nav li form {
-  padding-left: 10px; /* adds spacing along left of dropdown menu form */
-  padding-right: 10px;
+input[type=submit]:hover {
+    background-color: #8cf0af;
+    color: white;
+}
+
+.btn-outline-warning.btn-sm:hover {
+    color: white;
+    background-color: #ffc107;
+}
+
+.btn-outline-danger.btn-sm {
+    margin-top: 10px;
+    color: #f3375d;
+    border: 1px solid #f3375d;
+}
+
+.btn-outline-danger.btn-sm:hover {
+    background-color: #f3375d;
+    color: white;
+}
+
+
+/* unordered list */
+
+ul.bg-yellow {
+    color: #0277bd;
+    /* background-color: #eeff41; */
+    list-style-type: circle;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+li.fooscolor>a {
+    color: #0277bd;
+    /* font-family: Consolas monospace; */
+    font-family: 'Redressed', cursive;
+    /* font-size: 1.1em; */
+    text-decoration: none;
+}
+
+
+/* mouse over link */
+
+li.fooscolor>a:hover {
+    color: hotpink;
 }
 
 [readonly='readonly'] {
-  background-color: inherit;
+    background-color: inherit;
 }
 
 button:disabled {
-    color:#717782;
+    color: #717782;
 }

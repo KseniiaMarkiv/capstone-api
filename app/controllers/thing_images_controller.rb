@@ -1,13 +1,13 @@
 class ThingImagesController < ApplicationController
   include ActionController::Helpers
   helper ThingsHelper
-  wrap_parameters :thing_image, include: %i[image_id thing_id priority]
-  before_action :get_thing, only: %i[index update destroy]
-  before_action :get_image, only: %i[image_things]
-  before_action :get_thing_image, only: %i[update destroy]
-  before_action :authenticate_user!, only: %i[create update destroy]
+  wrap_parameters :thing_image, include: ["image_id", "thing_id", "priority"]
+  before_action :get_thing, only: [:index, :update, :destroy]
+  before_action :get_image, only: [:image_things]
+  before_action :get_thing_image, only: [:update, :destroy]
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
   after_action :verify_authorized
-  # after_action :verify_policy_scoped, only: [:linkable_things]
+  #after_action :verify_policy_scoped, only: [:linkable_things]
 
   def index
     authorize @thing, :get_images?
@@ -17,7 +17,7 @@ class ThingImagesController < ApplicationController
   def image_things
     authorize @image, :get_things?
     @thing_images=@image.thing_images.prioritized.with_name
-    render :index
+    render :index 
   end
 
   def linkable_things
@@ -28,9 +28,9 @@ class ThingImagesController < ApplicationController
     @things=Thing.not_linked(image)
     @things=ThingPolicy::Scope.new(current_user,@things).user_roles(true,false)
     @things=ThingPolicy.merge(@things)
-    render 'things/index'
+    render "things/index"
   end
-  
+
   def create
     thing_image = ThingImage.new(thing_image_create_params.merge({
                                   :image_id=>params[:image_id],
@@ -79,6 +79,7 @@ class ThingImagesController < ApplicationController
     def get_thing_image
       @thing_image ||= ThingImage.find(params[:id])
     end
+
     def thing_image_create_params
       params.require(:thing_image).tap {|p|
           #_ids only required in payload when not part of URI
