@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Role, type: :model do
+
   context "user assigned roles" do
     # we start with an instance of a Devise user in the database
     let(:user) { FactoryBot.create(:user) }

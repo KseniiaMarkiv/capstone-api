@@ -64,6 +64,37 @@ module ApiHelper
   #   }
   #   auth_params
   # end
+  # def create_resource path, factory, status=:created
+  #   jpost path, FactoryGirl.attributes_for(factory)
+  # post cities_url, params: { city: valid_attributes }
+  #   expect(response).to have_http_status(status) if status
+  #   parsed_body
+  # end
+
+  def apply_admin account
+    User.find(account.symbolize_keys[:id]).roles.create(:role_name=>Role::ADMIN)
+    return account
+  end
+  def apply_originator account, model_class
+    User.find(account.symbolize_keys[:id]).add_role(Role::ORIGINATOR, model_class).save
+    return account
+  end
+  def apply_role account, role, object
+    user=User.find(account.symbolize_keys[:id])
+    arr=object.kind_of?(Array) ? object : [object]
+    arr.each do |m|
+      user.add_role(role, m).save
+    end
+    return account
+  end
+  def apply_organizer account, object
+    apply_role(account,Role::ORGANIZER, object)
+  end
+  def apply_member account, object
+    apply_role(account, Role::MEMBER, object)
+  end
+
+
   RSpec.shared_examples "resource index" do |model|
     let!(:resources) { FactoryBot.create_list( model, 5) }
     let!(:apply_roles) { apply_organizer User.find(user["id"]), resources }
