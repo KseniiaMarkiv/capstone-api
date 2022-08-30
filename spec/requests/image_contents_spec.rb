@@ -9,24 +9,21 @@ RSpec.describe "ImageContents", type: :request do
   # let!(:user_props) { login signup(FactoryBot.attributes_for(:user)) }
   let(:image_props) { FactoryBot.attributes_for(:image) }
   let(:image_cont_props) { FactoryBot.attributes_for(:image_content) }
-  let(:valid_headers) {
-    { headers: headers } 
- }
+  let(:valid_headers) { { headers: headers } }
 
   context "lifecycle" do
     include_context "db_clean_after"
 
     it "generates sizes from original" do
-      # pp except_content image_props
-      # pp response.headers
-      post images_url, params: { image: image_props, image_content: image_cont_props }, headers: valid_headers.merge(account.create_new_auth_token)
-      # pp response.headers
+      pp except_content image_props
+      post images_url, params: 
+      {
+        image: image_props, image_content: image_cont_props 
+      },
+        headers: valid_headers.merge(account.create_new_auth_token)
       json = parsed_body
       pp json
-      # expect(json).to eq(image_props[:caption])
-      
-      # jpost images_url, params: { image: image_props }, headers: valid_headers 
-    #  pp response.headers
+
       expect(response).to have_http_status(:created)
       image=Image.find(parsed_body["id"])
       expect(ImageContent.image(image).count).to eq(5)
