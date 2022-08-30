@@ -25,7 +25,7 @@ RSpec.describe "/images", type: :request do
   
   shared_examples "cannot create" do 
     it "create fails" do
-      post api_images_path, params: { city: valid_attributes }
+      post images_path, params: { image: valid_attributes }
       expect(response.status).to be >= 400
       expect(response.status).to be < 500
       expect(parsed_body).to include("errors")
@@ -33,7 +33,7 @@ RSpec.describe "/images", type: :request do
   end
   shared_examples "can create" do
     it "is created" do
-      post api_images_path, params: { city: valid_attributes }
+      post images_path, params: { image: valid_attributes }
       pp parsed_body
       expect(response).to have_http_status(:found)
       payload=parsed_body
@@ -43,7 +43,7 @@ RSpec.describe "/images", type: :request do
   end
   shared_examples "all fields present" do 
     it "list has all fields" do
-      get api_images_path
+      get images_path
       expect(response).to have_http_status(:ok)
       #pp parsed_body
       payload=parsed_body
@@ -54,7 +54,7 @@ RSpec.describe "/images", type: :request do
       end
     end
     it "get has all fields" do
-      get api_image_path(image_id)
+      get image_path(image_id)
       expect(response).to have_http_status(:ok)
       #pp parsed_body
       payload=parsed_body

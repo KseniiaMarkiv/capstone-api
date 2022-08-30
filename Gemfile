@@ -46,7 +46,6 @@ gem 'mongo'
 gem 'mongoid'#, git: 'https://github.com/mongodb/mongoid.git', branch: 'master'
 gem 'httparty'
 gem 'rack-cors'
-gem 'rexml', '~> 3.2', '>= 3.2.5'
 gem 'jquery-rails', '~> 4.5'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
@@ -75,7 +74,8 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 4.0.0.alpha7'
   gem 'simplecov', require: false
   gem 'rspec-rails', '~> 6.0.0.rc1'
-  gem 'webdrivers', '~> 4.0', require: false
+  gem 'rexml', '~> 3.2', '>= 3.2.5'
+  gem 'webdrivers', '~> 4.0' #, require: false
 end
 
 group :development do

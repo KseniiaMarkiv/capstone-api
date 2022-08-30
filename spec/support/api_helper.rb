@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+require 'exifr/jpeg'
 module ApiHelper
   def parsed_body
     JSON.parse(response.body)
@@ -15,14 +15,13 @@ module ApiHelper
   #   end
   # end
 
-  def signup user, status = :ok
-    post user_registration_path,
-      params: { name: user[:name],
-      email: user[:email],
-      password: user[:password],
-      password_confirmation: user[:password] },
-    headers: user[:headers],
-    as: :json
+  def signup(user, status = :ok)
+    post user_registration_path, params:
+      { name: user[:name],
+        email: user[:email],
+        password: user[:password],
+        password_confirmation: user[:password] },
+      headers: user[:headers], as: :json
     expect(response).to have_http_status(status)
   
   end
@@ -35,14 +34,13 @@ module ApiHelper
   #   response.headers.slice('client', 'access-token', 'uid', 'token-type')
   # end
 
-  def login user, status = :ok
+  def login(user, status = :ok)
     signup(FactoryBot.attributes_for(:user))
     assert_response :success
        
-    user = FactoryBot.create(:user) # factory to create user
-  pp request.headers.merge! user.create_new_auth_token 
+    get_user = FactoryBot.create(:user) # factory to create user
+    request.headers.merge! get_user.create_new_auth_token
     expect(response).to have_http_status(status)
-    
   end
   def logout status=:not_found
     delete '/auth/sign_out'
@@ -94,14 +92,25 @@ module ApiHelper
     apply_role(account, Role::MEMBER, object)
   end
 
-
+  #returns a hash without the noisy content property
+  def except_content original
+    if original[:image_content] && original[:image_content][:content] 
+      clone=original.clone
+      bytes=original[:image_content][:content].size
+      clone[:image_content]=original[:image_content].clone
+      clone[:image_content][:content]="#{bytes} bytes"
+      return clone
+    else
+      return original
+    end
+  end
   RSpec.shared_examples "resource index" do |model|
     let!(:resources) { FactoryBot.create_list( model, 5) }
     let!(:apply_roles) { apply_organizer User.find(user["id"]), resources }
     let(:json) { parsed_body }
   
     it "returns all #{model} instances" do
-      get send("api_#{model}s_path"), params: { "#{model}": resources }, headers: headers, as: :json
+      get send("#{model}s_path"), params: { "#{model}": resources }, headers: headers, as: :json
       expect(response).to have_http_status(:ok)
       assert_equal "application/json", @response.media_type
   
@@ -117,14 +126,14 @@ module ApiHelper
     let(:bad_id) { 1234567890 }
   
     it "returns #{model} when using correct ID" do
-      get send("api_#{model}_path", resource.id)
+      get send("#{model}_path", resource.id)
       expect(response).to have_http_status(:ok)
       assert_equal "application/json", @response.media_type
       response_check if respond_to?(:response_check)
     end
   
     it "returns not found when using incorrect ID" do
-      get send("api_#{model}_path", bad_id)
+      get send("#{model}_path", bad_id)
       expect(response).to have_http_status(:not_found)
       assert_equal "application/json", @response.media_type
   
@@ -158,7 +167,7 @@ module ApiHelper
   RSpec.shared_examples "modifiable resource" do |model|
     let(:resource_state) {FactoryBot.create(:"#{model}")}
     let(:resource) do 
-      post send("api_#{model}s_path"), params: { "#{model}": {:name=>resource_state[:name]}}, headers: headers, as: :json
+      post send("#{model}s_path"), params: { "#{model}": {:name=>resource_state[:name]}}, headers: headers, as: :json
       expect(response).to have_http_status(:created)
       parsed_body
     end
@@ -170,7 +179,7 @@ module ApiHelper
       # pp new_name
       
       # change to new state
-      put send("api_#{model}_path", resource["id"]), params: { "#{model}": new_name }, headers: headers, as: :json
+      put send("#{model}_path", resource["id"]), params: { "#{model}": new_name }, headers: headers, as: :json
       resource_state.reload
       expect(response).to have_http_status(:ok)
 
@@ -178,14 +187,14 @@ module ApiHelper
     end
   
     it "can be deleted" do
-      head send("api_#{model}_path", resource["id"])
+      head send("#{model}_path", resource["id"])
       assert_response :ok
       assert_equal "application/json", @response.media_type
   
-      delete send("api_#{model}_path", resource["id"])
+      delete send("#{model}_path", resource["id"])
       expect(response).to have_http_status(:no_content)
       
-      head send("api_#{model}_path", resource["id"])
+      head send("#{model}_path", resource["id"])
       expect(response).to have_http_status(:not_found)
     end
   end

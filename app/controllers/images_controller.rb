@@ -1,7 +1,7 @@
 class ImagesController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :set_image, only: [:show, :update, :destroy]
   wrap_parameters :image, include: ["caption"]
-  before_action :authenticate_user!, only: [:create, :update, :destroy]
   after_action :verify_authorized
   after_action :verify_policy_scoped, only: [:index]
 
@@ -24,10 +24,14 @@ class ImagesController < ApplicationController
 
     User.transaction do
       if @image.save
-        role=current_user.add_role(Role::ORGANIZER, @image)
-        @image.user_roles << role.role_name
-        role.save!
-        render :show, status: :created, location: @image
+        original=ImageContent.new(image_content_params)
+        contents=ImageContentCreator.new(@image, original).build_contents
+        if (contents.save!) 
+          role=current_user.add_role(Role::ORGANIZER, @image)
+          @image.user_roles << role.role_name
+          role.save!
+          render :show, status: :created, location: @image
+        end
       else
         render json: {errors:@image.errors.messages}, status: :unprocessable_entity
       end
@@ -59,5 +63,12 @@ class ImagesController < ApplicationController
 
     def image_params
       params.require(:image).permit(:caption)
+    end
+
+    def image_content_params
+      params.require(:image_content).tap { |ic|
+        ic.require(:content_type)
+        ic.require(:content)
+      }.permit(:content_type, :content)
     end
 end

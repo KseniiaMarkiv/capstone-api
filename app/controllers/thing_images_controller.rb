@@ -2,10 +2,11 @@ class ThingImagesController < ApplicationController
   include ActionController::Helpers
   helper ThingsHelper
   wrap_parameters :thing_image, include: ["image_id", "thing_id", "priority"]
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
   before_action :get_thing, only: [:index, :update, :destroy]
   before_action :get_image, only: [:image_things]
   before_action :get_thing_image, only: [:update, :destroy]
-  before_action :authenticate_user!, only: [:create, :update, :destroy]
+  
   after_action :verify_authorized
   #after_action :verify_policy_scoped, only: [:linkable_things]
 
