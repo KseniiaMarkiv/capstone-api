@@ -62,7 +62,7 @@ RSpec.describe "/images", type: :request do
       expect(payload).to include("caption"=>image.caption)
     end
   end
-
+ 
   describe "access" do
     let(:images_props) { FactoryBot.attributes_for(:image, :with_caption) }
     let(:image_props) { images_props[0] }

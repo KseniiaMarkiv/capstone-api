@@ -1,11 +1,12 @@
 module ImageContentHelper
-  BASE_URL="https://loremflickr.com/cache/resized"
-  URL_PATH="65535_51046544336_f19600366c_c_640_480_nofilter.jpg"
-  IMAGE_PATH="db/images/vacaciones-playa-verano.jpg"
+  random_city = ['travels', 'paris', 'florida', 'travel', 'ukraine', 'china', 'haiti', 'portugal', 'italy', 'india', 'israel', 'greece', 'barbados', 'brazil', 'belgium', 'estonia']
+  BASE_URL=Faker::LoremFlickr.image(size: "840x680", search_terms: [random_city.sample])
+  # URL_PATH="#{BASE_URL}"
+  IMAGE_PATH="db/images/3.jpg"
 
 
   def download_image
-    image_url="#{BASE_URL}/#{URL_PATH}"
+    image_url="#{BASE_URL}"
     puts "downloading #{image_url} to #{IMAGE_PATH}"
 
     FileUtils::mkdir_p(File.dirname(IMAGE_PATH))
@@ -21,3 +22,4 @@ module ImageContentHelper
   end
 
 end
+ 

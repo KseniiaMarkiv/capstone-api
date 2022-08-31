@@ -16,11 +16,11 @@ browser = :firefox
 Capybara.register_driver :selenium do |app|
   if browser == :chrome
     require 'webdrivers/chromedriver'
-    Selenium::WebDriver::Chrome.path = 'C:\WebDriver\bin\chromedriver.exe'
+    Selenium::WebDriver::Chrome.path = '/mnt/c/WebDriver/bin/chromedriver.exe'
     Capybara::Selenium::Driver.new(app, browser: :chrome)
   else
     require 'webdrivers/geckodriver'
-    Selenium::WebDriver::Firefox.path = 'C:\WebDriver\bin\geckodriver.exe'
+    Selenium::WebDriver::Firefox.path = '/mnt/c/WebDriver/bin/geckodriver.exe'
     Capybara::Selenium::Driver.new(app, browser: :firefox)
   end
 end

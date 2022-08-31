@@ -18,7 +18,9 @@ RSpec.describe "ImageContent", type: :model do
       fout.write(binary.data)
       expect(fout.size).to eq(fin.size)
       fout.close
+      
     end
+
     context "using helper" do
       it "derives BSON::Binary from file" do
         binary=ImageContent.to_binary(fin)

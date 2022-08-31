@@ -15,7 +15,7 @@ FactoryBot.define do
 
   factory :originator, class: User, parent: :user do
     transient do
-      mname nil
+      mname { nil }
     end
     after(:build) do |user, props|
       user.roles.build(role_name: Role::ORIGINATOR, mname: props.mname)

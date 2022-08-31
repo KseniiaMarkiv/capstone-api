@@ -57,6 +57,7 @@ RSpec.describe "/states", type: :request do
       it "redirects to the created state" do
         post states_url, params: { state: valid_attributes }
         expect(response).to redirect_to(state_url(State.last))
+        assert_routing({ path: 'api/states', method: :post }, { controller: 'states', action: 'create' })
       end
     end
 

@@ -58,6 +58,9 @@ class ImageContent
       self.height = xf.height if xf
     end
   end
+  def suffix
+    "jpg" if CONTENT_TYPES.include? content_type
+  end
 
   def self.to_binary(value)
     case

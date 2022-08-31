@@ -19,7 +19,7 @@ FactoryBot.define do
     end
     trait :with_roles do
       transient do
-        originator_id {1}
+        originator_id { 1 }
         member_id nil
       end
 

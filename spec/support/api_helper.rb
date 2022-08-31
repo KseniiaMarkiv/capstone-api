@@ -34,6 +34,7 @@ module ApiHelper
   #   response.headers.slice('client', 'access-token', 'uid', 'token-type')
   # end
 
+  # ************** Work only GET auth action ***********
   def login(user, status = :ok)
     signup(FactoryBot.attributes_for(:user))
     assert_response :success

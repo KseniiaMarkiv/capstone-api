@@ -37,7 +37,7 @@ RSpec.describe 'Mainpages', type: :feature do
       expect(page).to have_css 'h1'
     end
   end
-  xfeature 'with Angular when the main page is accessed', js: true do
+  feature 'with Angular when the main page is accessed', js: true do
     before(:each) do
       # binding.pry
       visit '/'

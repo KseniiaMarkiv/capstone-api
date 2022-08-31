@@ -1,12 +1,9 @@
 require 'rails_helper'
-require 'exifr/jpeg'
 
 RSpec.describe "ImageContents", type: :request do
   include_context "db_cleanup"
  
   let!(:account) { FactoryBot.create(:user) }
-  # let(:account) { signup FactoryBot.attributes_for(:user) }
-  # let!(:user_props) { login signup(FactoryBot.attributes_for(:user)) }
   let(:image_props) { FactoryBot.attributes_for(:image) }
   let(:image_cont_props) { FactoryBot.attributes_for(:image_content) }
   let(:valid_headers) { { headers: headers } }
@@ -15,27 +12,32 @@ RSpec.describe "ImageContents", type: :request do
     include_context "db_clean_after"
 
     it "generates sizes from original" do
-      pp except_content image_props
-      post images_url, params: 
-      {
-        image: image_props, image_content: image_cont_props 
-      },
-        headers: valid_headers.merge(account.create_new_auth_token)
-      json = parsed_body
-      pp json
+      # pp except_content image_props
+      # pp except_content image_cont_props
 
+      post images_url, params:
+      {
+        image: image_props, image_content: image_cont_props
+      },
+        headers: valid_headers.merge(account.create_new_auth_token), as: :json
+      # json = parsed_body
+      # pp json
       expect(response).to have_http_status(:created)
       image=Image.find(parsed_body["id"])
       expect(ImageContent.image(image).count).to eq(5)
     end
 
     it "provides ImageContent upon request" do
-      post images_url, params: { image: image_props } 
+      post images_url, params:
+      {
+        image: image_props, image_content: image_cont_props
+      },
+        headers: valid_headers.merge(account.create_new_auth_token), as: :json
       expect(response).to have_http_status(:created)
       image=Image.find(parsed_body["id"])
       get image_content_path(image.id)   #no need for credentials
       expect(response).to have_http_status(:ok)
-      #pp response.header
+      pp response.header
       expect(response.header["content-transfer-encoding"]).to eq("binary")
       expect(response.header["content-type"]).to eq("image/jpg")
       expect(response.header["content-disposition"]).to include("inline")
@@ -46,17 +48,25 @@ RSpec.describe "ImageContents", type: :request do
     end
 
     it "deletes ImageContent with image" do
-      jpost images_url, image_props
+      post images_url, params:
+      {
+        image: image_props, image_content: image_cont_props
+      },
+        headers: valid_headers.merge(account.create_new_auth_token), as: :json
       expect(response).to have_http_status(:created)
       id=parsed_body["id"]
       expect(Image.where(:id=>id)).to exist
       expect(ImageContent.where(:image_id=>id)).to exist
 
-      jdelete image_url(id)
+      delete image_url(id), params:
+      {
+        image: image_props, image_content: image_cont_props
+      },
+        headers: valid_headers.merge(account.create_new_auth_token), as: :json
       expect(response).to have_http_status(:no_content)
 
       expect(Image.where(:id=>id)).to_not exist
-      expect(ImageContent.where(:image_id=>id)).to_not exist
+      expect(ImageContent.where(:id=>id)).to_not exist
 
       get image_content_path(id)
       expect(response).to have_http_status(:not_found)

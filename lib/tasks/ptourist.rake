@@ -1,9 +1,12 @@
+require 'exifr/jpeg'
 namespace :ptourist do
   MEMBERS=["mike","carol","alice","greg","marsha","peter","jan","bobby","cindy", "sam"]
   ADMINS=["mike","carol"]
   ORIGINATORS=["carol","alice"]
   BOYS=["greg","peter","bobby"]
   GIRLS=["marsha","jan","cindy"]
+  random_city = ['travels', 'paris', 'florida', 'travel', 'ukraine', 'china', 'haiti', 'portugal', 'italy', 'india', 'israel', 'greece', 'barbados', 'brazil', 'belgium', 'estonia']
+  BASE_URL=Faker::LoremFlickr.image(size: "840x680", search_terms: [random_city.sample])
 
   def user_name first_name
     last_name = (first_name=="alice") ? "nelson" : "brady"
@@ -53,6 +56,17 @@ namespace :ptourist do
     puts "building image for #{img[:caption]}, by #{organizer.name}"
     image=Image.create(creator_id: organizer.id, caption: img[:caption])
     organizer.add_role(Role::ORGANIZER, image).save
+    create_image_content img.merge(:image=>image)
+  end
+  def create_image_content img
+    url="#{img[:path]}"
+    # url=img[:path]
+    puts "downloading #{url}"
+    contents = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE ).read
+    original_content=ImageContent.new(:image_id=>img[:image].id,
+                                      :content_type=>"image/jpeg", 
+                                      :content=>BSON::Binary.new(contents))
+    ImageContentCreator.new(img[:image], original_content).build_contents.save!
   end
   def create_thing thing, organizer, members, images
     thing=Thing.create!(thing)
@@ -72,6 +86,7 @@ namespace :ptourist do
       ThingImage.new(:thing=>thing, :image=>image, 
                      :creator_id=>organizer.id)
                 .tap {|ti| ti.priority=img[:priority] if img[:priority]}.save!
+      create_image_content img.merge(:image=>image)
     end
   end
 
@@ -124,16 +139,16 @@ namespace :ptourist do
     organizer=get_user("alice")
     members=boy_users
     images=[
-    {:path=>"db/bta/image001_original.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Front of Museum Restored: 1884 B&O Railroad Museum Roundhouse",
      :lng=>-76.6327453,
      :lat=>39.2854217,
      :priority=>0},
-    {:path=>"db/bta/image002_original.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Roundhouse Inside: One-of-a-Kind Railroad Collection inside the B&O Roundhouse",
      :lng=>-76.6327453,
      :lat=>39.2854217},
-    {:path=>"db/bta/image003_original.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"40 acres of railroad history at the B&O Railroad Museum",
      :lng=>-76.6327453,
      :lat=>39.2854217},
@@ -146,20 +161,20 @@ namespace :ptourist do
     organizer=get_user("alice")
     members=boy_users
     images=[
-    {:path=>"db/bta/DSC_5358.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Boat at Fort McHenry",
      :lng=>-76.578519,
      :lat=>39.265882},
-    {:path=>"db/bta/DSC_5393.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Boat heading in to Fell's Point",
      :lng=>-76.593026,
      :lat=>39.281676},
-    {:path=>"db/bta/DSC_5441.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Boat at Harborplace",
      :lng=>-76.611449,
      :lat=>39.285887,
      :priority=>0},
-    {:path=>"db/bta/DSC_5469.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Boat passing Pier 5",
      :lng=>-76.605206,
      :lat=>39.284038}
@@ -172,12 +187,12 @@ namespace :ptourist do
     organizer=get_user("greg")
     members=boy_users
     images=[
-    {:path=>"db/bta/image004_original.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Overview",
      :lng=>nil,
      :lat=>nil
      },
-    {:path=>"db/bta/image005_original.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Roger Taney Statue",
      :lng=>-76.615686,
      :lat=>39.297953,
@@ -192,7 +207,7 @@ namespace :ptourist do
     organizer=get_user("carol")
     members=girl_users
     images=[
-    {:path=>"db/bta/hitim-001.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Hotel Front Entrance",
      :lng=>-76.64285450000001, 
      :lat=>39.454538,
@@ -207,23 +222,23 @@ namespace :ptourist do
     organizer=get_user("carol")
     members=girl_users
     images=[
-    {:path=>"db/bta/naqua-001.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"National Aquarium buildings",
      :lng=>-76.6083, 
      :lat=>39.2851,
      :priority=>0
      },
-    {:path=>"db/bta/naqua-002.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Blue Blubber Jellies",
      :lng=>-76.6083, 
      :lat=>39.2851,
      },
-    {:path=>"db/bta/naqua-003.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Linne's two-toed sloths",
      :lng=>-76.6083, 
      :lat=>39.2851,
      },
-    {:path=>"db/bta/naqua-004.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Hosting millions of students and teachers",
      :lng=>-76.6083, 
      :lat=>39.2851,
@@ -240,49 +255,49 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     organizer=get_user("marsha")
     members=girl_users
     images=[
-    {:path=>"db/bta/hpm-001.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Hotel Front Entrance",
      :lng=>-76.5987, 
      :lat=>39.2847,
      :priority=>0
      },
-    {:path=>"db/bta/hpm-002.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Terrace",
      :lng=>-76.5987, 
      :lat=>39.2847,
      :priority=>1
      },
-    {:path=>"db/bta/hpm-003.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Cozy Corner",
      :lng=>-76.5987, 
      :lat=>39.2847
      },
-    {:path=>"db/bta/hpm-004.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Fitness Center",
      :lng=>-76.5987, 
      :lat=>39.2847
      },
-    {:path=>"db/bta/hpm-005.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Gallery Area",
      :lng=>-76.5987, 
      :lat=>39.2847
      },
-    {:path=>"db/bta/hpm-006.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Harbor Room",
      :lng=>-76.5987, 
      :lat=>39.2847
      },
-    {:path=>"db/bta/hpm-007.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Indoor Pool",
      :lng=>-76.5987, 
      :lat=>39.2847
      },
-    {:path=>"db/bta/hpm-008.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Lobby",
      :lng=>-76.5987, 
      :lat=>39.2847
      },
-    {:path=>"db/bta/hpm-009.jpg",
+    {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Specialty King",
      :lng=>-76.5987, 
      :lat=>39.2847
@@ -291,7 +306,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     create_thing thing, organizer, members, images
 
     organizer=get_user("peter")
-    image= {:path=>"db/bta/aquarium.jpg",
+    image= {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Aquarium",
      :lng=>-76.6083, 
      :lat=>39.2851
@@ -299,7 +314,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     create_image organizer, image
 
     organizer=get_user("jan")
-    image= {:path=>"db/bta/bromo_tower.jpg",
+    image= {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Bromo Tower",
      :lng=>-76.6228645, 
      :lat=>39.2876736
@@ -307,7 +322,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     create_image organizer, image
 
     organizer=get_user("bobby")
-    image= {:path=>"db/bta/federal_hill.jpg",
+    image= {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Federal Hill",
      :lng=>-76.6152507,
      :lat=>39.2780092
@@ -315,7 +330,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     create_image organizer, image
 
     organizer=get_user("alice")
-    image= {:path=>"db/bta/row_homes.jpg",
+    image= {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Row Homes",
      :lng=>-76.6152153,
      :lat=>39.3149715
@@ -323,7 +338,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     create_image organizer, image
 
     organizer=get_user("alice")
-    image= {:path=>"db/bta/skyline_water_level.jpg",
+    image= {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Skyline Water Level",
      :lng=>-76.6284366, 
      :lat=>39.2780493
@@ -331,7 +346,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     create_image organizer, image
 
     organizer=get_user("bobby")
-    image= {:path=>"db/bta/skyline.jpg",
+    image= {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Skyline",
      :lng=>-76.6138132,
      :lat=>39.2801504
@@ -339,7 +354,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     create_image organizer, image
 
     organizer=get_user("marsha")
-    image= {:path=>"db/bta/visitor_center.jpg",
+    image= {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"Visitor Center",
      :lng=>-76.6155792, 
      :lat=>39.28565
@@ -347,7 +362,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     create_image organizer, image
 
     organizer=get_user("greg")
-    image= {:path=>"db/bta/world_trade_center.jpg",
+    image= {:path=>"db/images/#{(1..31).to_a.sample}.jpg",
      :caption=>"World Trade Center",
      :lng=>-76.6117195,
      :lat=>39.2858057
