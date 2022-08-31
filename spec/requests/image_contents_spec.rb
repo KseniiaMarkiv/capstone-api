@@ -76,7 +76,11 @@ RSpec.describe "ImageContents", type: :request do
       before(:each) do
         @image=Image.all.first
         unless @image
-          jpost images_url, image_props
+          post images_url, params:
+          {
+            image: image_props, image_content: image_cont_props
+          },
+            headers: valid_headers.merge(account.create_new_auth_token), as: :json
           expect(response).to have_http_status(:created)
           @image=Image.find(parsed_body["id"])
         end
@@ -90,16 +94,16 @@ RSpec.describe "ImageContents", type: :request do
       end
 
       it "supplies content_url in show response" do
-        jget image_url(@image)
+        get image_url(@image), as: :json
         expect(response).to have_http_status(:ok)
-        payload=parsed_body
-        expect(payload).to include("content_url")
+        json=parsed_body
+        expect(json).to include("content_url")
 
-        jget payload["content_url"]
+        get json["content_url"]
       end
 
       it "supplies content_url in index response" do
-        jget images_url
+        get images_url
         expect(response).to have_http_status(:ok)
         #pp parsed_body
         payload=parsed_body
