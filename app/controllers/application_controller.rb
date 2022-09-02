@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from Mongoid::Errors::DocumentNotFound, with: :record_not_found
+  rescue_from Mongoid::Errors::Validations, with: :mongoid_validation_error
   rescue_from ActionController::ParameterMissing, with: :missing_parameter
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   
@@ -34,7 +35,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:name])
   end 
-
+  def mongoid_validation_error(exception) 
+    payload = { errors:exception.record.errors.messages }
+    render :json=>payload, :status=>:unprocessable_entity
+    Rails.logger.debug exception.message
+  end
   def missing_parameter(exception) 
     payload = {
       errors: { full_messages:["#{exception.message}"] }
@@ -50,4 +55,6 @@ class ApplicationController < ActionController::Base
     render :json=>payload, :status=>:forbidden
     Rails.logger.debug exception
   end
+
+  
 end

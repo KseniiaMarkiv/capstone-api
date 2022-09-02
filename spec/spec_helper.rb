@@ -1,4 +1,5 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require "awesome_print"
 require 'mongoid-rspec'
 require 'capybara'
 require 'capybara/rspec'

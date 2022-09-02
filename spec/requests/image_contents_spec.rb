@@ -7,6 +7,19 @@ RSpec.describe "ImageContents", type: :request do
   let(:image_props) { FactoryBot.attributes_for(:image) }
   let(:image_cont_props) { FactoryBot.attributes_for(:image_content) }
   let(:valid_headers) { { headers: headers } }
+  let(:invalid_attributes) do
+    {
+      :content_type=>"",
+      :content=>""
+    }
+  end
+  let(:invalid_attr_cont) do
+    {
+      :content_type=>"image/jpg",
+      :content=>"blah blah blah"
+    }
+  end
+  let(:invalid_attr_type) { FactoryBot.attributes_for(:image_content, :with_types) }
 
   context "lifecycle" do
     include_context "db_clean_after"
@@ -106,40 +119,45 @@ RSpec.describe "ImageContents", type: :request do
         get images_url
         expect(response).to have_http_status(:ok)
         #pp parsed_body
-        payload=parsed_body
-        expect(payload.length).to be > 0
-        expect(payload[0]).to include("content_url")
+        json=parsed_body
+        expect(json.length).to be > 0
+        expect(json[0]).to include("content_url")
 
-        jget payload[0]["content_url"]
+        get json[0]["content_url"]
       end
 
       it "supplies content_url in thing image response" do
         thing=FactoryBot.create(:thing)
-        thing.thing_images.create(:creator_id=>user["id"], :image=>@image) 
+        thing.thing_images.create(:creator_id=>account["id"], :image=>@image) 
 
-        jget thing_thing_images_url(thing)
+        get thing_thing_images_url(thing), as: :json
         expect(response).to have_http_status(:ok)
-        payload=parsed_body
-        expect(payload.length).to eq(1)
-        expect(payload[0]).to include("image_content_url")
+        json=parsed_body
+        expect(json.length).to eq(1)
+        expect(json[0]).to include("image_content_url")
 
-        jget payload[0]["image_content_url"]
+        get json[0]["image_content_url"]
       end
     end
-  end
+  end # end lifecycle
 
   shared_examples "image requires parameter" do |parameter|
     it "image requires content" do
       start_count=Image.count
-      image_props[:image_content].delete(parameter)
-      jpost images_url, image_props
+      
+      post images_url, params:
+      {
+        image: image_props, image_content: invalid_attributes
+      },
+        headers: valid_headers.merge(account.create_new_auth_token), as: :json
       expect(response).to have_http_status(:bad_request)
       expect(Image.count).to eq(start_count) #image is not saved
 
-      payload=parsed_body
-      expect(payload).to include("errors")
-      expect(payload["errors"]).to include("full_messages")
-      expect(payload["errors"]["full_messages"][0]).to include("param is missing", parameter.to_s)
+      json=parsed_body
+      # pp json
+      expect(json).to include("errors")
+      expect(json["errors"]).to include("full_messages")
+      expect(json["errors"]["full_messages"][0]).to include("param is missing", parameter.to_s)
     end
 
   end
@@ -151,53 +169,63 @@ RSpec.describe "ImageContents", type: :request do
 
     it "image requires valid content" do
       start_count=Image.count
-      image_props[:image_content][:content]="blah blah blah"
-      jpost images_url, image_props
+      post images_url, params:
+      {
+        image: image_props, image_content: invalid_attr_cont
+      },
+        headers: valid_headers.merge(account.create_new_auth_token), as: :json
       expect(response).to have_http_status(:unprocessable_entity)
       expect(Image.count).to eq(start_count) #image is not saved
 
-      payload=parsed_body
-      #pp parsed_body
-      expect(payload).to include("errors")
-      expect(payload["errors"]).to include("full_messages")
-      expect(payload["errors"]["full_messages"]).to include("unable to create image contents",
+      json=parsed_body
+      pp json
+      expect(json).to include("errors")
+      expect(json["errors"]).to include("full_messages")
+      expect(json["errors"]["full_messages"]).to include("unable to create image contents",
                                                             "no start of image marker found")
     end
 
     it "image requires supported content_type" do
       start_count=Image.count
-      image_props[:image_content][:content_type]="image/blah"
-      jpost images_url, image_props
-      #pp parsed_body
+      post images_url, params:
+      {
+        image: image_props, image_content: invalid_attr_type
+      },
+        headers: valid_headers.merge(account.create_new_auth_token), as: :json
+      # ap parsed_body
       expect(response).to have_http_status(:unprocessable_entity)
       expect(Image.count).to eq(start_count) #image is not saved
 
-      payload=parsed_body
-      expect(payload).to include("errors")
-      expect(payload["errors"]).to include("full_messages")
-      expect(payload["errors"]["full_messages"]).to include("unable to create image contents")
+      json=parsed_body
+      expect(json).to include("errors")
+      expect(json["errors"]).to include("full_messages")
+      expect(json["errors"]["full_messages"]).to include("unable to create image contents")
 
-      expect(payload["errors"]).to_not include("width")
-      expect(payload["errors"]).to_not include("height")
-      expect(payload["errors"]).to include("content_type")
-      expect(payload["errors"]["content_type"]).to include(/not supported type/)
+      expect(json["errors"]).to_not include("width")
+      expect(json["errors"]).to_not include("height")
+      expect(json["errors"]).to include("content_type")
+      expect(json["errors"]["content_type"]).to include(/not supported type/)
     end
 
     it "rejects image too large" do
       content=""
-      decoded_pad = Base64.decode64(image_props[:image_content][:content])
+      decoded_pad = Base64.decode64(image_cont_props[:content])
       begin
         content += decoded_pad
       end while content.size < ImageContent::MAX_CONTENT_SIZE
-      image_props[:image_content][:content]=Base64.encode64(content)
+      image_cont_props[:content]=Base64.encode64(content)
       
-      #pp "base64 size=#{content.size}"
-      jpost images_url, image_props
-      #pp parsed_body
+      # ap "base64 size=#{content.size}"
+      post images_url, params:
+      {
+        image: image_props, image_content: image_cont_props
+      },
+        headers: valid_headers.merge(account.create_new_auth_token), as: :json
+      # ap parsed_body
       expect(response).to have_http_status(:unprocessable_entity)
-      payload=parsed_body
-      expect(payload["errors"]).to include("content")
-      expect(payload["errors"]["content"]).to include(/too large/)
+      json=parsed_body
+      expect(json["errors"]).to include("content")
+      expect(json["errors"]["content"]).to include(/too large/)
     end
   end
 
@@ -207,7 +235,11 @@ RSpec.describe "ImageContents", type: :request do
     before(:each) do
       @image=Image.all.first
       unless @image
-        jpost images_url, image_props
+        post images_url, params:
+        {
+          image: image_props, image_content: image_cont_props
+        },
+          headers: valid_headers.merge(account.create_new_auth_token), as: :json
         expect(response).to have_http_status(:created)
         @image=Image.find(parsed_body["id"])
       end
