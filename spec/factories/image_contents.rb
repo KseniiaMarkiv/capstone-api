@@ -4,9 +4,14 @@ FactoryBot.define do
     content { File.open("db/images/3.jpg", "rb") { |f| Base64.encode64(f.read)
       }}
 
-    trait :with_types do
+    trait :wrong_types do
       content_type { "image/blah" }
       content { File.open("db/images/3.jpg", "rb") { |f| Base64.encode64(f.read)}}
+    end
+
+    trait :wrong_content do
+      content_type { "image/jpg" }
+      content { "blah blah blah" }
     end
   end
 end

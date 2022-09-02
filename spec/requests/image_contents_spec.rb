@@ -13,13 +13,8 @@ RSpec.describe "ImageContents", type: :request do
       :content=>""
     }
   end
-  let(:invalid_attr_cont) do
-    {
-      :content_type=>"image/jpg",
-      :content=>"blah blah blah"
-    }
-  end
-  let(:invalid_attr_type) { FactoryBot.attributes_for(:image_content, :with_types) }
+  let(:invalid_attr_cont) { FactoryBot.attributes_for(:image_content, :wrong_content) }
+  let(:invalid_attr_type) { FactoryBot.attributes_for(:image_content, :wrong_types) }
 
   context "lifecycle" do
     include_context "db_clean_after"
@@ -227,14 +222,14 @@ RSpec.describe "ImageContents", type: :request do
       expect(json["errors"]).to include("content")
       expect(json["errors"]["content"]).to include(/too large/)
     end
-  end
+  end # end validation
 
   context "content queries" do
     include_context "db_clean_after"
     let(:image_content) { ImageContent.image(@image) }
     before(:each) do
       @image=Image.all.first
-      unless @image
+      unless @image   # make test is speeder
         post images_url, params:
         {
           image: image_props, image_content: image_cont_props
