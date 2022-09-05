@@ -4,7 +4,7 @@ FactoryBot.define do
     name     { Faker::Name.first_name }
     email    { Faker::Internet.email }
     password { Faker::Internet.password }
-    confirmed_at { Date.today }
+    confirmed_at { Date.today.to_fs(:db) }
   end
 
   factory :admin, class: User, parent: :user do

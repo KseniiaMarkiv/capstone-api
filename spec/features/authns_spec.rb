@@ -7,7 +7,7 @@ RSpec.feature "Authns", type: :feature, :js=>true do
   feature "sign-up" do
     context "valid registration" do
       scenario "creates account and navigates away from signup page" do
-        start_time=Time.now
+        start_time=Time.now.to_fs(:db)
         signup user_props
 
         #check we re-directed to home page
@@ -15,7 +15,7 @@ RSpec.feature "Authns", type: :feature, :js=>true do
         #check the DB for the existance of the User account
         user=User.where(:email=>user_props[:email]).first
         #make sure we were the ones that created it
-        expect(user.created_at).to be > start_time        
+        expect(user.created_at).to be > start_time
         sleep 0.5 #give time for async requests to finish on server
       end
     end
