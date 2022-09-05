@@ -2,6 +2,15 @@
     <span class="image_id id">{{$ctrl.item.id}}</span>
     <span class="invalid">{{$ctrl.item.errors.full_messages}}</span>
 
+    <div class="image-content row g-2">
+        <label class="col-auto pe-2 form-label"></label>
+        <div class="col-auto pe-2 image-rendering">
+            <div class="image-existing">
+                <img class="img-fluid rounded" style="width: 250px" ng-src="{{$ctrl.item.content_url}}?width=250" ng-if="$ctrl.item.content_url" />
+            </div>
+        </div>
+    </div>
+
     <div class="image-caption row g-2">
         <label class="col-auto pe-2 form-label">Caption:</label>
         <input class="col-auto form-control shadow-lg bg-body rounded border-0" name="image-caption" ng-model="$ctrl.item.caption" ng-readonly="!$ctrl.authz.canUpdate" maxlength="80" pattern=".{3,}" title="3 character minimum for Caption" placeholder="Write creating Caption...">
