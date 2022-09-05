@@ -69,7 +69,7 @@ ul.dropdown-menu.show {
     padding-top: 2em;
     padding-bottom: 2em;
     /* backdrop-filter: drop-shadow(4px 4px 10px blue); */
-    box-shadow: rgb(0, 85, 255) -5px 5px, rgb(255, 255, 0, 0.7) -10px 10px, rgba(0, 85, 255, 0.5) -15px 15px, rgba(61, 255, 207, 0.7) -5px 5px 15px 0px inset, rgba(61, 255, 207, 0.5) -5px 5px 15px 0px inset;
+    box-shadow: rgb(0, 85, 255) -5px 5px, rgba(255, 255, 0, 0.7) -10px 10px, rgba(0, 85, 255, 0.5) -15px 15px, rgba(61, 255, 207, 0.7) -5px 5px 15px 0px inset, rgba(61, 255, 207, 0.5) -5px 5px 15px 0px inset;
 }
 
 sd-signup {

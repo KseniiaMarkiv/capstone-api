@@ -13384,7 +13384,7 @@ ul.dropdown-menu.show {
     padding-top: 2em;
     padding-bottom: 2em;
     /* backdrop-filter: drop-shadow(4px 4px 10px blue); */
-    box-shadow: rgb(0, 85, 255) -5px 5px, rgb(255, 255, 0, 0.7) -10px 10px, rgba(0, 85, 255, 0.5) -15px 15px, rgba(61, 255, 207, 0.7) -5px 5px 15px 0px inset, rgba(61, 255, 207, 0.5) -5px 5px 15px 0px inset;
+    box-shadow: rgb(0, 85, 255) -5px 5px, rgba(255, 255, 0, 0.7) -10px 10px, rgba(0, 85, 255, 0.5) -15px 15px, rgba(61, 255, 207, 0.7) -5px 5px 15px 0px inset, rgba(61, 255, 207, 0.5) -5px 5px 15px 0px inset;
 }
 
 sd-signup {
@@ -13413,21 +13413,6 @@ sd-thing-editor form {
 
 
 
-
-
- */
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
 
 
  */
