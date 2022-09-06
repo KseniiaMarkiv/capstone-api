@@ -1,4 +1,5 @@
 class ImageContent
+  require 'exifr/jpeg'
   #3:2 ratios
   THUMBNAIL="100x67"
   SMALL="320x213"

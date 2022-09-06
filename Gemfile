@@ -105,5 +105,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-angular-resource', '1.5.9'
   gem 'rails-assets-ng-token-auth', '0.0.30'
   gem 'rails-assets-angular-cookie' #required by ng-token-auth
+  gem 'rails-assets-ng-file-upload'
+  gem 'rails-assets-ng-file-upload-shim'
 end
 gem "matrix", "~> 0.4.2"
