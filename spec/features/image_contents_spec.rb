@@ -65,9 +65,9 @@ RSpec.feature "ImageContents", type: :feature, js:true do
     it "can display thumbnails for thing image list" do
       visit_thing thing
 
-      within("sd-thing-editor .thing-form") do
-        expect(page).to have_css(".thing-images li",
-                                 :count=>thing.thing_images.count)
+      within("sd-thing-editor .thing-form ul.thing-images") do
+        expect(page).to have_css("li",
+                                 :count=>thing.thing_images.count, :wait=>10)
         img=find(".image_id",:text=>image.id, :visible=>false).find(:xpath,"..")
         within(img) do
           expect(page).to have_css("a label", :text=>image_caption(image))
