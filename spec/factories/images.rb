@@ -9,7 +9,7 @@ FactoryBot.define do
       image.image_content = FactoryBot.build(:image_content, image.image_content) if image.image_content
     end
     transient do
-      sizes 5
+      sizes { 5 }
     end
     after(:create) do |image, props|
       if props.sizes==1

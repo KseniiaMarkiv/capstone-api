@@ -1,5 +1,6 @@
 <div class="crop-area" ng-show="$ctrl.file">
-    <ui-cropper class="rounded" image="$ctrl.file" result-image="$ctrl.dataUri" url-blob="$ctrl.objectUrl" result-image-format="'image/jpeg'" area-type="rectangle" aspect-ratio="3/2" result-image-size="{w:1200,h:800}">
+    <ui-cropper class="rounded" image="$ctrl.file" result-image="$ctrl.dataUri" url-blob="$ctrl.objectUrl" result-image-format="image/jpeg" area-type="rectangle" aspect-ratio="3/2" result-image-size="{w:1200,h:800}">
+        <i class="overlay bi bi-upload"></i>
     </ui-cropper>
 </div>
 

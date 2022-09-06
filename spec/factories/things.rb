@@ -20,7 +20,7 @@ FactoryBot.define do
     trait :with_roles do
       transient do
         originator_id { 1 }
-        member_id nil
+        member_id { nil }
       end
 
       after(:create) do |thing, props|

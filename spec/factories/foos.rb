@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :foo_fixed, class: 'Foo' do
-    name "test"
+    name { "test" }
   end
 
   factory :foo_sequence, class: 'Foo' do
@@ -13,7 +13,7 @@ FactoryBot.define do
 
   factory :foo_transient, class: 'Foo' do
     transient do
-      male true
+      male { true }
     end
 
     after(:build) do |object, props|

@@ -125,6 +125,16 @@ img.image-preview {
 }
 
 
+/* ******************* END image upload ***************** */
+
+
+/*** image viewer ***/
+
+sd-image-viewer img {
+    width: 100%;
+}
+
+
 /*** media queries ****/
 
 
@@ -166,6 +176,3 @@ img.image-preview {
 
 
 /*** END media queries ****/
-
-
-/* ******************* END image upload ***************** */
