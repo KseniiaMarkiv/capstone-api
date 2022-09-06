@@ -107,5 +107,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-angular-cookie' #required by ng-token-auth
   gem 'rails-assets-ng-file-upload'
   gem 'rails-assets-ng-file-upload-shim'
+  gem 'rails-assets-ui-cropper'
 end
 gem "matrix", "~> 0.4.2"

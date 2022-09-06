@@ -26,6 +26,8 @@ GEM
     rails-assets-ng-token-auth (0.0.30)
       rails-assets-angular (>= 1.4, < 1.6.0)
       rails-assets-angular-cookie (~> 4.1.0)
+    rails-assets-ui-cropper (1.0.6)
+      rails-assets-angular (>= 1.4.0)
 
 GEM
   remote: https://rubygems.org/
@@ -405,6 +407,7 @@ DEPENDENCIES
   rails-assets-ng-file-upload!
   rails-assets-ng-file-upload-shim!
   rails-assets-ng-token-auth (= 0.0.30)!
+  rails-assets-ui-cropper!
   rails_serve_static_assets
   rexml (~> 3.2, >= 3.2.5)
   rspec-rails (~> 6.0.0.rc1)

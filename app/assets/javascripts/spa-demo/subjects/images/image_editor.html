@@ -45,7 +45,7 @@
     </div>
     <div class="image-controls">
         <span ng-show="$ctrl.authz.authenticated">
-      <button name="image-create" ng-show="!$ctrl.item.id && $ctrl.authz.canCreate" type="submit" ng-disabled="imageform.$invalid" ng-click="$ctrl.create()" class="btn btn-info btn-sm">Create Image</button>
+      <button name="image-create" ng-show="!$ctrl.item.id && $ctrl.authz.canCreate" type="submit" ng-disabled="imageform.$invalid || !$ctrl.item.image_content.content" ng-click="$ctrl.create()" class="btn btn-info btn-sm">Create Image</button>
 
       <span ng-show="$ctrl.item.id">
         <button name="image-update" type="submit" ng-show="$ctrl.authz.canUpdate" ng-disabled="!imageform.$dirty" ng-click="$ctrl.update()" class="btn btn-warning btn-sm">Update Image</button>
