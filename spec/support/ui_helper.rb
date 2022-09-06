@@ -1,4 +1,9 @@
 module UiHelper
+  def create_user
+    user_props=FactoryBot.attributes_for(:user);
+    user = FactoryBot.create(:user, user_props)
+    user_props.merge(:id=>user.id, :uid=>user.uid)
+  end
 
   def fillin_signup registration
     visit "#{ui_path}/#/signup" unless page.has_css?("#signup-form")
@@ -21,6 +26,7 @@ module UiHelper
       expect(page).to have_button("Sign Up")
     end
   end
+
   def logged_in? account=nil
     account ?
       page.has_css?("#navbar-loginlabel",:text=>/#{account[:name]}/) :
