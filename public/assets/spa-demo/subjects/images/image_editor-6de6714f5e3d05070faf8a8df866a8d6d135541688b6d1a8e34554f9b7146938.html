@@ -1,0 +1,63 @@
+<form class="image-form" name="imageform">
+    <span class="image_id id">{{$ctrl.item.id}}</span>
+    <span class="invalid">{{$ctrl.item.errors.full_messages}}</span>
+
+    <div class="image-content row g-2">
+        <label class="col-auto pe-2 form-label"></label>
+        <div class="col-auto pe-2 image-rendering">
+            <div class="image-existing">
+                <img class="img-fluid rounded" style="width: 250px" ng-src="{{$ctrl.item.content_url}}?width=250" ng-if="$ctrl.item.content_url" />
+            </div>
+        </div>
+    </div>
+
+    <sd-image-loader class="image-select pb-2 row align-self-start" result-data-uri="$ctrl.setImageContent(dataUri)" ng-if="!$ctrl.item.id && $ctrl.authz.canCreate">
+        <span class="invalid" ng-show="imageform['image-file'].$error.maxSize">image size is too large (max=10MB)</span>
+    </sd-image-loader>
+    <span class="invalid">{{$ctrl.item.errors.content_type}}</span>
+    <span class="invalid">{{$ctrl.item.errors.content}}</span>
+
+    <div class="image-caption row g-2">
+        <label class="col-auto pe-2 form-label">Caption:</label>
+        <input class="col-auto form-control shadow-lg bg-body rounded border-0" name="image-caption" ng-model="$ctrl.item.caption" ng-readonly="!$ctrl.authz.canUpdate" maxlength="80" pattern=".{3,}" title="3 character minimum for Caption" placeholder="Write creating Caption...">
+        <span class="invalid">{{$ctrl.item.errors.name}}</span>
+    </div>
+    <div class="image-things row g-2" ng-show="$ctrl.item.id">
+        <label class="col-auto pe-4 form-label">Related Things:</label>
+        <ul class="image-things col-auto p-2" style="list-style-type: circle;">
+            <li ng-repeat="ti in $ctrl.things | orderBy:'priority'">
+                <a data-ui-sref="things({id:ti.thing_id})" class="text-decoration-none">
+                    <span class="id thing_id">{{ti.thing_id}}</span> {{ti.thing_name}}
+                </a>
+            </li>
+        </ul>
+        <span class="invalid">{{$ctrl.item.errors.thing_images}}</span>
+    </div>
+
+    <div class="linkable-things row g-12" ng-show="$ctrl.linkable_things.length>0 && $ctrl.authz.authenticated">
+        <label class="ol-auto pe-2 form-label">Linkable Things:</label>
+        <div class="link-things" class="col-auto">
+            <select name="linkable-things" ng-model="$ctrl.selected_linkables" multiple>
+                <option ng-repeat="thing in $ctrl.linkable_things | orderBy:'name'" value="{{thing.id}}">{{thing.name}}</option>
+            </select>
+        </div>
+        <span class="invalid">{{$ctrl.item.errors.linkable_things}}</span>
+    </div>
+    <div class="image-controls">
+        <span ng-show="$ctrl.authz.authenticated">
+      <button name="image-create" ng-show="!$ctrl.item.id && $ctrl.authz.canCreate" type="submit" ng-disabled="imageform.$invalid || !$ctrl.item.image_content.content" ng-click="$ctrl.create()" class="btn btn-info btn-sm">Create Image</button>
+
+      <span ng-show="$ctrl.item.id">
+        <button name="image-update" type="submit" ng-show="$ctrl.authz.canUpdate" ng-disabled="!imageform.$dirty" ng-click="$ctrl.update()" class="btn btn-warning btn-sm">Update Image</button>
+        <button name="image-update"
+                type="submit"
+                ng-show="!$ctrl.authz.canUpdate" 
+                ng-disabled="$ctrl.selected_linkables.length==0"
+                ng-click="$ctrl.linkThings()" class="btn btn-danger btn-sm">Link to Things</button>
+        <button name="image-delete" type="submit" ng-show="$ctrl.authz.canDelete" ng-click="$ctrl.remove()" class="btn btn-danger btn-sm">Delete Image</button>
+      </span>
+        </span>
+        <button name="image-clear" type="submit" ng-show="$ctrl.item.id || imageform.$dirty" ng-click="$ctrl.clear()" class="btn btn-secondary btn-sm">Clear Image</button>
+    </div>
+
+</form>

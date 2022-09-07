@@ -106,9 +106,10 @@ button:disabled {
 }
 
 
-/* ******************* image upload ***************** */
+/* ******************* image upload not fit me ***************** */
 
-img.image-preview {
+
+/* img.image-preview {
     display: inline-block;
     width: 300px;
     height: 200px;
@@ -122,7 +123,7 @@ img.image-preview {
     height: 350px;
     margin: 10px;
     overflow: visible;
-}
+} */
 
 
 /* ******************* END image upload ***************** */
@@ -156,7 +157,8 @@ sd-image-viewer img {
 /* Extra small */
 
 @media (max-width: 767px) {
-    .image-rendering img,
+    /* not fit me */
+    /* .image-rendering img,
     .image-content>div {
         display: block;
         margin-left: auto;
@@ -165,8 +167,8 @@ sd-image-viewer img {
     .crop-area {
         margin: 0px;
         margin-left: auto;
-        margin-right: auto
-    }
+        margin-right: auto 
+}*/
 }
 
 

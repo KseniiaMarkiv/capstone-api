@@ -1,0 +1,41 @@
+<div ng-hide="$ctrl.getCurrentUser()">
+    <form id="login-form" name="login_form" ng-submit="$ctrl.login()">
+        <div class="form-group">
+            <div id="login-email" class="form-floating mb-3">
+                <!-- <label for="exampleInputEmail1" class="form-label fw-bold">email</label>
+                <input type="email" name="login_email" ng-model="$ctrl.loginForm.email" required="required" class="fst-italic text-muted form-control"> -->
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="login_email" ng-model="$ctrl.loginForm.email" required="required" class="fst-italic text-muted form-control">
+                <label for="floatingInput">Email address</label>
+            </div>
+
+            <div id="login-password" class="form-floating mb-3">
+                <!-- <label for="exampleInputPassword1" class="form-label fw-bold">password</label>
+                <input type="password" name="login_password" ng-model="$ctrl.loginForm.password" required="required" class="fst-italic text-muted form-control"> -->
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="login_password" ng-model="$ctrl.loginForm.password" required="required" class="fst-italic text-muted form-control">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div id="login-submit" class="button-video">
+                <span class="invalid-error" ng-hide="login_form.$dirty">{{$ctrl.loginForm.errors.full_messages}}
+              </span>
+                <button class="rounded btn-mine" ng-disabled="login_form.$invalid" name="login_submit" type="submit" style="--clr:#0d6efd"><span>Login</span> <i></i></button>
+
+            </div>
+        </div>
+        <div id="new-account" class="text-center pb-2">
+            <label>New here?</label>
+            <a ui-sref="accountSignup" class="initialism fw-bold">Sign Up</a>
+        </div>
+
+    </form>
+</div>
+
+<div ng-show="$ctrl.getCurrentUser()" class="pb-5">
+    <form id="logout-form" ng-submit="$ctrl.logout()">
+        <span id="user_id" class="id" ng-if="$ctrl.getCurrentUser()">{{$ctrl.getCurrentUser().id}}</span>
+
+        <div id="logout-identity" class="mb-2">
+            <label class="form-label">{{$ctrl.getCurrentUserName()}}</label>
+            <button type="submit" name="logout_submit" class="btn btn-sm btn-dark">Logout</button>
+        </div>
+    </form>
+</div>

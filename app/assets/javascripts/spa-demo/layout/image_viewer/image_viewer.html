@@ -28,19 +28,23 @@
             <span class="id image_id">{{$ctrl.imageId(image)}}</span>
             <img class="d-block w-100" ng-src="{{$ctrl.imageUrl(image)}}">
             <div class="carousel-caption d-none d-md-block">
-                <h3 class="caption">{{$ctrl.imageCaption(image)}}</h3>
+                <span class="fst-italic fw-bold text-muted pe-2 fs-6">Caption:</span>
+                <h6 class="caption">{{$ctrl.imageCaption(image)}}</h6>
                 <span class="image-browse" ui-sref="images({id:$ctrl.imageId(image)})">
-                <span class=""><i class="bi bi-share"></i></span>
+                <!-- <span class=""><i class="bi bi-share"></i></span> -->
+                <span><i class="bi bi-reply-all-fill"></i></span>
             </div>
         </div>
 
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev" ng-click="$ctrl.previousImage()">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+    <i class="bi bi-caret-left-fill fa-3x" aria-hidden="true"></i>
     <span class="visually-hidden">Previous</span>
   </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next" ng-click="$ctrl.nextImage()">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+    <i class="bi bi-caret-right-fill fa-3x" aria-hidden="true"></i>
     <span class="visually-hidden">Next</span>
   </button>
 </div>
