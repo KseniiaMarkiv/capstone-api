@@ -1,18 +1,20 @@
 class Geocoder
   def geocode address
-    geoloc=Geokit::Geocoders::GoogleGeocoder.geocode address
+    geoloc = Geokit::Geocoders::GoogleGeocoder.geocode address
     location(geoloc)
   end
 
   def reverse_geocode point
-    geoloc=Geokit::Geocoders::GoogleGeocoder.reverse_geocode point.latlng
+    geoloc = Geokit::Geocoders::GoogleGeocoder.reverse_geocode point.latlng
     location(geoloc)
   end
 
   def location geoloc
-    if geoloc && geoloc.lng && geoloc.lat
-      position=Point.new(geoloc.lng, geoloc.lat)
-      address=PostalAddress.new(geoloc.street_address,
+    # binding.pry
+    # if geoloc && geoloc.lng && geoloc.lat
+    if geoloc&.geoloc&.lng&.geoloc&.lat
+      position = Point.new(geoloc.lng, geoloc.lat)
+      address = PostalAddress.new(geoloc.street_address,
                       geoloc.city,
                       geoloc.state_code,
                       geoloc.zip,

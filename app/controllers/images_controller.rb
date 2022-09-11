@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :update, :destroy, :content]
-  wrap_parameters :image, include: ["caption"]
+  wrap_parameters :image, include: ["caption", "position"]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
   
   after_action :verify_authorized, except: [:content]
@@ -74,32 +74,32 @@ class ImagesController < ApplicationController
 
   private
 
-    def set_image
-      @image = Image.find(params[:id])
-    end
+  def set_image
+    @image = Image.find(params[:id])
+  end
 
-    def image_params
-      params.require(:image).permit(:caption)
-    end
+  def image_params
+    params.require(:image).permit(:caption, :position=>[:lng, :lat])
+  end
 
-    def image_content_params
-      params.require(:image_content).tap { |ic|
-        ic.require(:content_type)
-        ic.require(:content)
-      }.permit(:content_type, :content)
-    end
+  def image_content_params
+    params.require(:image_content).tap { |ic|
+      ic.require(:content_type)
+      ic.require(:content)
+    }.permit(:content_type, :content)
+  end
 
-    def contents_error exception
-      render json: {errors:{full_messages:["unable to create image contents","#{exception}"]}},
-            status: :unprocessable_entity
-      Rails.logger.debug exception
-    end
-    def mongoid_validation_error(exception) 
-      payload = { errors:exception.record.errors.messages
-                     .slice(:content_type,:content,:full_messages) 
-                     .merge(full_messages:["unable to create image contents"])}
-      render :json=>payload, :status=>:unprocessable_entity
-      Rails.logger.debug exception.message
-    end
+  def contents_error exception
+    render json: {errors:{full_messages:["unable to create image contents","#{exception}"]}},
+          status: :unprocessable_entity
+    Rails.logger.debug exception
+  end
+  def mongoid_validation_error(exception) 
+    payload = { errors:exception.record.errors.messages
+                    .slice(:content_type,:content,:full_messages) 
+                    .merge(full_messages:["unable to create image contents"])}
+    render :json=>payload, :status=>:unprocessable_entity
+    Rails.logger.debug exception.message
+  end
     
 end
