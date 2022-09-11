@@ -12,6 +12,7 @@ gem 'database_cleaner-mongoid'
 gem 'pundit', '~> 2.2'
 gem 'exifr', '~> 1.3', '>= 1.3.9'
 gem 'mini_magick', '~> 4.11'
+gem 'geokit-rails'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
