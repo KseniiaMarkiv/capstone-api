@@ -29,10 +29,10 @@ shared_context "db_clean_after" do
 end
 shared_context "db_clean_all" do
   before(:all) do
-    DatabaseCleaner.clean_with(:deletion)
+    DatabaseCleaner[:active_record].clean_with(:truncation)
   end
   after(:all) do
-    DatabaseCleaner.clean_with(:deletion)
+    DatabaseCleaner[:active_record].clean_with(:truncation)
   end
 end
 shared_context "db_cleanup_each" do |ar_strategy=:truncation|
