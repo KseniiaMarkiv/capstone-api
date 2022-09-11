@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_12_151910) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_10_113644) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,7 +31,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_151910) do
     t.integer "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "lng"
+    t.float "lat"
     t.index ["creator_id"], name: "index_images_on_creator_id"
+    t.index ["lng", "lat"], name: "index_images_on_lng_and_lat"
   end
 
   create_table "roles", force: :cascade do |t|

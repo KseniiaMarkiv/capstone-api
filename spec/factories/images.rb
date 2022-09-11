@@ -1,9 +1,11 @@
+require_relative '../support/image_content_helper.rb'
 FactoryBot.define do
-
+  
   factory :image do
     sequence(:caption) {|n| n%2==0 ? nil : Faker::Lorem.sentence(word_count: 3).chomp(".") }
     creator_id { 1 }
     image_content { FactoryBot.attributes_for(:image_content) }
+    position      { FactoryBot.build(:point) }
 
     after(:build) do |image|
       image.image_content = FactoryBot.build(:image_content, image.image_content) if image.image_content

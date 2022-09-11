@@ -10,6 +10,7 @@ require_relative 'support/database_cleaners'
 require_relative 'support/api_bar_helper'
 require_relative 'support/api_helper'
 require_relative 'support/ui_helper'
+
 require 'simplecov'
 require 'exifr/jpeg'
 

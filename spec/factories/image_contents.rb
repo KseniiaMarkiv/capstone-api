@@ -1,4 +1,7 @@
+require_relative '../support/image_content_helper.rb'
+
 FactoryBot.define do
+ 
   factory :image_content do
     content_type { "image/jpg" }
     sequence(:content) {|idx|
