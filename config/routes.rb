@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     get 'images/:id/content', as: :image_content, controller: :images, action: :content, defaults: { format: :jpg }
     get 'geocoder/addresses' => "geocoder#addresses"
     get 'geocoder/positions' => "geocoder#positions"
+    get 'subjects' => "thing_images#subjects"
   end
   namespace :api, defaults: {format: :json } do 
     resources :foos, except: %i[new edit]

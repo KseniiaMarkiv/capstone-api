@@ -255,7 +255,7 @@ RSpec.describe "Geocoders", type: :request do
       end
     end
 
-    shared_examples "ordered" do |direction|
+    shared_examples "ordered #{direction}" do |direction|
       it "ordered" do
         results=ThingImage.within_range(@origin, @distance)
         get subjects_path, {miles:@distance,distance:true,order:direction}.merge(@origin.to_hash)
@@ -309,7 +309,7 @@ RSpec.describe "Geocoders", type: :request do
 
     describe "result caching" do
       before(:each) do
-        get subjects_path, {order: :ASC}.merge(@origin.to_hash)
+        get subjects_path, {miles:@distance,distance:true}.merge(@origin.to_hash)
         expect(response).to have_http_status(:ok)
         @starting_eTag=response.headers["ETag"]
       end
@@ -326,56 +326,56 @@ RSpec.describe "Geocoders", type: :request do
       end
 
       it "provides cache re-validation unmodified" do
-        get subjects_path, {miles:@distance}.merge(@origin.to_hash),
+        get subjects_path, {miles:@distance,distance:true}.merge(@origin.to_hash),
                             {"IF-NONE-MATCH"=>@starting_eTag}
         expect(response).to have_http_status(:not_modified)
         expect(response.headers["ETag"]).to eq(@starting_eTag)
       end
 
-      it "updates eTag-modified for a Thing" do
+      it "updates eTag for a Thing" do
         sleep 1 #get beyond 1sec
         t=ThingImage.first.thing
         t.name="we have changed you"
         t.save
 
-        get subjects_path, {order: :ASC}.merge(@origin.to_hash)
+        get subjects_path, {miles:@distance,distance:true}.merge(@origin.to_hash)
         expect(response).to have_http_status(:ok)
         expect(response.headers["ETag"]).to_not eq(@starting_eTag)
       end
 
-      context "updates eTag-modified for ThingImage" do
+      context "updates eTag for ThingImage" do
         let(:ti) { ThingImage.first }
         before(:each) do
           sleep 1 #get beyond 1sec
         end
 
-        it "updates last-modified for ThingImage update" do
+        it "updates eTag for ThingImage update" do
           ti.priority += 1
           ti.save
 
-          get subjects_path, {miles:@distance}.merge(@origin.to_hash)
+          get subjects_path, {miles:@distance,distance:true}.merge(@origin.to_hash)
           expect(response).to have_http_status(:ok)
           expect(response.headers["ETag"]).to_not eq(@starting_eTag)
         end
 
-        it "updates last-modified for ThingImage delete" do
+        it "updates eTag for ThingImage delete" do
           login apply_admin(user)
           delete thing_thing_image_path(ti.thing, ti)
           expect(response).to have_http_status(:no_content)
 
-          get subjects_path, {miles:@distance}.merge(@origin.to_hash)
+          get subjects_path, {miles:@distance,distance:true}.merge(@origin.to_hash)
           expect(response).to have_http_status(:ok)
           expect(response.headers["ETag"]).to_not eq(@starting_eTag)
         end
       end
 
-      it "updates last-modified for Image" do
+      it "updates eTag for Image" do
         sleep 1 #get beyond 1sec
         img=Image.first
         img.caption="we changed you"
         img.save
 
-        get subjects_path, {miles:@distance}.merge(@origin.to_hash)
+        get subjects_path, {miles:@distance,distance:true}.merge(@origin.to_hash)
         expect(response).to have_http_status(:ok)
         expect(response.headers["ETag"]).to_not eq(@starting_eTag)
       end
