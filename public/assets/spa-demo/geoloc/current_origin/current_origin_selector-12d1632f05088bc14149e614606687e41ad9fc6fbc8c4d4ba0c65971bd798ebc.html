@@ -1,0 +1,12 @@
+<form name="select_origin" class="navbar-form d-flex" ng-hide="$ctrl.getOriginAddress()">
+    <input name="address-search" class="form-control me-2" type="search" placeholder="Address Search" ng-model="$ctrl.address" ng-required="true" aria-label="Search">
+    <button title="lookup-address" class="btn btn-info text-white" type="submit" ng-disabled="select_origin.$invalid" ng-click="$ctrl.lookupAddress()">Lookup<i class="bi bi-search ps-2" style = "color:white;"></i></button>
+</form>
+<span class="search-criteria" ng-show="$ctrl.getOriginAddress()">
+  <form name="show_origin" class="navbar-form">
+    <label class="form-label pe-2 fw-bold">Origin: </label>
+    <span class="current-origin fst-italic pb-4">{{$ctrl.getOriginAddress()}}</span>
+<button title="change-origin" type="submit" class="btn text-white" style="background-color: #0D6EFD;" ng-click="$ctrl.clearOrigin()">Change<i class="bi bi-pen ps-2" style = "color:white;"></i></button>
+</form>
+</span>
+<!-- 00EDED -->

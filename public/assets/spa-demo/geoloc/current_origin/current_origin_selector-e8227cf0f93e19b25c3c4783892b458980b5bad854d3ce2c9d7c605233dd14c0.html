@@ -1,0 +1,26 @@
+<form name="select_origin" class="navbar-form row g-3" ng-hide="$ctrl.getOriginAddress()">
+    <div class="col-auto">
+        <input name="address-search" class="form-control me-2" type="search" placeholder="Address Search" ng-model="$ctrl.address" ng-required="true" aria-label="Search">
+    </div>
+    <div class="col-auto m-0">
+        <button title="lookup-address" class="btn btn-info text-white pe-2" type="button" ng-disabled="select_origin.$invalid" ng-click="$ctrl.lookupAddress()">Lookup<i class="bi bi-search ps-2" style="color:white;"></i></button>
+    </div>
+    <div class="col-auto m-0">
+        <label title="my-position" class="btn btn-default form-label" ng-show="$ctrl.isCurrentLocationSupported()" ng-click="$ctrl.useCurrentLocation()">My Position</label>
+    </div>
+</form>
+<span class="search-criteria" ng-show="$ctrl.getOriginAddress()">
+  <form name="show_origin" class="navbar-form row g-2">
+    <div class="col-auto pe-2">
+      <label class="form-label pe-2 fw-bold">Origin: </label>
+      <span class="current-origin fst-italic">{{$ctrl.getOriginAddress()}}</span>
+</div>
+<div class="col-auto m-0">
+    <button title="change-origin" type="submit" class="btn text-white" style="background-color: #0D6EFD;" ng-click="$ctrl.clearOrigin()">
+      Change
+      <i class="bi bi-pen ps-2" style = "color:white;"></i>
+    </button>
+</div>
+</form>
+</span>
+<!-- 00EDED -->
