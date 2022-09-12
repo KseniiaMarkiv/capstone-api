@@ -14,8 +14,8 @@ RSpec.describe "Geocoders", type: :request do
     context "service" do
       it "locates location by address" do
         loc=geocoder.geocode search_address
-        #pp "search address=#{search_address}"
-        #pp loc.to_hash
+        pp "search address=#{search_address}"
+        pp loc.to_hash
         expect(loc.formatted_address).to eq(jhu.formatted_address)
         expect(loc.position===jhu.position).to be true
         expect(loc.address).to eq(jhu.address)
@@ -24,8 +24,8 @@ RSpec.describe "Geocoders", type: :request do
 
       it "locates location by position" do
         loc=geocoder.reverse_geocode search_position
-        #pp "search position=#{search_position.to_hash}"
-        #pp loc.to_hash
+        pp "search position=#{search_position.to_hash}"
+        pp loc.to_hash
         expect(loc.formatted_address).to eq(jhu.formatted_address)
         expect(loc.position===jhu.position).to be true
         expect(loc.address).to eq(jhu.address)
@@ -37,7 +37,8 @@ RSpec.describe "Geocoders", type: :request do
       let(:geo)  { geocoder.geocode address.full_address }
       let(:rgeo) { geocoder.reverse_geocode position }
       it "locates location by address" do
-        get geocoder_addresses_path, :address=>search_address
+        # get geocoder_addresses_path, :address=>search_address
+        get geocoder_addresses_path, params: { location: { address: search_address } }
         #pp "search address=#{search_address}"
         #pp parsed_body
         #pp "Cache-Control=#{response.header['Cache-Control']}"
@@ -52,7 +53,9 @@ RSpec.describe "Geocoders", type: :request do
       end
 
       it "locates location by position" do
-        get geocoder_positions_path, search_position.to_hash
+        # get geocoder_positions_path, search_position.to_hash
+        get geocoder_positions_path, params: { location: search_position.to_hash }
+
         #pp "search position=#{search_position.to_hash}"
         #pp parsed_body
         #pp "Cache-Control=#{response.header['Cache-Control']}"
@@ -99,7 +102,9 @@ RSpec.describe "Geocoders", type: :request do
 
     context "API cash" do
       it "caches location by address" do
-        get geocoder_addresses_path, {:address=>search_address}
+        # get geocoder_addresses_path, {:address=>search_address}
+        get geocoder_addresses_path, params: { location: { address: search_address } }
+
         expect(response).to have_http_status(:ok)
         expect(CachedLocation.by_address(search_address).count).to eq(1)
         #pp parsed_body
@@ -108,7 +113,7 @@ RSpec.describe "Geocoders", type: :request do
         3.times do 
           etag = response.headers["ETag"]
           #pp "ETag=#{etag}"
-          get geocoder_addresses_path, {:address=>search_address}, {"If-None-Match"=>etag}
+          get geocoder_addresses_path, params: { location: { address: search_address } }, headers: { 'If-None-Match' => etag }
           expect(response).to have_http_status(:not_modified)
           expect(CachedLocation.by_address(search_address).count).to eq(1)
         end
@@ -116,21 +121,24 @@ RSpec.describe "Geocoders", type: :request do
         #no request header
         cache=nil
         3.times do
-          get geocoder_addresses_path, {:address=>search_address}
+          # get geocoder_addresses_path, {:address=>search_address}
+          get geocoder_addresses_path, params: { location: { address: search_address } }
           expect(response).to have_http_status(:ok)
           expect(CachedLocation.by_address(search_address).count).to eq(1)
         end
       end
 
       it "caches location by position" do
-        get geocoder_positions_path, search_position.to_hash
+        # get geocoder_positions_path, search_position.to_hash
+        get geocoder_positions_path, params: { location: search_position.to_hash }
         expect(response).to have_http_status(:ok)
         expect(CachedLocation.by_position(search_position).count).to eq(1)
         #pp parsed_body
 
         #no request header
         3.times do
-          get geocoder_positions_path, search_position.to_hash
+          # get geocoder_positions_path, search_position.to_hash
+          get geocoder_positions_path, params: { location: search_position.to_hash }
           expect(response).to have_http_status(:ok)
           expect(CachedLocation.by_position(search_position).count).to eq(1)
         end
@@ -139,7 +147,8 @@ RSpec.describe "Geocoders", type: :request do
         3.times do 
           etag = response.headers["ETag"]
           #pp "ETag=#{etag}"
-          get geocoder_positions_path, search_position.to_hash, {"If-None-Match"=>etag}
+          # get geocoder_positions_path, search_position.to_hash, {"If-None-Match"=>etag}
+          get geocoder_positions_path, params: { location: search_position.to_hash }, headers: { 'If-None-Match' => etag }
           expect(response).to have_http_status(:not_modified)
           expect(CachedLocation.by_position(search_position).count).to eq(1)
         end
@@ -204,10 +213,13 @@ RSpec.describe "Geocoders", type: :request do
       @distance=distances.reduce(:+) / distances.size.to_f
     end
 
+    # ------- STOP HERE ---------
     describe "search origin" do
       it "within range by position" do
         results=ThingImage.within_range(@origin, @distance)
         get subjects_path, {miles:@distance}.merge(@origin.to_hash)
+        # get subjects_path, params: { {miles:@distance}.merge(@origin.to_hash) }
+
         #pp parsed_body
         expect(response).to have_http_status(:ok)
 

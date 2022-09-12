@@ -63,10 +63,11 @@
         "spa-demo.layout.DataUtils",
         "spa-demo.subjects.ImageThing",
         "spa-demo.subjects.ImageLinkableThing",
+        "spa-demo.geoloc.geocoder",
     ];
 
     function ImageEditorController($scope, $q, $state, $stateParams,
-        Authz, Image, DataUtils, ImageThing, ImageLinkableThing) {
+        Authz, Image, DataUtils, ImageThing, ImageLinkableThing, geocoder) {
         var vm = this;
         vm.selected_linkables = [];
         vm.create = create;
@@ -75,6 +76,7 @@
         vm.remove = remove;
         vm.linkThings = linkThings;
         vm.setImageContent = setImageContent;
+        vm.locationByAddress = locationByAddress;
 
         vm.$onInit = function() {
             console.log("ImageEditorController", $scope);
@@ -106,6 +108,10 @@
             $q.all([vm.item.$promise,
                 vm.things.$promise
             ]).catch(handleError);
+            // allows IMMEDIATE display country name 
+            vm.item.$promise.then(function(image) {
+                vm.location = geocoder.getLocationByPosition(image.position);
+            });
         }
 
         function clear() {
@@ -164,6 +170,15 @@
                 handleError);
         }
 
+        function locationByAddress(address) {
+            console.log("locationByAddress for", address);
+            geocoder.getLocationByAddress(address).$promise.then(
+                function(location) {
+                    vm.location = location;
+                    vm.item.position = location.position;
+                    console.log("location", vm.location);
+                });
+        }
 
         function handleError(response) {
             console.log("error", response);

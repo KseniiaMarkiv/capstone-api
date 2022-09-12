@@ -54,7 +54,7 @@
         <div class="col-lg-10 col-md-10 col-sm-12">
             <input class="col-auto form-control shadow-lg bg-body rounded border-0" name="image-address" data-ng-model="$ctrl.address" ng-show="$ctrl.authz.canUpdate" ng-blur="$ctrl.locationByAddress($ctrl.address)" />
             <label class="form-label pe-2 h5"></label>
-            <div class="formatted_address fst-italic pb-4">{{$ctrl.location.formatted_address}}</div>
+            <div class="formatted_address fst-italic">{{$ctrl.location.formatted_address}}</div>
             <span class="invalid">{{$ctrl.location.errors}}</span>
         </div>
     </div>

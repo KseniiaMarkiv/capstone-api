@@ -11,8 +11,7 @@ class Geocoder
 
   def location geoloc
     # binding.pry
-    # if geoloc && geoloc.lng && geoloc.lat
-    if geoloc&.geoloc&.lng&.geoloc&.lat
+    if geoloc && geoloc.lng && geoloc.lat
       position = Point.new(geoloc.lng, geoloc.lat)
       address = PostalAddress.new(geoloc.street_address,
                       geoloc.city,
