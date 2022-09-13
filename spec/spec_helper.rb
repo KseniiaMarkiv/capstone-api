@@ -60,6 +60,12 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Warden::Test::Helpers, type: :request
 
+  config.before(:each, js: true) do
+    # Capybara.page.driver.browser.manage.window.maximize
+    if !ENV['SELENIUM_REMOTE_HOST'] || Capybara.javascript_driver = :poltergeist
+      Capybara.page.current_window.resize_to(1050, 800)
+    end
+  end
 
   config.infer_spec_type_from_file_location!
   # this way isn't recommended cuz will be everywhere - the same way

@@ -58552,8 +58552,8 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
       images_page_html: "/assets/spa-demo/pages/images_page-f8d518f2ff5689d700180af1cf43683412563b2583d054da21fb5473c05e6682.html",
       things_page_html: "/assets/spa-demo/pages/things_page-2c6151299f0e8388a64ee9956a0017fe39025c105012e25abb0bf31c6f6dad0c.html",
 
-      navbar_html: "/assets/spa-demo/layout/navbar/navbar-8ccbd234b4c94d3f81fe6e02166e871dc614ff16e7ded161e06d34777aa1bf65.html",
-      current_origin_selector_html: "/assets/spa-demo/geoloc/current_origin/current_origin_selector-756d7e16f6250ffeee86e8d116b1edc58bd855f7205cfc70f7799b883d3fb814.html",
+      navbar_html: "/assets/spa-demo/layout/navbar/navbar-f65cd17e162112ef2bf9cd7089cacc212530b1a5e2bf172a58db8f6f2de973a2.html",
+      current_origin_selector_html: "/assets/spa-demo/geoloc/current_origin/current_origin_selector-241e046a05b5e587f8e0d6dc403aebf1de9908e1a90b9928b3a6714d181ea199.html",
       image_loader_html: "/assets/spa-demo/layout/image_loader/image_loader-cffd38ed02d0ab8d78f33776ba5b9eaa39a3ddfebb7af71a13040fc9e139b9e9.html",
       image_viewer_html: "/assets/spa-demo/layout/image_viewer/image_viewer-20df548f29f3612c6343597226b155e6a2fd1e9c6d76ebda909bac7a75a3bbc5.html",
       authn_session_html: "/assets/spa-demo/authn/authn_session/authn_session-8d56aef36831d45bd327a8cce269aed6bf107b3b8612c7cdcadf8b0fb72f9688.html",
@@ -59087,6 +59087,89 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
     angular
         .module("spa-demo.geoloc")
+        .provider("spa-demo.geoloc.myLocation", MyLocationProvider);
+
+    MyLocationProvider.$inject = [];
+
+    function MyLocationProvider() {
+        var provider = this;
+
+        //configure if we want to hard-code a specific current position
+        provider.usePositionOverride = function(coords) {
+            provider.positionOverride = coords;
+        }
+
+        function MyLocation() {}
+
+        provider.$get = ["$window", "$q", "spa-demo.geoloc.geocoder",
+            function($window, $q, geocoder) {
+
+                //returns true/false whether current location provided
+                MyLocation.prototype.isCurrentLocationSupported = function() {
+                    //console.log("isCurrentLocationSupported", $window.navigator.geolocation != null);
+                    return $window.navigator.geolocation != null;
+                }
+
+                //determines current position and returns the geocoded location information
+                MyLocation.prototype.getCurrentLocation = function() {
+                        console.log("getCurrentLocation");
+                        var service = this;
+                        var deferred = $q.defer();
+
+                        if (!this.isCurrentLocationSupported()) {
+                            deferred.reject("geolocation not supported by browser");
+                        } else {
+                            $window.navigator.geolocation.getCurrentPosition(
+                                function(position) { service.geocodeGeoposition(deferred, position); },
+                                function(err) { deferred.reject(err); }, { timeout: 10000 }
+                            );
+                        }
+
+                        return deferred.promise;
+                    }
+                    //completes a deferred with the geocoded location of the current position
+                MyLocation.prototype.geocodeGeoposition = function(deferred, position) {
+                    var pos = provider.positionOverride ? provider.positionOverride : position.coords;
+                    console.log("handleMyPosition", pos, geocoder);
+
+                    geocoder.getLocationByPosition({ lng: pos.longitude, lat: pos.latitude }).$promise.then(
+                        function geocodeSuccess(location) {
+                            console.log("locationResult", location);
+                            deferred.resolve(location);
+                        },
+                        function geocodeFailure(err) {
+                            deferred.reject(err);
+                        });
+                }
+                return new MyLocation();
+            }
+        ];
+
+        return;
+        ////////////////
+    }
+})();
+(function() {
+    "use strict";
+
+    angular
+        .module("spa-demo.geoloc")
+        .config(JhuLocationOverride);
+
+    JhuLocationOverride.$inject = ["spa-demo.geoloc.myLocationProvider"];
+
+    function JhuLocationOverride(myLocationProvider) {
+        myLocationProvider.usePositionOverride({
+            longitude: -76.6200464,
+            latitude: 39.3304957
+        });
+    }
+})();
+(function() {
+    "use strict";
+
+    angular
+        .module("spa-demo.geoloc")
         .service("spa-demo.geoloc.currentOrigin", CurrentOrigin);
 
     CurrentOrigin.$inject = ["$rootScope"];
@@ -59156,14 +59239,19 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
     CurrentOriginSelectorController.$inject = ["$scope",
         "spa-demo.geoloc.geocoder",
-        "spa-demo.geoloc.currentOrigin"
+        "spa-demo.geoloc.currentOrigin",
+        "spa-demo.geoloc.myLocation"
     ];
 
-    function CurrentOriginSelectorController($scope, geocoder, currentOrigin) {
+    function CurrentOriginSelectorController($scope, geocoder, currentOrigin, myLocation) {
         var vm = this;
         vm.lookupAddress = lookupAddress;
         vm.getOriginAddress = getOriginAddress;
         vm.clearOrigin = clearOrigin;
+        vm.isCurrentLocationSupported = myLocation.isCurrentLocationSupported;
+        vm.useCurrentLocation = useCurrentLocation;
+        vm.myPositionError = null;
+        vm.changeDistance = changeDistance;
 
         vm.$onInit = function() {
             console.log("CurrentOriginSelectorController", $scope);
@@ -59185,6 +59273,23 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
         function clearOrigin() {
             return currentOrigin.clearLocation();
+        }
+
+        function changeDistance() {
+            currentOrigin.setDistance(vm.distanceLimit);
+        }
+
+        function useCurrentLocation() {
+            myLocation.getCurrentLocation().then(
+                function(location) {
+                    console.log("useCurrentLocation", location);
+                    currentOrigin.setLocation(location);
+                    vm.myPositionError = null;
+                },
+                function(err) {
+                    console.log(err);
+                    vm.myPositionError = err;
+                });
         }
     }
 })();
@@ -60346,6 +60451,8 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
 })();
 // SPA Demo Javascript Manifest File
+
+
 
 
 

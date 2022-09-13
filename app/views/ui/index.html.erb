@@ -10,10 +10,10 @@
     <%= javascript_include_tag 'spa-demo' %>
   </head>
   <body ng-app="spa-demo" class="bg-light">
-      <div class="container-fluid fullsize">
+      <div id="main-menubar" class="container-fluid fullsize">
         <sd-navbar></sd-navbar>
       </div>
-      <div class="container">
+      <div id="display-area" class="container">
         <div ui-view class="mt-5"></div>  
       </div>
 
