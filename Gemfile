@@ -47,6 +47,7 @@ gem 'mongo'
 gem 'mongoid'#, git: 'https://github.com/mongodb/mongoid.git', branch: 'master'
 gem 'httparty'
 gem 'rack-cors'
+gem 'rexml', '~> 3.2', '>= 3.2.5'
 gem 'jquery-rails', '~> 4.5'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
@@ -70,7 +71,6 @@ group :development do
   gem 'launchy', '~> 2.5'
   gem 'poltergeist', '~> 1.18', '>= 1.18.1'
   gem 'simplecov', require: false
-  gem 'rexml', '~> 3.2', '>= 3.2.5'
 end
 group :test do
   gem 'capybara', '3.34'
