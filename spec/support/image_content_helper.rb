@@ -1,12 +1,14 @@
 module ImageContentHelper
   random_city = ['travels', 'paris', 'florida', 'travel', 'ukraine', 'china', 'haiti', 'portugal', 'italy', 'india', 'israel', 'greece', 'barbados', 'brazil', 'belgium', 'estonia']
   BASE_URL=Faker::LoremFlickr.image(size: "840x680", search_terms: [random_city.sample])
-  # URL_PATH="#{BASE_URL}"
-  IMAGE_PATH="db/images/3.jpg"
+  # BASE_URL="https://raw.githubusercontent.com/KseniiaMarkiv/capstone-api/5-module"
+  # URL_PATH="db/images/vacaciones-playa-verano.jpg"
+  IMAGE_PATH="db/images/vacaciones-playa-verano.jpg"
 
 
   def self.download_image
     image_url="#{BASE_URL}"
+    # image_url="#{BASE_URL}/#{URL_PATH}"
     puts "downloading #{image_url} to #{IMAGE_PATH}"
 
     FileUtils::mkdir_p(File.dirname(IMAGE_PATH))

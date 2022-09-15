@@ -7,6 +7,7 @@ namespace :ptourist do
   GIRLS=["marsha","jan","cindy"]
   random_city = ['travels', 'paris', 'florida', 'travel', 'ukraine', 'china', 'haiti', 'portugal', 'italy', 'india', 'israel', 'greece', 'barbados', 'brazil', 'belgium', 'estonia']
   BASE_URL=Faker::LoremFlickr.image(size: "840x680", search_terms: [random_city.sample])
+  # BASE_URL="https://raw.githubusercontent.com/KseniiaMarkiv/capstone-api/5-module"
 
   def user_name first_name
     last_name = (first_name=="alice") ? "nelson" : "brady"
@@ -59,8 +60,8 @@ namespace :ptourist do
     create_image_content img.merge(:image=>image)
   end
   def create_image_content img
+    # url="#{BASE_URL}/#{img[:path]}"
     url="#{img[:path]}"
-    # url=img[:path]
     puts "downloading #{url}"
     contents = open(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE ).read
     original_content=ImageContent.new(:image_id=>img[:image].id,
@@ -98,14 +99,14 @@ namespace :ptourist do
   task delete_subjects: :environment do
     puts "removing #{Thing.count} things and #{ThingImage.count} thing_images"
     puts "removing #{Image.count} images"
-    DatabaseCleaner[:active_record].clean_with(:deletion, {:except=>%w[users]})
-    DatabaseCleaner[:mongoid].clean_with(:deletion)
+    DatabaseCleaner[:active_record].clean_with(:truncation, {:except=>%w[users]})
+    DatabaseCleaner[:mongoid].clean_with(:truncation)
   end
 
   desc "delete all data"
   task delete_all: [:delete_subjects] do
     puts "removing #{User.count} users"
-    DatabaseCleaner[:active_record].clean_with(:deletion, {:only=>%w[users]})
+    DatabaseCleaner[:active_record].clean_with(:truncation, {:only=>%w[users]})
   end
 
   desc "reset users"
