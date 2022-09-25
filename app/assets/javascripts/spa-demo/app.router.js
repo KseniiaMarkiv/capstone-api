@@ -13,10 +13,10 @@
     function RouterFunction($stateProvider, $urlRouterProvider, APP_CONFIG) {
         $stateProvider
             .state("home", {
-                url: "/",
-                templateUrl: APP_CONFIG.main_page_html,
-                // controller: ,
-                // controllerAs: ,
+                url: "/subjects",
+                templateUrl: APP_CONFIG.subjects_page_html
+                    // controller: ,
+                    // controllerAs: ,
             })
             .state("accountSignup", {
                 url: "/signup",
@@ -33,12 +33,13 @@
             .state("things", {
                 url: "/things/:id",
                 templateUrl: APP_CONFIG.things_page_html
-            })
-            .state("subjects", {
-                url: "/subjects",
-                templateUrl: APP_CONFIG.subjects_page_html
             });
+        // .state("subjects", {
+        //     url: "/subjects",
+        //     templateUrl: APP_CONFIG.subjects_page_html
+        // });
 
-        $urlRouterProvider.otherwise("/"); // eliminate default route
+        // $urlRouterProvider.otherwise("/"); // eliminate default route
+        $urlRouterProvider.otherwise("/subjects");
     }
 })();

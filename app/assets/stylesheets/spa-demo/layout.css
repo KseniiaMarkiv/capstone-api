@@ -57,6 +57,50 @@ input[type=submit]:hover {
 }
 
 
+/*********** main display-area ********/
+
+#display-area {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+/*********** areas ********/
+
+div.areas-left,
+div.areas-right {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+div.area-pane {
+    position: relative;
+}
+
+div.area-pane input[type='checkbox'] {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+div.area-pane div.tab-content {
+    height: 44vh;
+    overflow-y: auto;
+}
+
+div.area-pane.expanded div.tab-content {
+    height: 93vh;
+}
+
+div.areas-pane>ul.tab-label li a {
+    line-height: 7px;
+    font-size: 0.8em;
+}
+
+
+/*********** END areas ********/
+
+
 /* unordered list */
 
 ul.bg-yellow {
@@ -88,6 +132,10 @@ li.fooscolor>a:hover {
 
 button:disabled {
     color: #717782;
+}
+
+.outlined {
+    border: 1px solid black;
 }
 
 

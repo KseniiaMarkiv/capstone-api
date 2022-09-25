@@ -32,6 +32,16 @@
         --bs-light: #f8f9fa;
     }
     
+    button.btn-info-mine {
+        background-color: white;
+        color: var(--bs-info);
+    }
+    
+    button.btn-info-mine:hover {
+        background-color: var(--bs-info);
+        color: white;
+    }
+    
     .btn-info {
         color: white;
     }

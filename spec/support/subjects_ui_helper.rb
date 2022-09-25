@@ -25,8 +25,18 @@ module SubjectsUiHelper
                               :visible=>false,
                               :count=>ThingImage.where(:image=>image).count,
                               :wait=>5)
-      wait_until {find("div.image-existing img")[:complete]==true}
+      wait_until {find("div.image-existing img")[:complete].to_s=="true"}
     end
+    def image_editor_loaded! image, expected_linkables=nil
+      within("sd-image-editor .image-form") do
+        expect(page).to have_css("span.image_id",:text=>image.id,:visible=>false)
+        expect(page).to have_css(".image-controls")
+        expect(page).to have_css("ul.image-things li span.thing_id",
+                                :visible=>false,
+                                :count=>ThingImage.where(:image=>image).count,
+                                :wait=>5)
+        expect(page).to have_css("div.image-existing img",:count=>1,:wait=>5)
+        wait_until {find("div.image-existing img")[:complete].to_s=="true"}
     expected_linkables ||= get_linkables(image).size
     if expected_linkables && logged_in?
       expect(page).to have_css(".link-things select option", :count=>expected_linkables)
