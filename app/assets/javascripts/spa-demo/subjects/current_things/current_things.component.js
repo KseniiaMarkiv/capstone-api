@@ -21,11 +21,22 @@
 
     function CurrentThingsController($scope, currentSubjects) {
         var vm = this;
+        vm.thingClicked = thingClicked;
+        vm.isCurrentThing = currentSubjects.isCurrentThingIndex;
 
         vm.$onInit = function() {
             console.log("CurrentThingsController", $scope);
         }
+        vm.$postLink = function() {
+            $scope.$watch(
+                function() { return currentSubjects.getThings(); },
+                function(things) { vm.things = things; }
+            );
+        }
         return;
         //////////////
+        function thingClicked(index) {
+            currentSubjects.setCurrentThing(index);
+        }
     }
 })();
