@@ -120,6 +120,10 @@ div.area-pane div.tab-pane ul.items li.selected {
     background-color: #e0e0d1;
 }
 
+sd-image-viewer div.image-items span.id {
+    display: none;
+}
+
 
 /*********** END areas ********/
 
