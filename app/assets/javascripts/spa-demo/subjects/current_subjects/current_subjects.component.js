@@ -41,6 +41,31 @@
                     vm.images = images;
                     displaySubjects();
                 });
+            $scope.$watch(
+                function() { return currentSubjects.getCurrentImage(); },
+                function(link) {
+                    if (link) {
+                        vm.setActiveMarker(link.thing_id, link.image_id);
+                    } else {
+                        vm.setActiveMarker(null, null);
+                    }
+                });
+            $scope.$watch(
+                function() {
+                    return vm.map ? vm.map.getCurrentMarker() : null;
+                },
+                function(marker) {
+                    if (marker) {
+                        console.log("map changed markers", marker);
+                        currentSubjects.setCurrentSubjectId(marker.thing_id, marker.image_id);
+                    }
+                });
+            $scope.$watch(
+                function() { return currentOrigin.getLocation(); },
+                function(location) {
+                    vm.location = location;
+                    vm.updateOrigin();
+                });
         }
 
         return;
@@ -90,7 +115,9 @@
                 position: {
                     lng: ti.position.lng,
                     lat: ti.position.lat
-                }
+                },
+                thing_id: ti.thing_id,
+                image_id: ti.image_id
             };
             if (ti.thing_id && ti.priority === 0) {
                 markerOptions.title = ti.thing_name;
@@ -110,11 +137,31 @@
     }
 
     CurrentSubjectsMapController.prototype.updateOrigin = function() {
-        //...
+        if (this.map && this.location) {
+            this.map.center({
+                center: this.location.position
+            });
+            this.map.displayOriginMarker(this.originInfoWindow(this.location));
+        }
     }
 
     CurrentSubjectsMapController.prototype.setActiveMarker = function(thing_id, image_id) {
-        //...
+        if (!this.map) {
+            return;
+        } else if (!thing_id && !image_id) {
+            if (this.map.getCurrentMarker().title !== 'origin') {
+                this.map.setActiveMarker(null);
+            }
+        } else {
+            var markers = this.map.getMarkers();
+            for (var i = 0; i < markers.length; i++) {
+                var marker = markers[i];
+                if (marker.thing_id === thing_id && marker.image_id === image_id) {
+                    this.map.setActiveMarker(marker);
+                    break;
+                }
+            }
+        }
     }
 
     CurrentSubjectsMapController.prototype.originInfoWindow = function(location) {

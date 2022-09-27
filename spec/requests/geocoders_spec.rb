@@ -76,7 +76,9 @@ RSpec.describe "Geocoders", type: :request do
     let(:geocoder_cache)    { GeocoderCache.new(Geocoder.new) }
     before(:each) do
       expect(CachedLocation.by_address(search_address).count).to be <= 1
-      expect(CachedLocation.by_position(search_position).count).to be <= 1
+      #we can get multiple addresses at same geo
+      positions=CachedLocation.by_position(search_position).count
+      @expected_positions= positions==0 ? 1 : positions
     end
 
     context "service" do
@@ -91,11 +93,11 @@ RSpec.describe "Geocoders", type: :request do
       end
       it "caches location by position" do
         expect(result=geocoder_cache.reverse_geocode(search_position)).to_not be_nil
-        expect(CachedLocation.by_position(search_position).count).to eq(1)
+        expect(CachedLocation.by_position(search_position).count).to eq(@expected_positions)
 
         3.times do
           expect(geocoder_cache.reverse_geocode(search_position)[1].id).to eq(result[1].id)
-          expect(CachedLocation.by_position(search_position).count).to eq(1)
+          expect(CachedLocation.by_position(search_position).count).to eq(@expected_positions)
         end
       end
     end
@@ -132,7 +134,7 @@ RSpec.describe "Geocoders", type: :request do
         # get geocoder_positions_path, search_position.to_hash
         get geocoder_positions_path, params: { location: search_position.to_hash }
         expect(response).to have_http_status(:ok)
-        expect(CachedLocation.by_position(search_position).count).to eq(1)
+        expect(CachedLocation.by_position(search_position).count).to eq(@expected_positions)
         #pp parsed_body
 
         #no request header
@@ -140,7 +142,7 @@ RSpec.describe "Geocoders", type: :request do
           # get geocoder_positions_path, search_position.to_hash
           get geocoder_positions_path, params: { location: search_position.to_hash }
           expect(response).to have_http_status(:ok)
-          expect(CachedLocation.by_position(search_position).count).to eq(1)
+          expect(CachedLocation.by_position(search_position).count).to eq(@expected_positions)
         end
 
         #with request header
@@ -150,7 +152,7 @@ RSpec.describe "Geocoders", type: :request do
           # get geocoder_positions_path, search_position.to_hash, {"If-None-Match"=>etag}
           get geocoder_positions_path, params: { location: search_position.to_hash }, headers: { 'If-None-Match' => etag }
           expect(response).to have_http_status(:not_modified)
-          expect(CachedLocation.by_position(search_position).count).to eq(1)
+          expect(CachedLocation.by_position(search_position).count).to eq(@expected_positions)
         end
       end
     end
