@@ -1,9 +1,0 @@
-<div class="areas-pane">
-    <ul class="area tab-label nav nav-pills" role="tablist">
-        <li class="nav-item mb-3" ng-repeat="area in $ctrl.areas" ng-hide="area.show">
-            <button type="button" class="nav-link btn btn-info-mine" role="tab" ng-click="area.show=true">{{area.label}}</button>
-        </li>
-    </ul>
-
-    <div class="area-content row row-cols-lg-2 row-cols-md-2 row-cols-sm-2 row-cols-xs-1" ng-transclude></div>
-</div>

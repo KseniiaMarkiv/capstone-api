@@ -125,6 +125,14 @@ sd-image-viewer div.image-items span.id {
 }
 
 
+/*** map height ***/
+
+div.area-pane div.tab-content div.tab-pane,
+div.area-pane div.tab-content div.tab-pane div#map {
+    height: 100%;
+}
+
+
 /*********** END areas ********/
 
 
@@ -197,6 +205,15 @@ sd-image-viewer img {
 
 
 /*** media queries ****/
+
+
+/* needed for poltergeist testing */
+
+@media (width: 1050px) and (height: 800px) {
+    div.area-pane div.tab-content div.tab-pane div#map {
+        min-height: 700px;
+    }
+}
 
 
 /* Large */
