@@ -13,7 +13,7 @@
     ];
 
     function CurrentSubjects($rootScope, $q, $resource, currentOrigin, APP_CONFIG) {
-        var subjectsResource = $resource(APP_CONFIG.server_url + "/api/subjects", {}, {});
+        var subjectsResource = $resource(APP_CONFIG.server_url + "/api/subjects", {}, { query: { cache: false, isArray: true } });
         var service = this;
         service.version = 0;
         service.images = [];
@@ -23,6 +23,8 @@
         service.refresh = refresh;
         service.isCurrentImageIndex = isCurrentImageIndex;
         service.isCurrentThingIndex = isCurrentThingIndex;
+        service.nextThing = nextThing;
+        service.previousThing = previousThing;
 
         //refresh();
         $rootScope.$watch(function() { return currentOrigin.getVersion(); }, refresh);
@@ -87,6 +89,22 @@
             //console.log("isCurrentThingIndex", index, service.thingIdx === index);
             return service.thingIdx === index;
         }
+
+        function nextThing() {
+            if (service.thingIdx !== null) {
+                service.setCurrentThing(service.thingIdx + 1);
+            } else if (service.things.length >= 1) {
+                service.setCurrentThing(0);
+            }
+        }
+
+        function previousThing() {
+            if (service.thingIdx !== null) {
+                service.setCurrentThing(service.thingIdx - 1);
+            } else if (service.things.length >= 1) {
+                service.setCurrentThing(service.things.length - 1);
+            }
+        }
     }
 
     CurrentSubjects.prototype.getVersion = function() {
@@ -140,7 +158,7 @@
     }
     CurrentSubjects.prototype.setCurrentThingForCurrentImage = function() {
         var image = this.getCurrentImage();
-        if (!image.thing_id) {
+        if (!image || !image.thing_id) {
             this.thingIdx = null;
         } else {
             var thing = this.getCurrentThing();
@@ -160,7 +178,9 @@
     CurrentSubjects.prototype.setCurrentImageForCurrentThing = function() {
         var image = this.getCurrentImage();
         var thing = this.getCurrentThing();
-        if ((thing && thing.thing_id !== image.thing_id) || !image || image.priority !== 0) {
+        if (!thing) {
+            this.imageIdx = null;
+        } else if ((thing && thing.thing_id !== image.thing_id) || !image || image.priority !== 0) {
             for (var i = 0; i < this.images.length; i++) {
                 image = this.images[i];
                 if (image.thing_id === thing.thing_id && image.priority === 0) {

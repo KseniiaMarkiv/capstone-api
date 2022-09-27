@@ -7,14 +7,14 @@
         <span class="caption overlay">{{$ctrl.imageCaption(image)}}</span>
 
         <span class="image-browse overlay" ui-sref="images({id:$ctrl.imageId(image)})">
-        <span class="overlay"><i class="bi bi-share"></i></span>
+        <span class="overlay glyphicon glyphicon-share-alt"><i class="bi bi-share"></i></span>
         </span>
 
     </div>
 
-    <span class="overlay" ng-click="$ctrl.previousImage()"><i class="bi bi-chevron-double-left"></i></span>
+    <span class="overlay glyphicon glyphicon-chevron-left" ng-click="$ctrl.previousImage()"><i class="bi bi-chevron-double-left"></i></span>
 
-    <span class="overlay" ng-click="$ctrl.nextImage()"><i class="bi bi-chevron-double-right"></i></span>
+    <span class="overlay glyphicon glyphicon-chevron-right" ng-click="$ctrl.nextImage()"><i class="bi bi-chevron-double-right"></i></span>
 </div> -->
 
 <div id="carouselExampleCaptions" class="carousel slide image-area" data-bs-ride="carousel">
@@ -29,23 +29,23 @@
             <span class="id image_id">{{$ctrl.imageId(image)}}</span>
             <img class="d-block w-100" ng-src="{{$ctrl.imageUrl(image)}}">
             <div class="carousel-caption d-none d-md-block">
-                <span class="fst-italic fw-bold text-muted pe-2 fs-6">Caption:</span>
-                <h6 class="caption">{{$ctrl.imageCaption(image)}}</h6>
+                <span class="fst-italic fw-bold text-muted pe-2 fs-4">Caption:</span>
+                <h4 class="caption">{{$ctrl.imageCaption(image)}}</h4>
                 <span class="image-browse" ui-sref="images({id:$ctrl.imageId(image)})">
                 <!-- <span class=""><i class="bi bi-share"></i></span> -->
-                <span><i class="bi bi-reply-all-fill"></i></span>
+                <span class="share-alt"><i class="bi bi-reply-all-fill"></i></span>
             </div>
         </div>
 
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev" ng-click="$ctrl.previousImage()">
     <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
-    <i class="bi bi-caret-left-fill fa-3x" aria-hidden="true"></i>
+    <span class="chevron-left"><i class="bi bi-caret-left-fill fa-3x" aria-hidden="true"></i></span>
     <span class="visually-hidden">Previous</span>
   </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next" ng-click="$ctrl.nextImage()">
     <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
-    <i class="bi bi-caret-right-fill fa-3x" aria-hidden="true"></i>
+    <span class="chevron-right"><i class="bi bi-caret-right-fill fa-3x" aria-hidden="true"></i></span>
     <span class="visually-hidden">Next</span>
   </button>
 </div>

@@ -227,7 +227,7 @@ RSpec.feature "AuthzThingImages", type: :feature, :js=>true do
           find_field("image-priority", :with=>old_priority, :readonly=>false)
           fill_in("image-priority", :with=>new_priority)
           find_field("image-priority", :with=>new_priority)
-          expect(page).to have_css("div.glyphicon-asterisk", :wait=>5)
+          expect(page).to have_css("div.glyphicon-asterisk", :wait=>10)
         end
         button = page.has_button?("Update Thing") ? "Update Thing" : "Update Image Links"
         click_button(button)
@@ -273,8 +273,8 @@ RSpec.feature "AuthzThingImages", type: :feature, :js=>true do
 
         #verify priority displayed on the page
         expect(page).to have_field("thing-name", :with=>new_name)
-        within(".thing-images ul li", :text=>displayed_caption(linked_image)) do
-          expect(page).to have_field("image-priority", :with=>new_priority)
+        within(".thing-images ul li", :text=>displayed_caption(linked_image),:wait=>5) do
+          expect(page).to have_field("image-priority", :with=>new_priority,:wait=>5)
         end
         #verify database has the expected values
         expect(ThingImage.find(thing_image.id).priority).to eq(new_priority)
@@ -295,7 +295,7 @@ RSpec.feature "AuthzThingImages", type: :feature, :js=>true do
         within(image_li) do
           fill_in("image-priority", :with=>thing_image.priority+1)
         end
-        expect(page).to have_no_button("Update Thing")
+        expect(page).to have_no_button("Update Thing", :wait=>5)
         expect(page).to have_button("Update Image Links", :disabled=>false)
 
         #editing name causes entire object update to be enabled

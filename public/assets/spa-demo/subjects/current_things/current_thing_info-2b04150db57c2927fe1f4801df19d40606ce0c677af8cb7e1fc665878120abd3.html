@@ -1,0 +1,16 @@
+<div class="thing-info">
+    <h4>{{$ctrl.link.thing_name}}</h4>
+
+    <span class="id thing_id">{{$ctrl.link.thing_id}}</span>
+    <div class="distance font-monospace text-muted ps-4" ng-if="$ctrl.link.distance">{{$ctrl.link.distance | number:1}} miles</div>
+    <p>
+        <div class="description ps-2 pe-2 text-center">{{$ctrl.thing.description}}</div>
+    </p>
+    <p>
+        <div class="notes">{{$ctrl.thing.notes}}</div>
+    </p>
+
+    <span class="overlay glyphicon glyphicon-chevron-left" ng-click="$ctrl.previousThing()"><i class="bi bi-chevron-double-left fa-3x" aria-hidden="true"></i></span>
+
+    <span class="overlay glyphicon glyphicon-chevron-right" ng-click="$ctrl.nextThing()"><i class="bi bi-chevron-double-right fa-3x" aria-hidden="true"></i></span>
+</div>
