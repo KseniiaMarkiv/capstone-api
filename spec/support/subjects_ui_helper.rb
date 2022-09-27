@@ -25,18 +25,9 @@ module SubjectsUiHelper
                               :visible=>false,
                               :count=>ThingImage.where(:image=>image).count,
                               :wait=>5)
+      expect(page).to have_css("div.image-existing img",:count=>1,:wait=>5)
       wait_until {find("div.image-existing img")[:complete].to_s=="true"}
     end
-    def image_editor_loaded! image, expected_linkables=nil
-      within("sd-image-editor .image-form") do
-        expect(page).to have_css("span.image_id",:text=>image.id,:visible=>false)
-        expect(page).to have_css(".image-controls")
-        expect(page).to have_css("ul.image-things li span.thing_id",
-                                :visible=>false,
-                                :count=>ThingImage.where(:image=>image).count,
-                                :wait=>5)
-        expect(page).to have_css("div.image-existing img",:count=>1,:wait=>5)
-        wait_until {find("div.image-existing img")[:complete].to_s=="true"}
     expected_linkables ||= get_linkables(image).size
     if expected_linkables && logged_in?
       expect(page).to have_css(".link-things select option", :count=>expected_linkables)
@@ -166,7 +157,7 @@ module SubjectsUiHelper
           id.find(:xpath, "..").has_css?("span.thing_id", 
                                         {visible:false, text:thing_id})
         }.first
-        id.find(:xpath,"..").click
+      id.find(:xpath,"..").click
       expect(page).to have_css("ul.images li.selected")
     end
     image_id
@@ -193,5 +184,10 @@ module SubjectsUiHelper
                                                 visible:false).text(:all)
       id.to_i   if id
     end
+  end
+  def subjects_map_loaded!
+    expect(page).to have_css("div#map")
+    #wait for the map to appear
+    expect(page).to have_css("div#map div.gm-style",:wait=>10)
   end
 end
