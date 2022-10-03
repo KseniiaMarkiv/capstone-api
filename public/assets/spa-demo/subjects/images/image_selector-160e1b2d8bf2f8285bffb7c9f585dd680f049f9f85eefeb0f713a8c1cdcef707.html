@@ -1,0 +1,43 @@
+<!-- <div class="image-list" ng-show="$ctrl.authz.canQuery">
+    <ul style="list-style-type: circle;">
+        <li ng-repeat="item in $ctrl.items | orderBy:'caption'" class="m-2 pe-2">
+            <a ui-sref="images({id:item.id})" class="text-decoration-none ps-2">
+                <span class="image_id id">{{item.id}}</span>
+                <img style="width: 50px; height: 33px" ng-src="{{item.content_url}}?width=50" /> {{item.caption}}
+
+                <span ng-show="$ctrl.authz.canUpdateItem(item)"> *</span>
+            </a>
+        </li>
+    </ul>
+</div> -->
+
+
+<div class="image-list" ng-show="$ctrl.authz.canQuery">
+
+    <ul style="list-style: none;">
+
+        <li ng-repeat="item in $ctrl.items | orderBy:'caption'" class="pe-2">
+            <div class="card position-relative border-start-0 border-top-0 border-end-0 float-start" style="max-width: 50%; max-height: 50%;">
+
+                <a ui-sref="images({id:item.id})" class="text-decoration-none ps-2">
+                    <div class="row g-0">
+                        <span class="image_id id">{{item.id}}</span>
+                        <div class="col-md-4">
+                            <img class="img-fluid rounded-start p-2" ng-src="{{item.content_url}}" />
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{item.caption}}<span ng-show="$ctrl.authz.canUpdateItem(item)"> *</span></h5>
+                                <p class="card-text"><small class="text-muted">Adress</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+        </li>
+
+    </ul>
+
+</div>

@@ -7,8 +7,24 @@
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: "Anek Malayalam", sans-serif, 400;
+}
+
+.clearfix:nth-child(odd) {
+    float: left;
+}
+
+.clearfix:nth-child(even) {}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 form .invalid {

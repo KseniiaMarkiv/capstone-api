@@ -15,7 +15,6 @@ require 'simplecov'
 require 'exifr/jpeg'
 
 browser = :firefox
-
 Capybara.register_driver :selenium do |app|
   if browser == :chrome
     require 'webdrivers/chromedriver'
@@ -23,16 +22,36 @@ Capybara.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, browser: :chrome)
   else
     require 'webdrivers/geckodriver'
-    Selenium::WebDriver::Firefox.path = '/mnt/c/WebDriver/bin/geckodriver.exe'
-    # Capybara::Selenium::Driver.new(app, browser: :firefox)
-    #http://stackoverflow.com/questions/20009266/selenium-testing-with-geolocate-firefox-keeps-turning-it-off
+
+    service = Selenium::WebDriver::Service.firefox(path: '/mnt/c/WebDriver/bin/geckodriver.exe')
     profile = Selenium::WebDriver::Firefox::Profile.new
     profile["geo.prompt.testing"]=true
     profile["geo.prompt.testing.allow"]=true
-    Capybara::Selenium::Driver.new(app, :browser=>:firefox, :profile=>profile)
-    # driver = Selenium::WebDriver.for :firefox, :profile => profile
+    options = Selenium::WebDriver::Options.firefox(profile: profile)
+    options.browser_version = 'latest'
+    options.platform_name = 'Windows 10'
+    options.accept_insecure_certs = true 
+    # @driver = Selenium::WebDriver.for :firefox, service: service, capabilities: options
+    Capybara::Selenium::Driver.new(app, browser: :firefox, service: service, capabilities: options)
   end
 end
+# Capybara.register_driver :selenium do |app|
+#   if browser == :chrome
+#     require 'webdrivers/chromedriver'
+#     Selenium::WebDriver::Chrome.path = '/mnt/c/WebDriver/bin/chromedriver.exe'
+#     Capybara::Selenium::Driver.new(app, browser: :chrome)
+#   else
+#     require 'webdrivers/geckodriver'
+#     Selenium::WebDriver::Firefox.path = '/mnt/c/WebDriver/bin/geckodriver.exe'
+#     # Capybara::Selenium::Driver.new(app, browser: :firefox)
+#     #http://stackoverflow.com/questions/20009266/selenium-testing-with-geolocate-firefox-keeps-turning-it-off
+#     profile = Selenium::WebDriver::Firefox::Profile.new
+#     profile["geo.prompt.testing"]=true
+#     profile["geo.prompt.testing.allow"]=true
+#     Capybara::Selenium::Driver.new(app, :browser=>:firefox, :profile=>profile)
+#     # driver = Selenium::WebDriver.for :firefox, :profile => profile
+#   end
+# end
 
 
 require 'capybara/poltergeist'

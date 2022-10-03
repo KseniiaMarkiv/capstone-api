@@ -1,10 +1,10 @@
 require 'rails_helper'
-Capybara.app_host = 'http://127.0.0.1:3000'
+# Capybara.app_host = 'http://127.0.0.1:3000'
 
 # ----- diference of methods in Capybara is wait download of element or not -----
 # ----- in many Capybara methods doesn't need use .using_wait_time method 
 
-RSpec.describe 'Mainpages', type: :feature do
+RSpec.describe 'Mainpages', type: :feature, js: true do
   # let(:valid_attributes) {
   #   # skip("Add a hash of attributes valid for your model")
   #   FactoryBot.attributes_for(:foo)
