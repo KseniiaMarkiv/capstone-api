@@ -116,3 +116,4 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-angular-messages'
 end
 gem "matrix", "~> 0.4.2"
+gem "aws-sdk-s3", require: false
