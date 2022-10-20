@@ -40,3 +40,4 @@
 # Ignore uploaded mp4 files in development.
 /public/lib/images/jumbotron.mp4
 /public/assets
+/config/credentials/production.key
