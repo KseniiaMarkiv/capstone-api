@@ -9,6 +9,10 @@
 //= require ng-file-upload-shim
 //= require ng-file-upload
 //= require ui-cropper
+//= require angular-material
+//= require angular-aria
+//= require angular-animate
+//= require angular-messages
 
 //= require spa-demo/app.module
 //= require spa-demo/app.router

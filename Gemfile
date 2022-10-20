@@ -110,5 +110,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-ng-file-upload'
   gem 'rails-assets-ng-file-upload-shim'
   gem 'rails-assets-ui-cropper'
+  gem 'rails-assets-angular-material'
+  gem 'rails-assets-angular-aria'
+  gem 'rails-assets-angular-animate'
+  gem 'rails-assets-angular-messages'
 end
 gem "matrix", "~> 0.4.2"

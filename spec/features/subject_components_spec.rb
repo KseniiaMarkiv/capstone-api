@@ -7,7 +7,7 @@ RSpec.feature "SubjectComponents", type: :feature, js: true do
   include SubjectsUiHelper
 
   let(:member)        { @member }
-  let(:origin)        { FactoryGirl.build(:location) }
+  let(:origin)        { FactoryBot.build(:location) }
   let(:true_orphan_images) { Image.where.not(:id=>ThingImage.pluck(:image_id)) }
   let(:orphan_images) { ThingImage.where.not(:thing_id=>ThingImage.where(:priority=>0).pluck(:thing_id)) }
   let(:things)        { ThingImage.within_range(origin.position).things }

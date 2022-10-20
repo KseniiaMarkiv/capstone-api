@@ -3,6 +3,8 @@
  *
  *= require bootstrap
  *= require ui-cropper
+ *= require angular-material
+ 
  *= require spa-demo/layout
  *= require spa-demo/custom
  *= require spa-demo/authn
