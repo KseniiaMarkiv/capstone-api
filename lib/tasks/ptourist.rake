@@ -97,6 +97,8 @@ namespace :ptourist do
 
   desc "deletes things, images, and links" 
   task delete_subjects: :environment do
+    DatabaseCleaner.allow_production = true
+    DatabaseCleaner.allow_remote_database_url = true
     puts "removing #{Thing.count} things and #{ThingImage.count} thing_images"
     puts "removing #{Image.count} images"
     DatabaseCleaner[:active_record].clean_with(:truncation, {:except=>%w[users]})
@@ -105,6 +107,8 @@ namespace :ptourist do
 
   desc "delete all data"
   task delete_all: [:delete_subjects] do
+    DatabaseCleaner.allow_production = true
+    DatabaseCleaner.allow_remote_database_url = true
     puts "removing #{User.count} users"
     DatabaseCleaner[:active_record].clean_with(:truncation, {:only=>%w[users]})
   end
