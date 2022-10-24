@@ -51,6 +51,7 @@ gem 'rexml', '~> 3.2', '>= 3.2.5'
 gem 'jquery-rails', '~> 4.5'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
+gem "aws-sdk-s3", require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
