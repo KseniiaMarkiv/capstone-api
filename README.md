@@ -1,4 +1,5 @@
-App from _Course 6_
+App from _Course 6_ 
+> <em>How looks like app you can see</em> [GitHub](https://github.com/KseniiaMarkiv/capstone-api/tree/8-module)
 
 # Capstone Demo Application
 *I created analogy app but change design and improve AngularJS version and some gems*
