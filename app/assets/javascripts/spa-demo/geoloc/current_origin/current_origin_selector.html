@@ -1,0 +1,47 @@
+<div class="row g-2">
+    <div class="col-lg-12 col-md-12">
+        <!-- <div class="row"> -->
+        <form name="select_origin" class="navbar-form row justify-content-end g-3 me-4" ng-hide="$ctrl.getOriginAddress()">
+            <div class="col-auto">
+                <input name="address-search" class="form-control me-2" type="search" placeholder="Address Search" ng-model="$ctrl.address" ng-required="true" aria-label="Search">
+            </div>
+            <div class="col-auto">
+                <button title="lookup-address" class="btn btn-info text-white pe-2" type="button" ng-disabled="select_origin.$invalid" ng-click="$ctrl.lookupAddress()">Lookup<i class="bi bi-search ps-2" style="color:white;"></i></button>
+            </div>
+            <div class="col-auto">
+                <label title="my-position" class="btn btn-default form-label text-light mb-0" ng-show="$ctrl.isCurrentLocationSupported()" ng-class="{'invalid' : $ctrl.myPositionError!=null }" ng-click="$ctrl.useCurrentLocation()" style="background-color: #246DFF">{{ $ctrl.myPositionError==null ? 'My Position' : 'Position Unavail'}}<i class="bi bi-geo ps-2" style="color:white;"></i></label>
+            </div>
+        </form>
+        <!-- </div> -->
+    </div>
+    <div class="col-lg-12 col-md-12">
+        <span class="search-criteria row justify-content-start g-2" ng-show="$ctrl.getOriginAddress()">
+  
+    <form name="show_origin" class="navbar-form col-auto"> 
+      <div class="col-auto pe-2">
+        <label class="form-label pe-2 fw-bold">Origin: </label>
+        <span class="current-origin fst-italic pb-2">{{$ctrl.getOriginAddress()}}</span>
+    </div>
+    <div class="col-auto m-0 pe-2">
+        <button title="change-origin" type="submit" class="btn text-white" style="background-color: #0D6EFD;" ng-click="$ctrl.clearOrigin()">
+        Change
+        <i class="bi bi-pen ps-2" style = "color:white;"></i>
+      </button>
+    </div>
+
+    </form>
+
+    <form name="distance_limit" class="navbar-form me-4 col-auto">
+        <div class="col-auto">
+            <label class="form-label pe-2 fw-bold pb-2">Miles:</label>
+        </div>
+        <div class="col-auto m-0">
+            <input type="number" name="distance-limit" class="form-control" min="0" step="1" ng-model="$ctrl.distanceLimit" ng-change="$ctrl.changeDistance()">
+        </div>
+    </form>
+
+
+    </span>
+</div>
+
+</div>

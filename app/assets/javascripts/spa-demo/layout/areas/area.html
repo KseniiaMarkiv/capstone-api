@@ -1,0 +1,5 @@
+<div class="area-pane outlined" ng-if="$ctrl.show" ng-class="{expanded: $ctrl.isExpanded()}">
+    <div class="area-transclude" ng-transclude></div>
+
+    <input name="collapse-area" type="checkbox" class="btn-close" aria-label="Close" ng-model="$ctrl.show">
+</div>

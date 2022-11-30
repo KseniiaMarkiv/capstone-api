@@ -6,10 +6,12 @@
 
 # Ignore bundler config.
 /.bundle
+/.env
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-*
+
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -29,7 +31,12 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
-/public/assets
+
+/coverage/*
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore uploaded mp4 files in development.
+/public/lib/images/jumbotron.mp4
+/public/assets

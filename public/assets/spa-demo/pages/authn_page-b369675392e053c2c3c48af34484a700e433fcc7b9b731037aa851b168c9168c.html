@@ -1,0 +1,20 @@
+<div class="col-lg-8 mt-5 justify-content-start align-items-start">
+
+    <div id="authn-check" sd-authn-check>
+        <h3 class="text-dark mb-2">Identity Check</h3>
+        <!-- <div class="d-grid gap-2 col-6 mx-auto"> -->
+        <div class="client-user mt-2">
+            <button class="btn fs-6" type="button" style="background-color:#ff1867" ng-click="idVM.getClientUser()">$auth says...</button><br>
+            <label class="fst-italic">{{idVM.client}}</label>
+        </div>
+        <div class="whoami-user mt-2">
+            <button class="btn fs-6" type="button" style="background-color:#6eff3e" ng-click="idVM.whoAmI()">whoAmI() says...</button><br>
+            <label class="fst-italic">{{idVM.server.whoAmI}}</label>
+        </div>
+        <div class="checkme-user mt-2">
+            <button class="btn fs-6" type="button" style="background-color:#fd7e14" ng-click="idVM.checkMe()">checkMe() says...</button><br>
+            <label class="fst-italic">{{idVM.server.checkMe}}</label>
+        </div>
+        <!-- </div> -->
+    </div>
+</div>

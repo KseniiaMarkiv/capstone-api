@@ -1,0 +1,81 @@
+span#user_id {
+    display: none;
+}
+
+
+/* 
+#authnSession {
+  margin-right: 10px;
+} */
+
+#login-form #new-account label {
+    width: auto;
+    /* flatten the New here? label */
+    margin-top: 5px;
+}
+
+div#logout-identity {
+    text-align: center;
+    /* keep organized as name in label gets long */
+}
+
+div#logout-identity label {
+    padding-right: 10px;
+}
+
+a.initialism:link {
+    text-decoration: none;
+}
+
+a.initialism:visited {
+    text-decoration: none;
+}
+
+a.initialism:hover {
+    text-decoration: none;
+}
+
+a.initialism:active {
+    text-decoration: none;
+}
+
+ul#authnSession.dropdown-menu.show form#login-form {
+    width: 15rem;
+    height: 15rem;
+}
+
+ul#authnSession.dropdown-menu.show form#logout-form {
+    width: 10rem;
+    height: 2rem;
+}
+
+ul.dropdown-menu.show {
+    padding: 1rem;
+}
+
+.authCheck {
+    text-decoration: none;
+    font-size: 0.7rem;
+}
+
+
+/* *************************************** signup form *************************************** */
+
+.card.signup-card {
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(3px);
+    padding-left: 4em;
+    padding-right: 4em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    /* backdrop-filter: drop-shadow(4px 4px 10px blue); */
+    box-shadow: rgb(0, 85, 255) -5px 5px, rgba(255, 255, 0, 0.7) -10px 10px, rgba(0, 85, 255, 0.5) -15px 15px, rgba(61, 255, 207, 0.7) -5px 5px 15px 0px inset, rgba(61, 255, 207, 0.5) -5px 5px 15px 0px inset;
+}
+
+sd-signup {
+    margin-top: 12em;
+    margin-left: 17em;
+}
+
+
+/* *************************************** signup form END *************************************** */

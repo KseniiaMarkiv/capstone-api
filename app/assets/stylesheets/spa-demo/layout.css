@@ -1,0 +1,274 @@
+/* 
+ * layout.css
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Anek+Malayalam&display=swap');
+ :root {
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Anek Malayalam", sans-serif, 400;
+}
+
+.clearfix:nth-child(odd) {
+    float: left;
+}
+
+.clearfix:nth-child(even) {}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+form .invalid {
+    color: red;
+    font-weight: bold;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+.invalid-error {
+    color: red;
+    font-weight: bold;
+    text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.6);
+}
+
+input[type=submit] {
+    padding: 4px 8px 4px;
+    margin-top: 10px;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color: white;
+    color: #52c57b;
+    border: 1px solid #89d4a3;
+    font-size: 0.875rem;
+}
+
+input[type=submit]:hover {
+    background-color: #8cf0af;
+    color: white;
+}
+
+.btn-outline-warning.btn-sm:hover {
+    color: white;
+    background-color: #ffc107;
+}
+
+.btn-outline-danger.btn-sm {
+    margin-top: 10px;
+    color: #f3375d;
+    border: 1px solid #f3375d;
+}
+
+.btn-outline-danger.btn-sm:hover {
+    background-color: #f3375d;
+    color: white;
+}
+
+
+/*********** main display-area ********/
+
+#display-area {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+/*********** areas ********/
+
+div.areas-left,
+div.areas-right {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+div.area-pane {
+    position: relative;
+}
+
+div.area-pane input[type='checkbox'] {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+div.area-pane div.tab-content {
+    height: 44vh;
+    overflow-y: auto;
+}
+
+div.area-pane.expanded div.tab-content {
+    height: 93vh;
+}
+
+div.areas-pane>ul.tab-label li a {
+    line-height: 7px;
+    font-size: 0.8em;
+}
+
+div.area-pane div.tab-pane ul.items {
+    margin-top: 5px;
+    padding-left: 5px;
+}
+
+div.area-pane div.tab-pane ul.items span.id {
+    display: none;
+}
+
+div.area-pane div.tab-pane ul.items img {
+    width: 50px;
+}
+
+div.area-pane.expanded div.tab-pane ul.items img {
+    width: 100px;
+}
+
+div.area-pane div.tab-pane ul.items li.selected {
+    font-weight: bold;
+    color: var(--bs-primary);
+    background-color: #e0e0d1;
+}
+
+sd-image-viewer div.image-items span.id {
+    display: none;
+}
+
+
+/*** map height ***/
+
+div.area-pane div.tab-content div.tab-pane,
+div.area-pane div.tab-content div.tab-pane div#map {
+    height: 100%;
+}
+
+
+/*********** END areas ********/
+
+
+/* unordered list */
+
+ul.bg-yellow {
+    color: #0277bd;
+    /* background-color: #eeff41; */
+    list-style-type: circle;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+li.fooscolor>a {
+    color: #0277bd;
+    /* font-family: Consolas monospace; */
+    font-family: 'Redressed', cursive;
+    /* font-size: 1.1em; */
+    text-decoration: none;
+}
+
+
+/* mouse over link */
+
+li.fooscolor>a:hover {
+    color: hotpink;
+}
+
+[readonly='readonly'] {
+    background-color: inherit;
+}
+
+button:disabled {
+    color: #717782;
+}
+
+
+/* .outlined {
+    border: 1px solid black;
+} */
+
+
+/* ******************* image upload not fit me ***************** */
+
+
+/* img.image-preview {
+    display: inline-block;
+    width: 300px;
+    height: 200px;
+    margin: 10px;
+}
+
+.crop-area {
+    position: relative;
+    display: block;
+    width: 300px;
+    height: 350px;
+    margin: 10px;
+    overflow: visible;
+} */
+
+
+/* ******************* END image upload ***************** */
+
+
+/*** image viewer ***/
+
+sd-image-viewer img {
+    width: 100%;
+}
+
+
+/*** media queries ****/
+
+
+/* needed for poltergeist testing */
+
+@media (width: 1050px) and (height: 800px) {
+    div.area-pane div.tab-content div.tab-pane div#map {
+        min-height: 700px;
+    }
+}
+
+
+/* Large */
+
+@media (min-width: 1200px) {}
+
+
+/* Medium */
+
+@media (min-width: 992px) and (max-width: 1199px) {}
+
+
+/* Small */
+
+@media (min-width: 768px) and (max-width: 991px) {}
+
+
+/* Extra small */
+
+@media (max-width: 767px) {
+    /* not fit me */
+    /* .image-rendering img,
+    .image-content>div {
+        display: block;
+        margin-left: auto;
+        margin-right: auto
+    }
+    .crop-area {
+        margin: 0px;
+        margin-left: auto;
+        margin-right: auto 
+}*/
+}
+
+
+/* Super-extra small */
+
+@media (max-width: 479px) {}
+
+
+/*** END media queries ****/
