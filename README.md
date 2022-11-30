@@ -7,7 +7,7 @@ App from _Course 6_
 ---
 ### affected materials as
 <ul>
-  <li>Built skeleton app</li>
+  <li>Skeleton app uilt</li>
   <li>Frontend</li>
   <li>Backend</li>
 </ul>
